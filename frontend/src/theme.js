@@ -25,7 +25,8 @@ export const theme = createTheme({
   typography: {
     fontFamily: '"Poppins", "Helvetica", "Arial", sans-serif',
     fontSize: 16,
-    fontWeightMedium: 600,
+    fontWeightMedium: 500,
+    fontWeightBold: 600,
   },
   props: {
     MuiAppBar: {
