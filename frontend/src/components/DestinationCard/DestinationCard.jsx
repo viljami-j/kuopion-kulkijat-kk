@@ -34,7 +34,7 @@ function DestinationCard({ header, content, imageSrc, location }) {
             height="174"
             width="225"
             image={imageSrc}
-            alt="Paella dish"
+            alt={header}
           />
         ) : (
           <Skeleton
