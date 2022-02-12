@@ -43,7 +43,6 @@
       "eqeqeq": "off",
       "guard-for-in": "error",
       "no-else-return": "error",
-      "no-magic-numbers": "error",
       "no-param-reassign": "error",
       "no-unmodified-loop-condition": "error",
       "no-unused-expressions": "error",
