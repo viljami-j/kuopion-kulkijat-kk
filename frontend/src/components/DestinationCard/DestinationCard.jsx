@@ -23,7 +23,7 @@ DestinationCard.propTypes = {
   country: PropTypes.string,
 };
 
-function DestinationCard({ header, content, imageSrc, location }) {
+function DestinationCard({ header, content, imageSrc, city, country }) {
   const displayedContent = takeMaxFortyCharacters(content);
   return (
     <DestinationStyledCard>
@@ -57,7 +57,7 @@ function DestinationCard({ header, content, imageSrc, location }) {
           <Typography variant="body2" color="text.secondary">
             {displayedContent}
           </Typography>
-          <LocationIndicator location={location} />
+          <LocationIndicator location={{ city, country }} />
         </CardContent>
       </CardActionArea>
     </DestinationStyledCard>
