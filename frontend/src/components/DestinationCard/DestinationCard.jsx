@@ -50,10 +50,11 @@ function DestinationCard({ name, description, image, city, country }) {
           titleTypographyProps={{
             component: "h3",
             fontWeight: "medium",
+            textAlign: "start",
           }}
           sx={{ pb: 0 }}
         />
-        <CardContent sx={{ pt: 1, pb: 1 }}>
+        <CardContent sx={{ pt: 1, pb: 1, textAlign: "start" }}>
           <Typography variant="body2" color="text.secondary">
             {displayedContent}
           </Typography>
