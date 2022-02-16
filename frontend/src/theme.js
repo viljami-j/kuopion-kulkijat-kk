@@ -44,5 +44,14 @@ export const theme = createTheme({
         }),
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        contained: ({ ownerState }) => ({
+          ...(ownerState.variant === "contained" && {
+            width: "fit-content",
+          }),
+        }),
+      },
+    },
   },
 });
