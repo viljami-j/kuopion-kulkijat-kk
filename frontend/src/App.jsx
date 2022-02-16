@@ -1,12 +1,12 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { theme } from "theme";
-import DestinationCard from "components/DestinationCard";
+import Index from "./scenes/front-page/FrontPage";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <DestinationCard />
+      <Index />
     </ThemeProvider>
   );
 }
