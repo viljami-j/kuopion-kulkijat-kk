@@ -12,29 +12,29 @@ import DestinationStyledCard from "./styled/DestinationStyledCard";
 import DestinationCardImage from "./styled/DestinationCardImage";
 
 DestinationCard.defaultProps = {
-  imageSrc: "",
+  image: "",
 };
 
 DestinationCard.propTypes = {
-  header: PropTypes.string,
-  content: PropTypes.string,
-  imageSrc: PropTypes.string,
+  name: PropTypes.string,
+  description: PropTypes.string,
+  image: PropTypes.string,
   city: PropTypes.string,
   country: PropTypes.string,
 };
 
-function DestinationCard({ header, content, imageSrc, city, country }) {
-  const displayedContent = takeMaxFortyCharacters(content);
+function DestinationCard({ name, description, image, city, country }) {
+  const displayedContent = takeMaxFortyCharacters(description);
   return (
     <DestinationStyledCard>
       <CardActionArea>
-        {imageSrc ? (
+        {image ? (
           <DestinationCardImage
             component="img"
             height="174"
             width="225"
-            image={imageSrc}
-            alt={header}
+            image={image}
+            alt={name}
           />
         ) : (
           <Skeleton
@@ -46,7 +46,7 @@ function DestinationCard({ header, content, imageSrc, city, country }) {
           />
         )}
         <CardHeader
-          title={header}
+          title={name}
           titleTypographyProps={{
             component: "h3",
             fontWeight: "medium",
