@@ -1,0 +1,82 @@
+[
+  {
+    "id": 0,
+    "name": "Ounasvaara",
+    "country": "Suomi",
+    "city": "Rovaniemi",
+    "description": "asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf ",
+    "image": ""
+  },
+  {
+    "id": 1,
+    "name": "Kultahippu",
+    "country": "Suomi",
+    "city": "Ivalo",
+    "description": "Lapin komein hotelli",
+    "image": ""
+  },
+  {
+    "id": 2,
+    "name": "Linnanmäki",
+    "country": "Suomi",
+    "city": "Helsinki",
+    "description": "Suomen suurin huvipuisto",
+    "image": ""
+  },
+  {
+    "id": 3,
+    "name": "Petonen",
+    "country": "Suomi",
+    "city": "Kuopio",
+    "description": "Suomen varmasti viihtyisin lähiö",
+    "image": ""
+  },
+  {
+    "id": 4,
+    "name": "Petonen",
+    "country": "Suomi",
+    "city": "Kuopio",
+    "description": "Suomen varmasti viihtyisin lähiö",
+    "image": ""
+  },
+  {
+    "id": 5,
+    "name": "Petonen",
+    "country": "Suomi",
+    "city": "Kuopio",
+    "description": "Suomen varmasti viihtyisin lähiö",
+    "image": ""
+  },
+  {
+    "id": 0,
+    "name": "Ounasvaara",
+    "country": "Suomi",
+    "city": "Rovaniemi",
+    "description": "asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf ",
+    "image": ""
+  },
+  {
+    "id": 0,
+    "name": "Ounasvaara",
+    "country": "Suomi",
+    "city": "Rovaniemi",
+    "description": "asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf ",
+    "image": ""
+  },
+  {
+    "id": 0,
+    "name": "Ounasvaara",
+    "country": "Suomi",
+    "city": "Rovaniemi",
+    "description": "asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf ",
+    "image": ""
+  },
+  {
+    "id": 0,
+    "name": "Ounasvaara",
+    "country": "Suomi",
+    "city": "Rovaniemi",
+    "description": "asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf ",
+    "image": ""
+  }
+]
