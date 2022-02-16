@@ -1,16 +1,13 @@
-import { BrowserRouter } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { theme } from "theme";
-import Navbar from "./components/Navbar/Navbar";
+import Index from "./scenes/front-page/FrontPage";
 
 function App() {
   return (
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Navbar />
-      </ThemeProvider>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Index />
+    </ThemeProvider>
   );
 }
 
