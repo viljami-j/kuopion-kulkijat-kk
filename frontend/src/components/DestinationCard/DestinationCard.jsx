@@ -15,13 +15,15 @@ DestinationCard.defaultProps = {
   image: "",
 };
 
-DestinationCard.propTypes = {
+export const DestinationPropType = {
   name: PropTypes.string,
   description: PropTypes.string,
   image: PropTypes.string,
   city: PropTypes.string,
   country: PropTypes.string,
 };
+
+DestinationCard.propTypes = DestinationPropType;
 
 function DestinationCard({ name, description, image, city, country }) {
   const displayedContent = takeMaxFortyCharacters(description);
