@@ -56,8 +56,12 @@ function DestinationCard({ name, description, image, city, country }) {
           }}
           sx={{ pb: 0 }}
         />
-        <CardContent sx={{ pt: 1, pb: 1, textAlign: "start" }}>
-          <Typography variant="body2" color="text.secondary">
+        <CardContent sx={{ pt: 1, pb: 2, textAlign: "start" }}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ height: "2.86rem" }}
+          >
             {displayedContent}
           </Typography>
           <LocationIndicator location={{ city, country }} />
