@@ -4,7 +4,7 @@ import { theme } from "theme";
 import Navbar from "components/Navbar/Navbar.jsx";
 import useCurrentUser from "hooks/useCurrentUser";
 
-function App() {
+function OmatTiedot() {
   const [newUser, setNewUser] = useState(""); // setNewUser vaihtaa kirjautuneen käyttäjänimen
   const currentUser = useCurrentUser(newUser);
 
@@ -12,8 +12,9 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Navbar loggedInName={currentUser} />
+      <h1>Omat Tiedot</h1>
     </ThemeProvider>
   );
 }
 
-export default App;
+export default OmatTiedot;

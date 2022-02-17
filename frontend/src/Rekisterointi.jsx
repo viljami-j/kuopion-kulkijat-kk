@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider, Button } from "@mui/material";
 import { theme } from "theme";
 import Navbar from "components/Navbar/Navbar.jsx";
-import useCurrentUser from "hooks/useCurrentUser";
+import useCurrentUser from "./hooks/useCurrentUser";
 
-function App() {
+function Rekisterointi() {
   const [newUser, setNewUser] = useState(""); // setNewUser vaihtaa kirjautuneen käyttäjänimen
   const currentUser = useCurrentUser(newUser);
 
@@ -12,8 +12,16 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Navbar loggedInName={currentUser} />
+      <h1>Rekisteröinti</h1>
+      <Button
+        onClick={() => {
+          setNewUser("Testi Testinen");
+        }}
+      >
+        rekisteröi käyttäjänimi "Testi Testinen"
+      </Button>
     </ThemeProvider>
   );
 }
 
-export default App;
+export default Rekisterointi;
