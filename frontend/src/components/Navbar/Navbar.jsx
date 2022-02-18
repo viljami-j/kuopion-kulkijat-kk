@@ -26,7 +26,7 @@ export default function Navbar({ loggedInName }) {
               }}
             >
               ⠀⠀⠀ Kuopion Kulkijat
-              {/* Linkin sisällössä pieni hack, jotta tekstin sai oikeaan paikkaan - jos parempi keino löytyy niin muutetaan */}
+              {/* Hacky fix using invisible characters to get the text in right place - couldn't apply margin, probably something to do with flex */}
             </Link>
             {<NavbarButtons loggedInName={loggedInName} />}
           </Toolbar>
