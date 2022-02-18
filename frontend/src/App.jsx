@@ -9,7 +9,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Routes></Routes>
-        <Navbar loggedInName={test ? "Testi Teppo" : ""} />
+        <Navbar />
       </ThemeProvider>
     </BrowserRouter>
   );
