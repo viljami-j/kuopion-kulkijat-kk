@@ -1,18 +1,17 @@
-import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { theme } from "theme";
 import Navbar from "components/Navbar/Navbar.jsx";
-import useCurrentUser from "hooks/useCurrentUser";
 
 function App() {
-  const [newUser, setNewUser] = useState(""); // setNewUser vaihtaa kirjautuneen käyttäjänimen
-  const currentUser = useCurrentUser(newUser);
-
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Navbar loggedInName={currentUser} />
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Routes></Routes>
+        <Navbar loggedInName={test ? "Testi Teppo" : ""} />
+      </ThemeProvider>
+    </BrowserRouter>
   );
 }
 
