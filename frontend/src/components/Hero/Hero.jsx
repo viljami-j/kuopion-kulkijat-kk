@@ -5,9 +5,15 @@ export default function Hero({ imageSrc, header, caption }) {
   return (
     <Grid item xs={12} align="center">
       <Box
+        style={{
+          background:
+            "radial-gradient(circle at 50% 100%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.6954131994594712) 100%), url(" +
+            imageSrc +
+            ")",
+          backgroundSize: "cover",
+        }}
         sx={{
           marginTop: "2%",
-          backgroundImage: `url(${imageSrc})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           height: "80vh",
