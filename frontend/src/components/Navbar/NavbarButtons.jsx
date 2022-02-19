@@ -2,14 +2,15 @@ import { Button } from "@mui/material";
 import PropTypes from "prop-types";
 import { Link as RouterLink } from "react-router-dom";
 
-export default function NavbarButtons({ loggedInName }) {
-  NavbarButtons.defaultProps = {
-    loggedInName: "",
-  };
+NavbarButtons.defaultProps = {
+  loggedInName: "",
+};
 
-  NavbarButtons.propTypes = {
-    loggedInName: PropTypes.string,
-  };
+NavbarButtons.propTypes = {
+  loggedInName: PropTypes.string,
+};
+
+export default function NavbarButtons({ loggedInName }) {
   if (loggedInName)
     return (
       <div>
@@ -40,7 +41,7 @@ export default function NavbarButtons({ loggedInName }) {
         <Button
           component={RouterLink}
           to="/omat_tiedot"
-          sx={{ mr: 2, fontSize: 14 }}
+          sx={{ fontSize: 14 }}
           color="primary"
         >
           {loggedInName}
@@ -63,7 +64,7 @@ export default function NavbarButtons({ loggedInName }) {
       <Button
         component={RouterLink}
         to="/rekisterointi"
-        sx={{ mr: 2, fontSize: 14 }}
+        sx={{ fontSize: 14 }}
         variant="contained"
         color="primary"
       >

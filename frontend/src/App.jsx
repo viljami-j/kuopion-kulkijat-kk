@@ -1,13 +1,16 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { theme } from "theme";
 import FrontPage from "./scenes/front-page/FrontPage";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <FrontPage />
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <FrontPage />
+      </ThemeProvider>
+    </BrowserRouter>
   );
 }
 
