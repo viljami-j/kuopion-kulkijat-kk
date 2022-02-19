@@ -6,7 +6,7 @@ export default function Hero({ imageSrc, header, caption }) {
     <Grid item xs={12} align="center">
       <Box
         sx={{
-          marginTop: "25px",
+          marginTop: "2%",
           backgroundImage: `url(${imageSrc})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
@@ -17,7 +17,7 @@ export default function Hero({ imageSrc, header, caption }) {
       >
         <Typography
           variant="h2"
-          style={{ color: "white", position: "relative", top: "50px" }}
+          style={{ color: "white", position: "relative", top: "8%" }}
         >
           {header}
         </Typography>
@@ -25,7 +25,7 @@ export default function Hero({ imageSrc, header, caption }) {
           style={{
             color: "white",
             position: "relative",
-            top: "80px",
+            top: "11%",
             width: "600px",
           }}
         >
