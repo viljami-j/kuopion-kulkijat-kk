@@ -1,15 +1,16 @@
-import { AppBar, Box, Toolbar, Link } from "@mui/material";
+import { AppBar, Box, Link, Toolbar } from "@mui/material";
 import NavbarButtons from "./NavbarButtons";
 import PropTypes from "prop-types";
 
-export default function Navbar({ loggedInName }) {
-  Navbar.defaultProps = {
-    loggedInName: "",
-  };
+Navbar.defaultProps = {
+  loggedInName: "",
+};
 
-  Navbar.propTypes = {
-    loggedInName: PropTypes.string,
-  };
+Navbar.propTypes = {
+  loggedInName: PropTypes.string,
+};
+
+export default function Navbar({ loggedInName }) {
   return (
     <div>
       <Box>
