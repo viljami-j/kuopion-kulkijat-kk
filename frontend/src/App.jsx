@@ -1,13 +1,16 @@
+import { BrowserRouter } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { theme } from "theme";
-import DestinationCard from "components/DestinationCard";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <DestinationCard />
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Navbar />
+      </ThemeProvider>
+    </BrowserRouter>
   );
 }
 
