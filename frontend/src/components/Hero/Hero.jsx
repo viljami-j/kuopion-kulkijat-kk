@@ -10,9 +10,9 @@ export default function Hero({ imageSrc, header, caption }) {
           backgroundImage: `url(${imageSrc})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
-          height: "800px",
+          height: "80vh",
           width: "92%",
-          borderRadius: "10px",
+          borderRadius: "15px",
         }}
       >
         <Typography
@@ -26,7 +26,7 @@ export default function Hero({ imageSrc, header, caption }) {
             color: "white",
             position: "relative",
             top: "11%",
-            width: "600px",
+            width: "34%",
           }}
         >
           {caption}
