@@ -16,9 +16,9 @@ export default function Navbar({ loggedInName }) {
     <div>
       <Box>
         <AppBar elevation={0} color="transparent" position="static">
-          <Toolbar sx={{ mr: 5 }}>
+          <Toolbar disableGutters>
             <StyledLink href="/">Kuopion Kulkijat</StyledLink>
-            {<NavbarButtons loggedInName={loggedInName} />}
+            <NavbarButtons loggedInName={loggedInName} />
           </Toolbar>
         </AppBar>
       </Box>

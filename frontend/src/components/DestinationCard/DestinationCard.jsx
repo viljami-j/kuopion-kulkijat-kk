@@ -12,29 +12,31 @@ import DestinationStyledCard from "./styled/DestinationStyledCard";
 import DestinationCardImage from "./styled/DestinationCardImage";
 
 DestinationCard.defaultProps = {
-  imageSrc: "",
+  image: "",
 };
 
-DestinationCard.propTypes = {
-  header: PropTypes.string,
-  content: PropTypes.string,
-  imageSrc: PropTypes.string,
+export const DestinationPropType = {
+  name: PropTypes.string,
+  description: PropTypes.string,
+  image: PropTypes.string,
   city: PropTypes.string,
   country: PropTypes.string,
 };
 
-function DestinationCard({ header, content, imageSrc, location }) {
-  const displayedContent = takeMaxFortyCharacters(content);
+DestinationCard.propTypes = DestinationPropType;
+
+function DestinationCard({ name, description, image, city, country }) {
+  const displayedContent = takeMaxFortyCharacters(description);
   return (
     <DestinationStyledCard>
       <CardActionArea>
-        {imageSrc ? (
+        {image ? (
           <DestinationCardImage
             component="img"
             height="174"
             width="225"
-            image={imageSrc}
-            alt={header}
+            image={image}
+            alt={name}
           />
         ) : (
           <Skeleton
@@ -46,18 +48,23 @@ function DestinationCard({ header, content, imageSrc, location }) {
           />
         )}
         <CardHeader
-          title={header}
+          title={name}
           titleTypographyProps={{
             component: "h3",
             fontWeight: "medium",
+            textAlign: "start",
           }}
           sx={{ pb: 0 }}
         />
-        <CardContent sx={{ pt: 1, pb: 1 }}>
-          <Typography variant="body2" color="text.secondary">
+        <CardContent sx={{ pt: 1, pb: 2, textAlign: "start" }}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ height: "2.86rem" }}
+          >
             {displayedContent}
           </Typography>
-          <LocationIndicator location={location} />
+          <LocationIndicator location={{ city, country }} />
         </CardContent>
       </CardActionArea>
     </DestinationStyledCard>

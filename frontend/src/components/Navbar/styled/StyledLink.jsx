@@ -7,7 +7,6 @@ const StyledLink = styled(Link)({
   fontSize: "1.35rem",
   textDecoration: "none",
   color: "black",
-  marginLeft: "50px",
 });
 
 export default StyledLink;

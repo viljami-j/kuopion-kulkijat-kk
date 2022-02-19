@@ -33,4 +33,25 @@ export const theme = createTheme({
       color: "transparent",
     },
   },
+  components: {
+    MuiTypography: {
+      styleOverrides: {
+        h2: ({ ownerState }) => ({
+          ...(ownerState.variant === "h2" && {
+            fontSize: "36px",
+            fontWeight: 600,
+          }),
+        }),
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        contained: ({ ownerState }) => ({
+          ...(ownerState.variant === "contained" && {
+            width: "fit-content",
+          }),
+        }),
+      },
+    },
+  },
 });
