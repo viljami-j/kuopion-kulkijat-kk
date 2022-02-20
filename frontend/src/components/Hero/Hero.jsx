@@ -6,33 +6,33 @@ export default function Hero({ imageSrc, header, caption }) {
     <Grid item xs={12} align="center">
       <Box
         style={{
-          background:
-            "radial-gradient(circle at 50% 100%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.6954131994594712) 100%), url(" +
-            imageSrc +
-            ")",
+          background: `linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 0%, rgba(0,212,255,0) 60%), url(${imageSrc})`,
           backgroundSize: "cover",
+          objectFit: "cover",
         }}
         sx={{
           marginTop: "2%",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
-          height: "80vh",
+          minHeight: "611px",
           width: "92%",
           borderRadius: "15px",
         }}
       >
         <Typography
-          variant="h2"
-          style={{ color: "white", position: "relative", top: "8%" }}
+          variant="h1"
+          style={{ color: "white" }}
+          sx={{ pt: 4, pb: 2 }}
+          fontSize={"48px"}
+          fontWeight={"medium"}
         >
           {header}
         </Typography>
         <Typography
           style={{
             color: "white",
-            position: "relative",
-            top: "11%",
-            width: "34%",
+            maxWidth: "80%",
+            textAlign: "start",
           }}
         >
           {caption}
