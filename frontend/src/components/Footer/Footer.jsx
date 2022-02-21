@@ -3,7 +3,9 @@ import { Box, Typography } from "@mui/material";
 
 function Footer() {
   return (
-    <Box sx={{ display: "flex", justifyContent: "space-between", my: 6 }}>
+    <Box
+      sx={{ display: "flex", justifyContent: "space-between", mb: 6, mt: 20 }}
+    >
       <Box>
         <Typography fontWeight="medium">Kuopion Kulkijat</Typography>
         <Typography>Älä kulje yksin</Typography>
