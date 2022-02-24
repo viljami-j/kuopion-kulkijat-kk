@@ -15,8 +15,7 @@ export default function Hero({ imageSrc, header, caption }) {
             marginTop: "2%",
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
-            minHeight: "611px",
-            width: "92%",
+            minHeight: "65vh",
             borderRadius: "15px",
           }}
         >
