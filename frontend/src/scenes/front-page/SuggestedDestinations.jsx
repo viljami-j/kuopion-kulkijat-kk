@@ -59,6 +59,7 @@ function SuggestedDestinations() {
         textAlign: "center",
         my: 6,
       }}
+      component={"section"}
     >
       <Typography variant="h2">Suosittelemme sinulle</Typography>
       <Typography>Käyttäjämme ovat nauttineet näistä kohteista</Typography>

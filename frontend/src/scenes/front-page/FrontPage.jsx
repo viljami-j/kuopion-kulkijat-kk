@@ -10,14 +10,16 @@ const FrontPage = () => {
   return (
     <Container>
       <Navbar />
-      <Hero
-        imageSrc={HeroImage}
-        header={"Tervetuloa kulkemaan kanssamme"}
-        caption={
-          "Tutustu maailmaan yhdessä tuhansien käyttäjiemme kanssa. Älä kulje enää yksin. Ota Kuopion Kulkijat mukaasi."
-        }
-      />
-      <SuggestedDestinations />
+      <main>
+        <Hero
+          imageSrc={HeroImage}
+          header={"Tervetuloa kulkemaan kanssamme"}
+          caption={
+            "Tutustu maailmaan yhdessä tuhansien käyttäjiemme kanssa. Älä kulje enää yksin. Ota Kuopion Kulkijat mukaasi."
+          }
+        />
+        <SuggestedDestinations />
+      </main>
       <Footer />
     </Container>
   );
