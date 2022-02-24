@@ -28,11 +28,6 @@ export const theme = createTheme({
     fontWeightMedium: 500,
     fontWeightBold: 600,
   },
-  props: {
-    MuiAppBar: {
-      color: "transparent",
-    },
-  },
   components: {
     MuiTypography: {
       styleOverrides: {
