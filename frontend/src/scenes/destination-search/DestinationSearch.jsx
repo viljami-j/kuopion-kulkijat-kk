@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Box, TextField, Typography } from "@mui/material";
 import DestinationCardGrid from "components/DestinationCardGrid";
 import testDestinations from "test-data/testDestinations.json";
 
 function DestinationSearch() {
-  const [destinations, setDestinations] = useState();
+  const [destinations, setDestinations] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(function fetchSuggestedDestinations() {
@@ -17,6 +17,12 @@ function DestinationSearch() {
   function onTextFieldTyped(event) {
     setSearchQuery(event.target.value);
   }
+
+  const searchResults = useMemo(() => {
+    return destinations.filter((destination) =>
+      destination.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [destinations, searchQuery]);
 
   return (
     <main>
@@ -44,7 +50,7 @@ function DestinationSearch() {
           }}
         />
       </Box>
-      <DestinationCardGrid destinations={destinations} />
+      <DestinationCardGrid destinations={searchResults} />
     </main>
   );
 }
