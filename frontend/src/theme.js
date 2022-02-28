@@ -27,24 +27,16 @@ export const theme = createTheme({
     fontSize: 16,
     fontWeightMedium: 500,
     fontWeightBold: 600,
+    h1: {
+      fontSize: "3rem",
+      fontWeight: 500,
+    },
+    h2: {
+      fontSize: "2.25rem",
+      fontWeight: 600,
+    },
   },
   components: {
-    MuiTypography: {
-      styleOverrides: {
-        h1: ({ ownerState }) => ({
-          ...(ownerState.variant === "h1" && {
-            fontSize: "3rem",
-            fontWeight: 500,
-          }),
-        }),
-        h2: ({ ownerState }) => ({
-          ...(ownerState.variant === "h2" && {
-            fontSize: "2.25rem",
-            fontWeight: 600,
-          }),
-        }),
-      },
-    },
     MuiButton: {
       styleOverrides: {
         contained: ({ ownerState }) => ({
