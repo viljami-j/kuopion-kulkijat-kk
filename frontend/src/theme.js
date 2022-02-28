@@ -33,13 +33,13 @@ export const theme = createTheme({
       styleOverrides: {
         h1: ({ ownerState }) => ({
           ...(ownerState.variant === "h1" && {
-            fontSize: "48px",
+            fontSize: "3rem",
             fontWeight: 500,
           }),
         }),
         h2: ({ ownerState }) => ({
           ...(ownerState.variant === "h2" && {
-            fontSize: "36px",
+            fontSize: "2.25rem",
             fontWeight: 600,
           }),
         }),
