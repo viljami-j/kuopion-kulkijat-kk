@@ -31,6 +31,12 @@ export const theme = createTheme({
   components: {
     MuiTypography: {
       styleOverrides: {
+        h1: ({ ownerState }) => ({
+          ...(ownerState.variant === "h1" && {
+            fontSize: "48px",
+            fontWeight: 500,
+          }),
+        }),
         h2: ({ ownerState }) => ({
           ...(ownerState.variant === "h2" && {
             fontSize: "36px",

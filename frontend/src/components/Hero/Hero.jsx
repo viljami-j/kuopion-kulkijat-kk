@@ -24,8 +24,6 @@ export default function Hero({ imageSrc, header, caption }) {
             variant="h1"
             style={{ color: "white" }}
             sx={{ pt: 4, pb: 2 }}
-            fontSize={"48px"}
-            fontWeight={"medium"}
           >
             {header}
           </Typography>
