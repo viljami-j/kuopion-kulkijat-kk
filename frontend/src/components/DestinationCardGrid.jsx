@@ -1,4 +1,5 @@
-import { Box } from "@mui/material";
+import { isEmpty } from "lodash";
+import { Box, CircularProgress } from "@mui/material";
 import generateDestinationCardsFromDestinationData from "../util/generateDestinationCardsFromDestinationData";
 import React from "react";
 import * as PropTypes from "prop-types";
@@ -17,7 +18,11 @@ function DestinationCardGrid({ destinations }) {
         mb: 6,
       }}
     >
-      {generateDestinationCardsFromDestinationData(destinations)}
+      {isEmpty(destinations) ? (
+        <CircularProgress sx={{ mx: "auto", my: 20 }} />
+      ) : (
+        <>{generateDestinationCardsFromDestinationData(destinations)}</>
+      )}
     </Box>
   );
 }

@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, TextField, Typography } from "@mui/material";
 import DestinationCardGrid from "../../components/DestinationCardGrid";
 import testDestinations from "test-data/testDestinations.json";
 
 function DestinationSearch() {
+  const [destinations, setDestinations] = useState();
+
+  useEffect(function fetchSuggestedDestinations() {
+    // TODO/30: fetch destinations from the destinations context variable once the endpoint is implemented
+    setTimeout(() => {
+      setDestinations(testDestinations);
+    }, 1000);
+  }, []);
+
   return (
-    <Box>
+    <main>
       <Box
         sx={{
           display: "flex",
@@ -28,8 +37,8 @@ function DestinationSearch() {
           }}
         />
       </Box>
-      <DestinationCardGrid destinations={testDestinations} />
-    </Box>
+      <DestinationCardGrid destinations={destinations} />
+    </main>
   );
 }
 
