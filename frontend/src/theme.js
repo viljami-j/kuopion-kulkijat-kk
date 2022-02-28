@@ -30,10 +30,16 @@ export const theme = createTheme({
     h1: {
       fontSize: "3rem",
       fontWeight: 500,
+      "@media (max-width: 600px)": {
+        fontSize: "2rem",
+      },
     },
     h2: {
       fontSize: "2.25rem",
       fontWeight: 600,
+      "@media (max-width: 600px)": {
+        fontSize: "1.5rem",
+      },
     },
   },
   components: {
