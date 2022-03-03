@@ -8,16 +8,22 @@ LocationIndicator.propTypes = {
     city: PropTypes.string,
     country: PropTypes.string,
   }),
+  fontSize: PropTypes.string,
 };
 
-function LocationIndicator({ location }) {
+// defaultProps ei jostain syystä toimi - ei anna muuttujalle määriteltyä arvoa
+LocationIndicator.defaultProps = {
+  fontSize: "14px",
+};
+
+function LocationIndicator({ location, fontSize }) {
   const { city, country } = location;
   return (
     <Box
       sx={{ display: "flex", flexWrap: "wrap", mt: 1, alignItems: "center" }}
     >
       <LocationOn color={"secondary"} sx={{ mr: 1, ml: -0.5 }} />
-      <Typography fontSize={"14px"}>{`${city}, ${country}`}</Typography>
+      <Typography fontSize={fontSize}>{`${city}, ${country}`}</Typography>
     </Box>
   );
 }
