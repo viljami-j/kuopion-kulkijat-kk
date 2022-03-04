@@ -1,4 +1,4 @@
-import { isNil } from "lodash";
+import { isEmpty } from "lodash";
 
 function makeApiRequest(method) {
   return function withPath(path) {
@@ -9,7 +9,7 @@ function makeApiRequest(method) {
         headers: {
           "Content-Type": "application/json;charset=utf-8",
         },
-        body: isNil(body) ? JSON.stringify({}) : JSON.stringify(body),
+        body: isEmpty(body) ? null : JSON.stringify(body),
       });
       return await response.json();
     };
