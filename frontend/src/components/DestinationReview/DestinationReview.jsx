@@ -1,4 +1,5 @@
-import { Box, Grid, Typography, Container } from "@mui/material";
+import { Box, Grid, Typography, Container, Button } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 import LocationIndicator from "components/DestinationCard/LocationIndicator";
 import PropTypes from "prop-types";
 import Navbar from "../Navbar/Navbar";
@@ -15,6 +16,8 @@ DestinationReview.propTypes = {
   header: PropTypes.string,
   city: PropTypes.string,
   country: PropTypes.string,
+  description: PropTypes.string,
+  isElevatedUser: PropTypes.bool,
 };
 
 export default function DestinationReview({
@@ -22,6 +25,8 @@ export default function DestinationReview({
   destinationName,
   city,
   country,
+  description,
+  isElevatedUser,
 }) {
   return (
     <Container>
@@ -62,11 +67,53 @@ export default function DestinationReview({
                 marginRight: "180px",
               }}
             >
-              <LocationIndicator location={{ city, country }} />
+              <LocationIndicator location={{ city, country }} fontsize="16px" />
             </div>
           ) : null}
         </Box>
       </Grid>
+      <Typography sx={{ fontSize: "14px", marginTop: "30px" }}>
+        {description}
+      </Typography>
+      <Box sx={{ flexGrow: 1, py: "30px", mt: "40px" }}>
+        <Grid container spacing={2}>
+          <Grid item xs={1}></Grid>
+          <Grid item xs={8}>
+            <Button
+              sx={{
+                color: "black",
+                fontWeight: "normal",
+                textTransform: "none",
+              }}
+              onClick={() => {
+                /* TO-DO/69: awaiting a solution for navigating to previous content */
+              }}
+            >
+              Takaisin navigointi
+            </Button>
+          </Grid>
+          <Grid item xs={3}>
+            {isElevatedUser ? (
+              <Button
+                variant="contained"
+                color="secondary"
+                sx={{
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  ml: "80px",
+                  borderRadius: "25px",
+                }}
+                onClick={() => {
+                  /* TO-DO/68: bring up the edit dialog */
+                }}
+              >
+                <EditIcon sx={{ mr: "8px", fontSize: "x-large", mb: "2px" }} />
+                Muokkaa
+              </Button>
+            ) : null}
+          </Grid>
+        </Grid>
+      </Box>
     </Container>
   );
 }
