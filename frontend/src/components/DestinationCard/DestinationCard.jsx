@@ -52,6 +52,7 @@ function DestinationCard({ name, description, image, city, country }) {
           titleTypographyProps={{
             component: "h3",
             fontWeight: "medium",
+            fontSize: "max(1rem, 1.25vw)",
             textAlign: "start",
           }}
           sx={{ pb: 0 }}
