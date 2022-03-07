@@ -3,7 +3,16 @@ import React from "react";
 
 function generateDestinationCardsFromDestinationData(destinations) {
   return destinations.map((destination) => {
-    return <DestinationCard {...destination} key={destination.id} />;
+    return (
+      <DestinationCard
+        name={destination.kohdenimi}
+        country={destination.maa}
+        city={destination.paikkakunta}
+        description={destination.kuvausteksti}
+        image={destination.kuva}
+        key={destination.idmatkakohde}
+      />
+    );
   });
 }
 

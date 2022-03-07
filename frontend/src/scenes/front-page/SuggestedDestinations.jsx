@@ -1,10 +1,11 @@
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
-import { isEmpty } from "lodash";
 import React, { useEffect, useState } from "react";
-import testDestinations from "test-data/testDestinations.json";
 import * as PropTypes from "prop-types";
 import generateDestinationCardsFromDestinationData from "util/generateDestinationCardsFromDestinationData";
 import { DestinationPropType } from "components/DestinationCard/DestinationCard";
+import { makeGetRequest } from "../../util/makeApiRequest";
+import useMessage from "../../util/hooks/useMessage";
+import useToggle from "../../util/hooks/useToggle";
 
 const DESTINATIONS_PER_ROW = 4;
 
@@ -12,21 +13,41 @@ function SuggestedDestinations() {
   const [suggestedDestinations, setSuggestedDestinations] = useState([]);
   const [numberOfDestinations, setNumberOfDestinations] =
     useState(DESTINATIONS_PER_ROW);
+  const [isLoading, toggleLoading] = useToggle(true);
+  const { MessageSnackbar, showMessage } = useMessage();
 
-  useEffect(function fetchSuggestedDestinations() {
-    // TODO/30: fetch suggestions from the backend once the endpoint is implemented
-    setTimeout(() => {
-      setSuggestedDestinations(testDestinations);
-    }, 1000);
-  }, []);
+  useEffect(
+    function fetchSuggestedDestinations() {
+      async function fetchData() {
+        try {
+          const destinations = await makeGetRequest("/destinations")(null);
+          setSuggestedDestinations(destinations);
+          toggleLoading();
+        } catch (error) {
+          showMessage(
+            `Verkkovirhe haettaessa matkakohteita. Yritä myöhemmin uudelleen.`
+          );
+        }
+      }
+
+      fetchData();
+    },
+    [showMessage, toggleLoading]
+  );
 
   function calculateDisplayedDestinations() {
-    return suggestedDestinations.slice(0, numberOfDestinations);
+    return suggestedDestinations.slice(
+      0,
+      Math.min(numberOfDestinations, suggestedDestinations.length)
+    );
   }
 
   function showMoreDestinations() {
-    setNumberOfDestinations(
-      (previousValue) => previousValue + DESTINATIONS_PER_ROW
+    setNumberOfDestinations((previousValue) =>
+      Math.min(
+        suggestedDestinations.length,
+        previousValue + DESTINATIONS_PER_ROW
+      )
     );
   }
 
@@ -42,7 +63,7 @@ function SuggestedDestinations() {
       <Typography variant="h2">Suosittelemme sinulle</Typography>
       <Typography>Käyttäjämme ovat nauttineet näistä kohteista</Typography>
 
-      {isEmpty(suggestedDestinations) ? (
+      {isLoading ? (
         <CircularProgress sx={{ mx: "auto", my: 20 }} />
       ) : (
         <DestinationCards destinations={calculateDisplayedDestinations()} />
@@ -54,6 +75,8 @@ function SuggestedDestinations() {
       >
         Näytä lisää
       </Button>
+
+      <MessageSnackbar />
     </Box>
   );
 }
