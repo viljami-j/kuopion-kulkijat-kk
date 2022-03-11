@@ -20,6 +20,7 @@ function DestinationCardGrid({ destinations }) {
         mt: 10,
         mb: 6,
       }}
+      aria-live="assertive"
     >
       {renderDestinationCards()}
     </Box>
