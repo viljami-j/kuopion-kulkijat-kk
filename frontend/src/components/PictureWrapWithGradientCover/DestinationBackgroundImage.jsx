@@ -4,7 +4,7 @@ import { Box, styled } from "@mui/system";
 
 function DestinationBackgroundImage({ imageSrc, direction, children }) {
   const gradientAngle = direction === "topToBottom" ? "180deg" : "0deg";
-  const RisingGradient = styled(Box)({
+  const ImageWithGradient = styled(Box)({
     background: `linear-gradient(${gradientAngle}, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 0%, rgba(0,212,255,0) 60%), url(${imageSrc})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
@@ -14,7 +14,7 @@ function DestinationBackgroundImage({ imageSrc, direction, children }) {
     borderRadius: "15px",
   });
 
-  return <RisingGradient>{children}</RisingGradient>;
+  return <ImageWithGradient>{children}</ImageWithGradient>;
 }
 
 DestinationBackgroundImage.propTypes = {
