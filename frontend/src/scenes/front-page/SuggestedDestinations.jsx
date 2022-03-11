@@ -1,9 +1,7 @@
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import React, { useState } from "react";
-import * as PropTypes from "prop-types";
-import generateDestinationCardsFromDestinationData from "util/generateDestinationCardsFromDestinationData";
-import { DestinationPropType } from "components/DestinationCard/DestinationCard";
 import useDestinations from "../../util/hooks/useDestinations";
+import DestinationCardGrid from "../../components/DestinationCardGrid";
 
 const DESTINATIONS_PER_ROW = 4;
 
@@ -42,7 +40,7 @@ function SuggestedDestinations() {
       {isLoadingDestinations ? (
         <CircularProgress sx={{ mx: "auto", my: 20 }} />
       ) : (
-        <DestinationCards destinations={calculateDisplayedDestinations()} />
+        <DestinationCardGrid destinations={calculateDisplayedDestinations()} />
       )}
       <Button
         variant="contained"
@@ -56,27 +54,5 @@ function SuggestedDestinations() {
     </Box>
   );
 }
-
-function DestinationCards({ destinations }) {
-  return (
-    <Box
-      sx={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(251px, 1fr))",
-        gridColumnGap: (theme) => theme.spacing(4),
-        gridRowGap: (theme) => theme.spacing(5),
-        justifyItems: "center",
-        mt: 10,
-        mb: 6,
-      }}
-    >
-      {generateDestinationCardsFromDestinationData(destinations)}
-    </Box>
-  );
-}
-
-DestinationCards.propTypes = {
-  destinations: PropTypes.arrayOf(PropTypes.shape(DestinationPropType)),
-};
 
 export default SuggestedDestinations;
