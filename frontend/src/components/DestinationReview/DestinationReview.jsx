@@ -26,7 +26,6 @@ export default function DestinationReview({
   city,
   country,
   description,
-  isElevatedUser,
 }) {
   return (
     <Container>
@@ -79,26 +78,7 @@ export default function DestinationReview({
         <Grid container spacing={2}>
           <Grid item xs={1}></Grid>
           <Grid item xs={8}></Grid>
-          <Grid item xs={3}>
-            {isElevatedUser ? (
-              <Button
-                variant="contained"
-                color="secondary"
-                sx={{
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                  ml: "80px",
-                  borderRadius: "25px",
-                }}
-                onClick={() => {
-                  /* TO-DO/68: bring up the edit dialog */
-                }}
-              >
-                <EditIcon sx={{ mr: "8px", fontSize: "x-large", mb: "2px" }} />
-                Muokkaa
-              </Button>
-            ) : null}
-          </Grid>
+          <Grid item xs={3}></Grid>
         </Grid>
       </Box>
     </Container>
