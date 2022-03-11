@@ -1,5 +1,6 @@
-import { Box, Grid, Typography, Container } from "@mui/material";
+import { Grid, Typography, Container } from "@mui/material";
 import LocationIndicator from "components/DestinationCard/LocationIndicator";
+import PictureWrapWithGradientCover from "components/PictureWrapWithGradientCover/PictureWrapWithGradientCover";
 import PropTypes from "prop-types";
 import Navbar from "../Navbar/Navbar";
 
@@ -45,56 +46,46 @@ export default function DestinationReview({
   return (
     <Container>
       <Navbar />
-      <Grid container spacing={2} rowSpacing={4}>
+      <Grid container spacing={2} rowSpacing={4} sx={{ mt: "-10px" }}>
         <Grid item xs={12}>
-          <Box
-            style={{
-              background: `linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 0%, rgba(0,212,255,0) 60%), url(${imageSrc})`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "100% 100%",
-              objectFit: "cover",
-            }}
-            sx={{
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              minHeight: "611px",
-              width: "100%",
-              borderRadius: "15px",
-            }}
-          >
-            <Grid container>
-              <ApplyRowBreaks count={18} />
-              <Grid item xs={0.3} />
-              <Grid item xs={8}>
-                <Typography
-                  variant="h1"
-                  sx={{ color: "white" }}
-                  fontSize={"48px"}
-                  fontWeight={"medium"}
-                >
-                  {destinationName}
-                </Typography>
-              </Grid>
-              <Grid item xs={3.7} />
-              <Grid item xs={0.3} />
-              <Grid item xs={8}>
-                {city && country ? (
-                  <div
-                    style={{
-                      color: "white",
-                      maxWidth: "80%",
-                      textAlign: "start",
-                    }}
+          <PictureWrapWithGradientCover
+            imageSrc={imageSrc}
+            gradientType={"rising"}
+            wrappedElement={
+              <Grid container>
+                <ApplyRowBreaks count={18} />
+                <Grid item xs={0.3} />
+                <Grid item xs={8}>
+                  <Typography
+                    variant="h1"
+                    sx={{ color: "white" }}
+                    fontSize={"48px"}
+                    fontWeight={"medium"}
                   >
-                    <LocationIndicator
-                      location={{ city, country }}
-                      fontsize="16px"
-                    />
-                  </div>
-                ) : null}
+                    {destinationName}
+                  </Typography>
+                </Grid>
+                <Grid item xs={3.7} />
+                <Grid item xs={0.3} />
+                <Grid item xs={8}>
+                  {city && country ? (
+                    <div
+                      style={{
+                        color: "white",
+                        maxWidth: "80%",
+                        textAlign: "start",
+                      }}
+                    >
+                      <LocationIndicator
+                        location={{ city, country }}
+                        fontsize="16px"
+                      />
+                    </div>
+                  ) : null}
+                </Grid>
               </Grid>
-            </Grid>
-          </Box>
+            }
+          />
         </Grid>
         <Grid item xs={12}>
           <Typography sx={{ fontSize: "14px" }}>{description}</Typography>
