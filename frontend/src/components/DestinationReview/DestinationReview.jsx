@@ -78,20 +78,7 @@ export default function DestinationReview({
       <Box sx={{ flexGrow: 1, py: "30px", mt: "40px" }}>
         <Grid container spacing={2}>
           <Grid item xs={1}></Grid>
-          <Grid item xs={8}>
-            <Button
-              sx={{
-                color: "black",
-                fontWeight: "normal",
-                textTransform: "none",
-              }}
-              onClick={() => {
-                /* TO-DO/69: awaiting a solution for navigating to previous content */
-              }}
-            >
-              Takaisin navigointi
-            </Button>
-          </Grid>
+          <Grid item xs={8}></Grid>
           <Grid item xs={3}>
             {isElevatedUser ? (
               <Button
