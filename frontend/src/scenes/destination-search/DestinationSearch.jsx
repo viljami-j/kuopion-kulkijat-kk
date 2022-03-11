@@ -50,11 +50,25 @@ function DestinationSearch() {
       {isLoadingDestinations ? (
         <CircularProgress sx={{ mx: "auto", my: 20 }} />
       ) : (
-        <DestinationCardGrid destinations={searchResults} />
+        <SearchResults searchResults={searchResults} />
       )}
 
       <DestinationLoadingSnackbar />
     </Box>
+  );
+}
+
+function SearchResults({ searchResults }) {
+  return (
+    <>
+      {searchResults.length !== 0 ? (
+        <DestinationCardGrid destinations={searchResults} />
+      ) : (
+        <Typography sx={{ textAlign: "center", mt: 5 }}>
+          Haku ei tuottanut tuloksia.
+        </Typography>
+      )}
+    </>
   );
 }
 
