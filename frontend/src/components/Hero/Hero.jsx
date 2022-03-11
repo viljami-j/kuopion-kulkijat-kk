@@ -2,6 +2,18 @@ import { Grid, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import PictureWrapWithGradientCover from "components/PictureWrapWithGradientCover/PictureWrapWithGradientCover";
 
+Hero.defaultProps = {
+  imageSrc: "",
+  header: "",
+  caption: "",
+};
+
+Hero.propTypes = {
+  imageSrc: PropTypes.string,
+  header: PropTypes.string,
+  caption: PropTypes.string,
+};
+
 export default function Hero({ imageSrc, header, caption }) {
   return (
     <Grid item xs={12} align="center">
@@ -34,15 +46,3 @@ export default function Hero({ imageSrc, header, caption }) {
     </Grid>
   );
 }
-
-Hero.defaultProps = {
-  imageSrc: "",
-  header: "",
-  caption: "",
-};
-
-Hero.propTypes = {
-  imageSrc: PropTypes.string,
-  header: PropTypes.string,
-  caption: PropTypes.string,
-};

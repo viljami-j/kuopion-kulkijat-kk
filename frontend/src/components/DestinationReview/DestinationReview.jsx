@@ -16,7 +16,7 @@ export function ApplyRowBreaks({ count }) {
         WebkitUserSelect: "none",
       }}
     >
-      ⠀
+      <p></p>
     </Grid>
   ));
 }
@@ -53,7 +53,7 @@ export default function DestinationReview({
             gradientType={"rising"}
             wrappedElement={
               <Grid container>
-                <ApplyRowBreaks count={18} />
+                <ApplyRowBreaks count={27} />
                 <Grid item xs={0.3} />
                 <Grid item xs={8}>
                   <Typography
