@@ -1,31 +1,27 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Box, TextField, Typography } from "@mui/material";
+import React, { useMemo, useState } from "react";
+import { Box, CircularProgress, TextField, Typography } from "@mui/material";
 import DestinationCardGrid from "components/DestinationCardGrid";
-import testDestinations from "test-data/testDestinations.json";
+import useDestinations from "../../util/hooks/useDestinations";
 
 function DestinationSearch() {
-  const [destinations, setDestinations] = useState([]);
+  const { destinations, isLoadingDestinations, DestinationLoadingSnackbar } =
+    useDestinations();
   const [searchQuery, setSearchQuery] = useState("");
-
-  useEffect(function fetchSuggestedDestinations() {
-    // TODO/30: fetch destinations from the destinations context variable once the endpoint is implemented
-    setTimeout(() => {
-      setDestinations(testDestinations);
-    }, 1000);
-  }, []);
 
   function onTextFieldTyped(event) {
     setSearchQuery(event.target.value);
   }
 
   const searchResults = useMemo(() => {
-    return destinations.filter((destination) =>
-      destination.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    return destinations.filter((destination) => {
+      return destination.kohdenimi
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
+    });
   }, [destinations, searchQuery]);
 
   return (
-    <main>
+    <Box sx={{ display: "flex", flexDirection: "column" }} component={"main"}>
       <Box
         sx={{
           display: "flex",
@@ -50,8 +46,15 @@ function DestinationSearch() {
           }}
         />
       </Box>
-      <DestinationCardGrid destinations={searchResults} />
-    </main>
+
+      {isLoadingDestinations ? (
+        <CircularProgress sx={{ mx: "auto", my: 20 }} />
+      ) : (
+        <DestinationCardGrid destinations={searchResults} />
+      )}
+
+      <DestinationLoadingSnackbar />
+    </Box>
   );
 }
 
