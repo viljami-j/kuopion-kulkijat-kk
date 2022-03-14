@@ -7,11 +7,15 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  IconButton,
+  InputAdornment,
   TextField,
 } from "@mui/material";
+import useToggle from "../../util/hooks/useToggle";
 import PropTypes from "prop-types";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-const RegistrationDialog = ({ open, toggle }) => {
+function RegistrationDialog({ open, toggle }) {
   const [registrationState, setRegistrationState] = useState({
     firstName: "",
     lastName: "",
@@ -19,6 +23,7 @@ const RegistrationDialog = ({ open, toggle }) => {
     email: "",
     password: "",
   });
+  const [passwordVisible, togglePasswordVisibility] = useToggle();
 
   function handleClose() {
     /*
@@ -83,8 +88,22 @@ const RegistrationDialog = ({ open, toggle }) => {
             label={"Salasana"}
             variant={"outlined"}
             value={registrationState.password}
-            type={"password"}
+            type={passwordVisible ? "text" : "password"}
             onChange={onRegistrationTextFieldChange}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={togglePasswordVisibility}
+                    onMouseDown={(event) => event.preventDefault()}
+                    edge="end"
+                  >
+                    {passwordVisible ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
         </Box>
       </DialogContent>
@@ -102,7 +121,7 @@ const RegistrationDialog = ({ open, toggle }) => {
       </DialogActions>
     </Dialog>
   );
-};
+}
 
 RegistrationDialog.propTypes = {
   open: PropTypes.bool,
