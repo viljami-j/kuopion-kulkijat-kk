@@ -61,15 +61,6 @@ export default function NavbarButtons({ loggedInName }) {
       <Button sx={{ mr: 2, fontSize: 14 }} color="primary">
         Kirjaudu sisään
       </Button>
-      <Button
-        component={RouterLink}
-        to="/rekisterointi"
-        sx={{ fontSize: 14 }}
-        variant="contained"
-        color="primary"
-      >
-        Rekisteröidy
-      </Button>
     </div>
   );
 }
