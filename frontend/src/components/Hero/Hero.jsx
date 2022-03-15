@@ -16,32 +16,35 @@ Hero.propTypes = {
 
 export default function Hero({ imageSrc, header, caption }) {
   return (
-    <Grid item xs={12} align="center">
-      <DestinationBackgroundImage
-        imageSrc={imageSrc}
-        gradientType={"topToBottom"}
-      >
-        <div style={{ marginTop: "2%" }}>
-          <Typography
-            variant="h1"
-            style={{ color: "white" }}
-            sx={{ pt: 4, pb: 2 }}
-            fontSize={"48px"}
-            fontWeight={"medium"}
-          >
-            {header}
-          </Typography>
-          <Typography
-            style={{
-              color: "white",
-              maxWidth: "80%",
-              textAlign: "start",
-            }}
-          >
-            {caption}
-          </Typography>
-        </div>
-      </DestinationBackgroundImage>
-    </Grid>
+    <section aria-labelledby={"hero-title"}>
+      <Grid item xs={12} align="center">
+        <DestinationBackgroundImage
+          imageSrc={imageSrc}
+          gradientType={"topToBottom"}
+        >
+          <div style={{ marginTop: "2%" }}>
+            <Typography
+              id="hero-title"
+              variant="h1"
+              style={{ color: "white" }}
+              sx={{ pt: 4, pb: 2 }}
+              fontSize={"48px"}
+              fontWeight={"medium"}
+            >
+              {header}
+            </Typography>
+            <Typography
+              style={{
+                color: "white",
+                maxWidth: "80%",
+                textAlign: "start",
+              }}
+            >
+              {caption}
+            </Typography>
+          </div>
+        </DestinationBackgroundImage>
+      </Grid>
+    </section>
   );
 }
