@@ -1,6 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 import PropTypes from "prop-types";
-import DestinationBackgroundImage from "components/PictureWrapWithGradientCover/DestinationBackgroundImage";
+import DestinationBackgroundImage from "components/DestinationBackgroundImage/DestinationBackgroundImage";
 
 Hero.defaultProps = {
   imageSrc: "",

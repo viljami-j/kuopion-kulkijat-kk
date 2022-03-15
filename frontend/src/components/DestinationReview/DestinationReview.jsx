@@ -1,7 +1,7 @@
 import { Container, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import Navbar from "../Navbar/Navbar";
-import DestinationBackgroundImage from "../PictureWrapWithGradientCover/DestinationBackgroundImage";
+import DestinationBackgroundImage from "../DestinationBackgroundImage/DestinationBackgroundImage";
 import LocationIndicator from "../DestinationCard/LocationIndicator";
 import { Box } from "@mui/system";
 
