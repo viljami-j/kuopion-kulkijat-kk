@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import LocationIndicator from "./LocationIndicator";
 import DestinationStyledCard from "./styled/DestinationStyledCard";
 import DestinationCardImage from "./styled/DestinationCardImage";
+import { useNavigate } from "react-router-dom";
 
 DestinationCard.defaultProps = {
   image: "",
@@ -25,10 +26,16 @@ export const DestinationPropType = {
 
 DestinationCard.propTypes = DestinationPropType;
 
-function DestinationCard({ name, description, image, city, country }) {
+function DestinationCard({ id, name, description, image, city, country }) {
+  const navigate = useNavigate();
+
   const displayedContent = takeMaxFortyCharacters(description);
   return (
-    <DestinationStyledCard>
+    <DestinationStyledCard
+      onClick={() => {
+        navigate("/destinations/" + id);
+      }}
+    >
       <CardActionArea>
         {image ? (
           <DestinationCardImage
