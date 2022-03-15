@@ -49,7 +49,7 @@ function LoginDialog({ open, toggle }) {
         <Box sx={{ mt: 1 }}>
           <TextField
             id={"userName"}
-            label={"Nimimerkki"}
+            label={"Käyttäjätunnus"}
             variant={"outlined"}
             value={loginState.userName}
             onChange={onLoginTextFieldChange}
