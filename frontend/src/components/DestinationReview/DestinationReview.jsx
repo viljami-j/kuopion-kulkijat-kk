@@ -1,70 +1,67 @@
-import { Container, Typography } from "@mui/material";
-import PropTypes from "prop-types";
-import Navbar from "../Navbar/Navbar";
+import { CircularProgress, Container, Typography } from "@mui/material";
 import DestinationBackgroundImage from "../DestinationBackgroundImage/DestinationBackgroundImage";
 import LocationIndicator from "../DestinationCard/LocationIndicator";
 import { Box } from "@mui/system";
+import { useParams } from "react-router-dom";
+import useDestinations from "../../util/hooks/useDestinations";
+import React from "react";
 
-DestinationReview.defaultProps = {
-  imageSrc: "",
-  header: "",
-  city: "",
-  country: "",
-};
+export default function DestinationReview() {
+  const { id } = useParams();
+  const { destinations, isLoadingDestinations, DestinationLoadingSnackbar } =
+    useDestinations(id);
 
-DestinationReview.propTypes = {
-  imageSrc: PropTypes.string,
-  header: PropTypes.string,
-  city: PropTypes.string,
-  country: PropTypes.string,
-  description: PropTypes.string,
-};
+  const { kohdenimi, maa, paikkakunta, kuvausteksti, kuva } = destinations;
 
-export default function DestinationReview({
-  imageSrc,
-  destinationName,
-  city,
-  country,
-  description,
-}) {
   return (
     <Container>
-      <Navbar />
-      <DestinationBackgroundImage imageSrc={imageSrc} direction={"bottomToTop"}>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "end",
-            height: "100%",
-            width: "100%",
-            pb: 3,
-            pl: 3,
-          }}
-          component="header"
-        >
-          <Typography
-            variant="h1"
-            sx={{ color: "white" }}
-            fontSize={"48px"}
-            fontWeight={"medium"}
-          >
-            {destinationName}
-          </Typography>
-          {city && country ? (
+      {isLoadingDestinations ? (
+        <CircularProgress sx={{ mx: "auto", my: 20 }} />
+      ) : (
+        <>
+          <DestinationBackgroundImage imageSrc={kuva} direction={"bottomToTop"}>
             <Box
-              style={{
-                color: "white",
-                maxWidth: "80%",
-                textAlign: "start",
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "end",
+                height: "100%",
+                width: "100%",
+                pb: 3,
+                pl: 3,
               }}
+              component="header"
             >
-              <LocationIndicator location={{ city, country }} fontsize="16px" />
+              <Typography
+                variant="h1"
+                sx={{ color: "white" }}
+                fontSize={"48px"}
+                fontWeight={"medium"}
+              >
+                {kohdenimi}
+              </Typography>
+              {paikkakunta && maa ? (
+                <Box
+                  style={{
+                    color: "white",
+                    maxWidth: "80%",
+                    textAlign: "start",
+                  }}
+                >
+                  <LocationIndicator
+                    location={{ city: paikkakunta, country: maa }}
+                    fontsize="16px"
+                  />
+                </Box>
+              ) : null}
             </Box>
-          ) : null}
-        </Box>
-      </DestinationBackgroundImage>
-      <Typography sx={{ lineHeight: 1.6, mt: 3 }}>{description}</Typography>
+          </DestinationBackgroundImage>
+          <Typography sx={{ lineHeight: 1.6, mt: 3 }}>
+            {kuvausteksti}
+          </Typography>
+        </>
+      )}
+      <DestinationLoadingSnackbar />
     </Container>
   );
 }

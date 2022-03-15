@@ -17,6 +17,7 @@ DestinationCard.defaultProps = {
 };
 
 export const DestinationPropType = {
+  id: PropTypes.number,
   name: PropTypes.string,
   description: PropTypes.string,
   image: PropTypes.string,
@@ -33,7 +34,7 @@ function DestinationCard({ id, name, description, image, city, country }) {
   return (
     <DestinationStyledCard
       onClick={() => {
-        navigate("/destination/" + id);
+        navigate(`/destinations/${id}`);
       }}
     >
       <CardActionArea>

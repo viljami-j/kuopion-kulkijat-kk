@@ -17,6 +17,7 @@ function generateDestinationCardsFromDestinationData(destinations) {
         city={destination.paikkakunta}
         description={destination.kuvausteksti}
         image={destination.kuva}
+        id={destination.idmatkakohde}
         key={destination.idmatkakohde}
       />
     ));
