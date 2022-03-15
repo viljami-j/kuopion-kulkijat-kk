@@ -3,7 +3,7 @@ import { makeGetRequest } from "../makeApiRequest";
 import useToggle from "./useToggle";
 import useMessage from "./useMessage";
 
-const useDestinations = () => {
+const useDestinations = (id) => {
   const [destinations, setDestinations] = useState([]);
   const [isLoadingDestinations, toggleLoading] = useToggle(true);
   const { MessageSnackbar, showMessage } = useMessage();
@@ -11,10 +11,11 @@ const useDestinations = () => {
   useEffect(
     function fetchSuggestedDestinations() {
       const abortController = new AbortController();
+      const path = id ? `/destinations/${id}` : `/destinations/`;
 
       async function fetchData() {
         try {
-          const destinations = await makeGetRequest("/destinations")(
+          const destinations = await makeGetRequest(path)(
             null,
             abortController
           );
@@ -34,7 +35,7 @@ const useDestinations = () => {
 
       return () => abortController.abort();
     },
-    [showMessage, toggleLoading]
+    [showMessage, toggleLoading, id]
   );
 
   return {
