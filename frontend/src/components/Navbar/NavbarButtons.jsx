@@ -1,6 +1,9 @@
 import { Button } from "@mui/material";
 import PropTypes from "prop-types";
 import { Link as RouterLink } from "react-router-dom";
+import useToggle from "../../util/hooks/useToggle";
+import RegistrationDialog from "../RegistrationDialog/RegistrationDialog";
+import LoginDialog from "../LoginDialog/LoginDialog";
 
 NavbarButtons.defaultProps = {
   loggedInName: "",
@@ -11,6 +14,9 @@ NavbarButtons.propTypes = {
 };
 
 export default function NavbarButtons({ loggedInName }) {
+  const [registrationDialogOpen, toggleRegistrationDialog] = useToggle();
+  const [loginDialogOpen, toggleLoginDialog] = useToggle();
+
   if (loggedInName)
     return (
       <div>
@@ -49,7 +55,7 @@ export default function NavbarButtons({ loggedInName }) {
       </div>
     );
   return (
-    <div>
+    <>
       <Button
         component={RouterLink}
         to="destinations"
@@ -58,9 +64,26 @@ export default function NavbarButtons({ loggedInName }) {
       >
         Matkakohteet
       </Button>
-      <Button sx={{ mr: 2, fontSize: 14 }} color="primary">
+      <Button
+        sx={{ mr: 2, fontSize: 14 }}
+        color="primary"
+        onClick={toggleLoginDialog}
+      >
         Kirjaudu sisään
       </Button>
-    </div>
+      <Button
+        sx={{ fontSize: 14 }}
+        variant="contained"
+        color="primary"
+        onClick={toggleRegistrationDialog}
+      >
+        Rekisteröidy
+      </Button>
+      <RegistrationDialog
+        open={registrationDialogOpen}
+        toggle={toggleRegistrationDialog}
+      />
+      <LoginDialog open={loginDialogOpen} toggle={toggleLoginDialog} />
+    </>
   );
 }
