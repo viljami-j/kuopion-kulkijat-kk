@@ -18,94 +18,92 @@ USE `mydb` ;
 -- Table `mydb`.`matkaaja`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`matkaaja` (
-  `idmatkaaja` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `etunimi` VARCHAR(45) NULL DEFAULT NULL,
-  `sukunimi` VARCHAR(45) NULL DEFAULT NULL,
-  `nimimerkki` VARCHAR(45) NULL DEFAULT NULL,
-  `paikkakunta` VARCHAR(45) NULL DEFAULT NULL,
-  `esittely` VARCHAR(500) NULL DEFAULT NULL,
-  `kuva` VARCHAR(45) NULL DEFAULT NULL,
-  `email` VARCHAR(45) NULL DEFAULT NULL,
-  `password` VARCHAR(45) NULL DEFAULT NULL,
+  `idmatkaaja` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `etunimi` VARCHAR(45) NULL,
+  `sukunimi` VARCHAR(45) NULL,
+  `nimimerkki` VARCHAR(45) NULL,
+  `paikkakunta` VARCHAR(45) NULL,
+  `esittely` VARCHAR(500) NULL,
+  `kuva` VARCHAR(45) NULL,
+  `email` VARCHAR(45) NULL,
+  `password` VARCHAR(45) NULL,
   PRIMARY KEY (`idmatkaaja`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 4
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`matka`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`matka` (
-  `idmatkaaja` INT(10) UNSIGNED NOT NULL,
-  `alkupvm` DATE NULL DEFAULT NULL,
-  `loppupvm` DATE NULL DEFAULT NULL,
-  `yksityinen` TINYINT(4) NULL DEFAULT NULL,
-  PRIMARY KEY (`idmatkaaja`),
-  CONSTRAINT `fk_matkaaja_has_matkakohde_matkaaja`
-    FOREIGN KEY (`idmatkaaja`)
-    REFERENCES `mydb`.`matkaaja` (`idmatkaaja`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `mydb`.`matkakohde`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`matkakohde` (
-  `idmatkakohde` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `kohdenimi` VARCHAR(45) NULL DEFAULT NULL,
-  `maa` VARCHAR(45) NULL DEFAULT NULL,
-  `paikkakunta` VARCHAR(45) NULL DEFAULT NULL,
-  `kuvausteksti` VARCHAR(500) NULL DEFAULT NULL,
-  `kuva` VARCHAR(45) NULL DEFAULT NULL,
+  `idmatkakohde` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `kohdenimi` VARCHAR(45) NULL,
+  `maa` VARCHAR(45) NULL,
+  `paikkakunta` VARCHAR(45) NULL,
+  `kuvausteksti` VARCHAR(500) NULL,
+  `kuva` VARCHAR(45) NULL,
   PRIMARY KEY (`idmatkakohde`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 103
-DEFAULT CHARACTER SET = utf8;
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`matka`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`matka` (
+  `idmatkaaja` INT UNSIGNED NOT NULL,
+  `alkupvm` DATE NULL,
+  `loppupvm` DATE NULL,
+  `yksityinen` TINYINT NULL,
+  `idmatka` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`idmatka`),
+  INDEX `fk_matkaaja_has_matkakohde_matkaaja_idx` (`idmatkaaja` ASC),
+  CONSTRAINT `fk_matkaaja_has_matkakohde_matkaaja`
+    FOREIGN KEY (`idmatkaaja`)
+    REFERENCES `mydb`.`matkaaja` (`idmatkaaja`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `mydb`.`tarina`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`tarina` (
-  `idmatkaaja` INT(10) UNSIGNED NOT NULL,
-  `idmatkakohde` INT(10) UNSIGNED NOT NULL,
-  `pvm` DATE NULL DEFAULT NULL,
-  `teksti` VARCHAR(500) NULL DEFAULT NULL,
-  PRIMARY KEY (`idmatkaaja`, `idmatkakohde`),
+  `idmatkakohde` INT UNSIGNED NOT NULL,
+  `pvm` DATE NOT NULL,
+  `teksti` VARCHAR(500) NULL,
+  `idmatka` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`idmatkakohde`, `idmatka`),
   INDEX `fk_tarina_matkakohde1_idx` (`idmatkakohde` ASC),
-  CONSTRAINT `fk_tarina_matka1`
-    FOREIGN KEY (`idmatkaaja`)
-    REFERENCES `mydb`.`matka` (`idmatkaaja`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+  INDEX `fk_tarina_matka1_idx` (`idmatka` ASC),
   CONSTRAINT `fk_tarina_matkakohde1`
     FOREIGN KEY (`idmatkakohde`)
     REFERENCES `mydb`.`matkakohde` (`idmatkakohde`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tarina_matka1`
+    FOREIGN KEY (`idmatka`)
+    REFERENCES `mydb`.`matka` (`idmatka`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `mydb`.`kuva`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`kuva` (
-  `idmatkaaja` INT(10) UNSIGNED NOT NULL,
-  `idmatkakohde` INT(10) UNSIGNED NOT NULL,
-  `kuva` VARCHAR(45) NULL DEFAULT NULL,
-  INDEX `fk_kuva_tarina1_idx` (`idmatkaaja` ASC, `idmatkakohde` ASC),
+  `idkuva` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `kuva` VARCHAR(45) NULL,
+  `tarina_idmatkakohde` INT UNSIGNED NOT NULL,
+  `tarina_idmatka` INT UNSIGNED NOT NULL,
+  INDEX `fk_kuva_tarina1_idx` (`tarina_idmatkakohde` ASC, `tarina_idmatka` ASC),
+  PRIMARY KEY (`idkuva`),
   CONSTRAINT `fk_kuva_tarina1`
-    FOREIGN KEY (`idmatkaaja` , `idmatkakohde`)
-    REFERENCES `mydb`.`tarina` (`idmatkaaja` , `idmatkakohde`)
+    FOREIGN KEY (`tarina_idmatkakohde` , `tarina_idmatka`)
+    REFERENCES `mydb`.`tarina` (`idmatkakohde` , `idmatka`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
