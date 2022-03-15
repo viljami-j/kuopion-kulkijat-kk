@@ -33,7 +33,7 @@ function DestinationCard({ id, name, description, image, city, country }) {
   return (
     <DestinationStyledCard
       onClick={() => {
-        navigate("/destinations/" + id);
+        navigate("/destination/" + id);
       }}
     >
       <CardActionArea>
