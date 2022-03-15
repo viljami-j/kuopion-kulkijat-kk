@@ -20,7 +20,7 @@ export default function Hero({ imageSrc, header, caption }) {
       <Grid item xs={12} align="center">
         <DestinationBackgroundImage
           imageSrc={imageSrc}
-          gradientType={"topToBottom"}
+          direction={"topToBottom"}
         >
           <div style={{ marginTop: "2%" }}>
             <Typography
