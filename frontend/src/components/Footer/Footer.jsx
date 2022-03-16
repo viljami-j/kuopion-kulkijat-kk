@@ -5,6 +5,7 @@ function Footer() {
   return (
     <Box
       sx={{ display: "flex", justifyContent: "space-between", mb: 6, mt: 20 }}
+      component={"footer"}
     >
       <Box>
         <Typography fontWeight="medium">Kuopion Kulkijat</Typography>

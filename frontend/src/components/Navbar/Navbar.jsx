@@ -1,7 +1,8 @@
-import { AppBar, Box, Toolbar } from "@mui/material";
+import { AppBar, Slide, Toolbar, useScrollTrigger } from "@mui/material";
 import NavbarButtons from "./NavbarButtons";
 import PropTypes from "prop-types";
 import StyledLink from "./styled/StyledLink";
+import { Link } from "react-router-dom";
 
 Navbar.defaultProps = {
   loggedInName: "",
@@ -12,16 +13,21 @@ Navbar.propTypes = {
 };
 
 export default function Navbar({ loggedInName }) {
+  const trigger = useScrollTrigger();
+
   return (
-    <div>
-      <Box>
-        <AppBar elevation={0} color="transparent" position="static">
-          <Toolbar disableGutters>
-            <StyledLink href="/">Kuopion Kulkijat</StyledLink>
+    <>
+      <Slide appear={false} direction={"down"} in={!trigger}>
+        <AppBar position="fixed" sx={{ backgroundColor: "white" }}>
+          <Toolbar>
+            <StyledLink to="/" component={Link}>
+              Kuopion Kulkijat
+            </StyledLink>
             <NavbarButtons loggedInName={loggedInName} />
           </Toolbar>
         </AppBar>
-      </Box>
-    </div>
+      </Slide>
+      <Toolbar />
+    </>
   );
 }
