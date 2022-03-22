@@ -3,6 +3,7 @@ import { theme } from "theme";
 import FrontPage from "scenes/front-page/FrontPage";
 import { Route, Routes } from "react-router-dom";
 import DestinationSearch from "scenes/destination-search/DestinationSearch";
+import GroupJourneys from "scenes/group-journeys/GroupJourneys";
 import Navbar from "./components/Navbar/Navbar";
 import React from "react";
 import Footer from "./components/Footer/Footer";
@@ -13,11 +14,12 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container>
-        <Navbar />
+        <Navbar loggedInName="Sauli Niinistö" />
         <Routes>
           <Route path="/" element={<FrontPage />} />
           <Route path="destinations" element={<DestinationSearch />} />
           <Route path="destinations/:id" element={<DestinationReview />} />
+          <Route path="group_journeys" element={<GroupJourneys />} />
         </Routes>
         <Footer />
       </Container>

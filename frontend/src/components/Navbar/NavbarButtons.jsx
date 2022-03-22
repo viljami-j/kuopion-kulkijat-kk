@@ -22,7 +22,7 @@ export default function NavbarButtons({ loggedInName }) {
       <div>
         <Button
           component={RouterLink}
-          to="/jasenet"
+          to="/members"
           sx={{ mr: 2, fontSize: 14, fontWeight: "light" }}
           color="primary"
         >
@@ -30,7 +30,7 @@ export default function NavbarButtons({ loggedInName }) {
         </Button>
         <Button
           component={RouterLink}
-          to="/porukan_matkat"
+          to="/group_journeys"
           sx={{ mr: 2, fontSize: 14, fontWeight: "light" }}
           color="primary"
         >
