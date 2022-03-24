@@ -11,6 +11,7 @@ import LocationIndicator from "./LocationIndicator";
 import DestinationStyledCard from "./styled/DestinationStyledCard";
 import DestinationCardImage from "./styled/DestinationCardImage";
 import { useNavigate } from "react-router-dom";
+import endpoints from "../../util/endpoints";
 
 DestinationCard.defaultProps = {
   image: "",
@@ -34,7 +35,7 @@ function DestinationCard({ id, name, description, image, city, country }) {
   return (
     <DestinationStyledCard
       onClick={() => {
-        navigate(`/destinations/${id}`);
+        navigate(`${endpoints.DESTINATIONS}/${id}`);
       }}
     >
       <CardActionArea>
