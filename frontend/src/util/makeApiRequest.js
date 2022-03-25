@@ -6,7 +6,7 @@ function makeApiRequest(method) {
       const apiUrl = `${process.env.REACT_APP_BACKEND_URL}${path}`;
       const response = await fetch(apiUrl, {
         method,
-        signal: abortController.signal,
+        signal: abortController != null ? abortController.signal : null,
         headers: {
           "Content-Type": "application/json;charset=utf-8",
         },
