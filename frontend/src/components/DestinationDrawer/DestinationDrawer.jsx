@@ -1,7 +1,7 @@
 import { Button, SwipeableDrawer, TextField, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DestinationDescriptionTextField } from "./DestinationDescriptionTextField";
 import { Upload } from "@mui/icons-material";
 import endpoints from "../../util/endpoints";
@@ -9,9 +9,9 @@ import { makePostRequest } from "../../util/makeApiRequest";
 import useMessage from "../../util/hooks/useMessage";
 
 DestinationDrawer.propTypes = {
-  open: PropTypes.bool,
-  toggleOpen: PropTypes.func,
-  header: PropTypes.string,
+  open: PropTypes.bool.isRequired,
+  toggleOpen: PropTypes.func.isRequired,
+  header: PropTypes.string.isRequired,
   values: PropTypes.shape({
     name: PropTypes.string,
     city: PropTypes.string,
@@ -52,6 +52,12 @@ function DestinationDrawer({ open, toggleOpen, header, values }) {
       showMessage("Virhe luotaessa matkakohdetta. Yritä myöhemmin uudelleen");
     }
   }
+
+  useEffect(() => {
+    if (values != null) {
+      setDestinationData(values);
+    }
+  }, [values]);
 
   return (
     <SwipeableDrawer
