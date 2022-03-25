@@ -89,8 +89,8 @@ export default function DestinationReview() {
         aria-label="Poista matkakohde"
         sx={{
           position: "fixed",
-          right: 60,
-          bottom: 128,
+          right: 30,
+          bottom: 108,
           backgroundColor: theme.palette.error.main,
           color: "white",
         }}
@@ -101,7 +101,7 @@ export default function DestinationReview() {
       <Fab
         color="secondary"
         aria-label="Muokkaa matkakohdetta"
-        sx={{ position: "fixed", right: 60, bottom: 60 }}
+        sx={{ position: "fixed", right: 30, bottom: 40 }}
         onClick={toggleDrawer}
       >
         <Edit />

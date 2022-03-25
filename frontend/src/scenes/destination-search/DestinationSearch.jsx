@@ -67,7 +67,7 @@ function DestinationSearch() {
       <Fab
         color="secondary"
         aria-label="Uusi matkakohde"
-        sx={{ position: "fixed", right: 60, bottom: 60 }}
+        sx={{ position: "fixed", right: 30, bottom: 40 }}
         onClick={toggleDrawer}
       >
         <Add />
