@@ -9,14 +9,29 @@ import { Delete, Edit } from "@mui/icons-material";
 import DestinationDrawer from "../DestinationDrawer/DestinationDrawer";
 import useToggle from "../../util/hooks/useToggle";
 import { theme } from "../../theme";
+import { makeDeleteRequest } from "../../util/makeApiRequest";
+import endpoints from "../../util/endpoints";
+import useMessage from "../../util/hooks/useMessage";
 
 export default function DestinationReview() {
   const { id } = useParams();
   const { destinations, isLoadingDestinations, DestinationLoadingSnackbar } =
     useDestinations(id);
   const [drawerOpen, toggleDrawer] = useToggle();
+  const { MessageSnackbar, showMessage } = useMessage();
 
   const { kohdenimi, maa, paikkakunta, kuvausteksti, kuva } = destinations;
+
+  function deleteDestination() {
+    try {
+      // TODO/80: viimeistele, kun backend valmis
+      makeDeleteRequest(endpoints.DESTINATIONS)();
+    } catch (e) {
+      showMessage(
+        "Virhe poistettaessa matkakohdetta. Yritä myöhemmin uudelleen."
+      );
+    }
+  }
 
   return (
     <Box
@@ -79,7 +94,7 @@ export default function DestinationReview() {
           backgroundColor: theme.palette.error.main,
           color: "white",
         }}
-        onClick={toggleDrawer}
+        onClick={deleteDestination}
       >
         <Delete />
       </Fab>
@@ -103,6 +118,7 @@ export default function DestinationReview() {
           description: kuvausteksti,
         }}
       />
+      <MessageSnackbar />
     </Box>
   );
 }
