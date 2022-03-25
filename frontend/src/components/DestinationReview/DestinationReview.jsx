@@ -5,9 +5,10 @@ import { Box } from "@mui/system";
 import { useParams } from "react-router-dom";
 import useDestinations from "../../util/hooks/useDestinations";
 import React from "react";
-import { Edit } from "@mui/icons-material";
+import { Delete, Edit } from "@mui/icons-material";
 import DestinationDrawer from "../DestinationDrawer/DestinationDrawer";
 import useToggle from "../../util/hooks/useToggle";
+import { theme } from "../../theme";
 
 export default function DestinationReview() {
   const { id } = useParams();
@@ -18,9 +19,11 @@ export default function DestinationReview() {
   const { kohdenimi, maa, paikkakunta, kuvausteksti, kuva } = destinations;
 
   return (
-    <Box>
+    <Box
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       {isLoadingDestinations ? (
-        <CircularProgress sx={{ mx: "auto", my: 20 }} />
+        <CircularProgress sx={{ m: 20 }} />
       ) : (
         <>
           <DestinationBackgroundImage imageSrc={kuva} direction={"bottomToTop"}>
@@ -60,13 +63,26 @@ export default function DestinationReview() {
               ) : null}
             </Box>
           </DestinationBackgroundImage>
-          <Typography sx={{ lineHeight: 1.6, mt: 3 }}>
+          <Typography sx={{ lineHeight: 1.6, mt: 3, alignSelf: "flex-start" }}>
             {kuvausteksti}
           </Typography>
         </>
       )}
       <DestinationLoadingSnackbar />
 
+      <Fab
+        aria-label="Poista matkakohde"
+        sx={{
+          position: "fixed",
+          right: 60,
+          bottom: 128,
+          backgroundColor: theme.palette.error.main,
+          color: "white",
+        }}
+        onClick={toggleDrawer}
+      >
+        <Delete />
+      </Fab>
       <Fab
         color="secondary"
         aria-label="Muokkaa matkakohdetta"
