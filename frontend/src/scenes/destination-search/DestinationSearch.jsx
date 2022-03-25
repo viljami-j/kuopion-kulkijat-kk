@@ -66,7 +66,7 @@ function DestinationSearch() {
       <DestinationLoadingSnackbar />
       <Fab
         color="secondary"
-        aria-label="Uusi matkahde"
+        aria-label="Uusi matkakohde"
         sx={{ position: "fixed", right: 60, bottom: 60 }}
         onClick={toggleDrawer}
       >

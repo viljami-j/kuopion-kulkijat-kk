@@ -1,20 +1,24 @@
-import { CircularProgress, Container, Typography } from "@mui/material";
+import { CircularProgress, Fab, Typography } from "@mui/material";
 import DestinationBackgroundImage from "../DestinationBackgroundImage/DestinationBackgroundImage";
 import LocationIndicator from "../DestinationCard/LocationIndicator";
 import { Box } from "@mui/system";
 import { useParams } from "react-router-dom";
 import useDestinations from "../../util/hooks/useDestinations";
 import React from "react";
+import { Edit } from "@mui/icons-material";
+import DestinationDrawer from "../DestinationDrawer/DestinationDrawer";
+import useToggle from "../../util/hooks/useToggle";
 
 export default function DestinationReview() {
   const { id } = useParams();
   const { destinations, isLoadingDestinations, DestinationLoadingSnackbar } =
     useDestinations(id);
+  const [drawerOpen, toggleDrawer] = useToggle();
 
   const { kohdenimi, maa, paikkakunta, kuvausteksti, kuva } = destinations;
 
   return (
-    <Container>
+    <Box>
       {isLoadingDestinations ? (
         <CircularProgress sx={{ mx: "auto", my: 20 }} />
       ) : (
@@ -62,6 +66,27 @@ export default function DestinationReview() {
         </>
       )}
       <DestinationLoadingSnackbar />
-    </Container>
+
+      <Fab
+        color="secondary"
+        aria-label="Muokkaa matkakohdetta"
+        sx={{ position: "fixed", right: 60, bottom: 60 }}
+        onClick={toggleDrawer}
+      >
+        <Edit />
+      </Fab>
+
+      <DestinationDrawer
+        open={drawerOpen}
+        toggleOpen={toggleDrawer}
+        header={"Muokkaa matkakohdetta"}
+        values={{
+          name: kohdenimi,
+          city: paikkakunta,
+          country: maa,
+          description: kuvausteksti,
+        }}
+      />
+    </Box>
   );
 }
