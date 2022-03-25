@@ -9,11 +9,14 @@ import {
 import DestinationCardGrid from "components/DestinationCardGrid";
 import useDestinations from "../../util/hooks/useDestinations";
 import { Add } from "@mui/icons-material";
+import DestinationDrawer from "../../components/DestinationDrawer/DestinationDrawer";
+import useToggle from "../../util/hooks/useToggle";
 
 function DestinationSearch() {
   const { destinations, isLoadingDestinations, DestinationLoadingSnackbar } =
     useDestinations();
   const [searchQuery, setSearchQuery] = useState("");
+  const [drawerOpen, toggleDrawer] = useToggle();
 
   function onTextFieldTyped(event) {
     setSearchQuery(event.target.value);
@@ -65,9 +68,16 @@ function DestinationSearch() {
         color="secondary"
         aria-label="Uusi matkahde"
         sx={{ position: "fixed", right: 60, bottom: 60 }}
+        onClick={toggleDrawer}
       >
         <Add />
       </Fab>
+
+      <DestinationDrawer
+        open={drawerOpen}
+        toggleOpen={toggleDrawer}
+        header={"Uusi matkakohde"}
+      />
     </Box>
   );
 }
