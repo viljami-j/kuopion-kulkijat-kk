@@ -14,7 +14,7 @@ export default function GroupJourneys() {
   const { journeys, isLoadingJourneys, JourneyLoadingSnackbar } = useJourneys();
 
   const SHOW_MORE_JOURNEYS_INCREASE_BY = 8;
-  const DATA_SOURCE = journeys; // uncomment testData & change 'journeys' to 'testData' for testing
+  const DATA_SOURCE = journeys; // uncomment testData import & change 'journeys' to 'testData' for testing. Navigate to http://localhost:3000/group_journeys
 
   function showMoreJourneys() {
     if (visibleCount < DATA_SOURCE.length) {
