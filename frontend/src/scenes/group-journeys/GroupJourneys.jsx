@@ -18,7 +18,7 @@ export default function GroupJourneys() {
     if (visibleCount < journeys.length) {
       setVisibleCount(visibleCount + SHOW_MORE_JOURNEYS_INCREASE_BY);
     } else {
-      setShowLoadButton(false); // Piilotetaan "Näytä lisää" nappi kun kaikki kohteet ovat näkyvillä
+      setShowLoadButton(false);
     }
   }
 
