@@ -6,7 +6,7 @@ import { Grid, Button, Typography, CircularProgress } from "@mui/material";
 import LocationIndicator from "components/DestinationCard/LocationIndicator";
 import useJourneys from "util/hooks/useJourneys";
 import { useState } from "react";
-import testData from "test-data/testJourneys.json";
+//import testData from "test-data/testJourneys.json";
 
 export default function GroupJourneys() {
   const [visibleCount, setVisibleCount] = useState(8);
@@ -14,7 +14,7 @@ export default function GroupJourneys() {
   const { journeys, isLoadingJourneys, JourneyLoadingSnackbar } = useJourneys();
 
   const SHOW_MORE_JOURNEYS_INCREASE_BY = 8;
-  const DATA_SOURCE = testData; // uncomment testData & change 'journeys' to 'testData' for testing
+  const DATA_SOURCE = journeys; // uncomment testData & change 'journeys' to 'testData' for testing
 
   function showMoreJourneys() {
     if (visibleCount < DATA_SOURCE.length) {
