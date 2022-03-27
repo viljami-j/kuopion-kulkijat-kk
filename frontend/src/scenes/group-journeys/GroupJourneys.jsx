@@ -6,6 +6,7 @@ import { Grid, Button, Typography, CircularProgress } from "@mui/material";
 import LocationIndicator from "components/DestinationCard/LocationIndicator";
 import useJourneys from "util/hooks/useJourneys";
 import { useState } from "react";
+import testData from "test-data/testJourneys.json";
 
 export default function GroupJourneys() {
   const [visibleCount, setVisibleCount] = useState(8);
@@ -13,12 +14,13 @@ export default function GroupJourneys() {
   const { journeys, isLoadingJourneys, JourneyLoadingSnackbar } = useJourneys();
 
   const SHOW_MORE_JOURNEYS_INCREASE_BY = 8;
+  const DATA_SOURCE = testData; // uncomment testData & change 'journeys' to 'testData' for testing
 
   function showMoreJourneys() {
-    if (visibleCount < journeys.length) {
+    if (visibleCount < DATA_SOURCE.length) {
       setVisibleCount(visibleCount + SHOW_MORE_JOURNEYS_INCREASE_BY);
-    } else {
-      setShowLoadButton(false);
+      if (visibleCount + SHOW_MORE_JOURNEYS_INCREASE_BY > DATA_SOURCE.length)
+        setShowLoadButton(false);
     }
   }
 
@@ -39,7 +41,7 @@ export default function GroupJourneys() {
           <CircularProgress sx={{ mx: "auto", my: 20 }} />
         ) : (
           <ImageList rowHeight={200} cols={4} gap={6} sx={{ width: "800px" }}>
-            {journeys.slice(0, visibleCount).map((item) => (
+            {DATA_SOURCE.slice(0, visibleCount).map((item) => (
               <ImageListItem key={item.img}>
                 <img
                   src={`${item.img}?w=248&fit=crop&auto=format`}
@@ -59,7 +61,7 @@ export default function GroupJourneys() {
         )}
       </Grid>
       <Grid item xs={12}>
-        {showLoadButton && journeys.length != 0 ? (
+        {showLoadButton ? (
           <Button variant="contained" onClick={showMoreJourneys}>
             Näytä lisää
           </Button>
