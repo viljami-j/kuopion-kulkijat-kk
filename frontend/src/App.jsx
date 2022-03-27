@@ -14,7 +14,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container>
-        <Navbar loggedInName="Sauli Niinistö" />
+        <Navbar />
         <Routes>
           <Route path="/" element={<FrontPage />} />
           <Route path="destinations" element={<DestinationSearch />} />
