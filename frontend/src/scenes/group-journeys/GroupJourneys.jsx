@@ -1,17 +1,26 @@
 import * as React from "react";
+import { useState } from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
-import { Grid, Button, Typography, CircularProgress } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  Grid,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import LocationIndicator from "components/DestinationCard/LocationIndicator";
 import useJourneys from "util/hooks/useJourneys";
-import { useState } from "react";
-//import testData from "test-data/testJourneys.json";
+// import testData from "test-data/testJourneys.json";
+import { theme } from "../../theme";
 
 export default function GroupJourneys() {
   const [visibleCount, setVisibleCount] = useState(8);
   const [showLoadButton, setShowLoadButton] = useState(true);
   const { journeys, isLoadingJourneys, JourneyLoadingSnackbar } = useJourneys();
+  const isMediumWidth = useMediaQuery(theme.breakpoints.down("md"));
+  const isSmallWidth = useMediaQuery(theme.breakpoints.down("sm"));
 
   const SHOW_MORE_JOURNEYS_INCREASE_BY = 8;
   const DATA_SOURCE = journeys; // uncomment testData import & change 'journeys' to 'testData' for testing. Navigate to http://localhost:3000/group_journeys
@@ -22,6 +31,15 @@ export default function GroupJourneys() {
       if (visibleCount + SHOW_MORE_JOURNEYS_INCREASE_BY > DATA_SOURCE.length)
         setShowLoadButton(false);
     }
+  }
+
+  function calculateGridColumns() {
+    if (isSmallWidth) {
+      return 1;
+    } else if (isMediumWidth) {
+      return 2;
+    }
+    return 4;
   }
 
   return (
@@ -40,7 +58,12 @@ export default function GroupJourneys() {
         {isLoadingJourneys ? (
           <CircularProgress sx={{ mx: "auto", my: 20 }} />
         ) : (
-          <ImageList rowHeight={200} cols={4} gap={6} sx={{ width: "800px" }}>
+          <ImageList
+            rowHeight={200}
+            cols={calculateGridColumns()}
+            gap={6}
+            sx={{ width: "50vw" }}
+          >
             {DATA_SOURCE.slice(0, visibleCount).map((item) => (
               <ImageListItem key={item.img}>
                 <img
