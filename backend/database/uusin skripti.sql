@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`matkaaja` (
   `esittely` VARCHAR(500) NULL,
   `kuva` VARCHAR(45) NULL,
   `email` VARCHAR(45) NULL,
-  `password` VARCHAR(45) NULL,
+  `password` VARCHAR(450) NULL,
   PRIMARY KEY (`idmatkaaja`))
 ENGINE = InnoDB;
 
