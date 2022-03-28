@@ -10,7 +10,6 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import LocationIndicator from "components/DestinationCard/LocationIndicator";
 import useJourneys from "util/hooks/useJourneys";
 // import testData from "test-data/testJourneys.json";
 import { theme } from "../../theme";
@@ -74,9 +73,7 @@ export default function GroupJourneys() {
                 />
                 <ImageListItemBar
                   title={item.author}
-                  subtitle={
-                    <LocationIndicator location={item.location} fontsize={14} />
-                  }
+                  subtitle={item.startDate + "-" + item.endDate}
                 />
               </ImageListItem>
             ))}
