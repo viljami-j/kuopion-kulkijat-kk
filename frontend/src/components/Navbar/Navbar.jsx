@@ -6,7 +6,6 @@ import {
   useMediaQuery,
   useScrollTrigger,
 } from "@mui/material";
-import PropTypes from "prop-types";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowBack, Menu } from "@mui/icons-material";
 import StyledLink from "./styled/StyledLink";
@@ -16,19 +15,7 @@ import useToggle from "../../util/hooks/useToggle";
 import React from "react";
 import { HamburgerMenu } from "./HamburgerMenu";
 
-Navbar.defaultProps = {
-  loggedInName: "",
-};
-
-Navbar.propTypes = {
-  loggedInName: PropTypes.string,
-};
-
-HamburgerMenu.propTypes = {
-  open: PropTypes.any,
-  onClose: PropTypes.func,
-};
-export default function Navbar({ loggedInName }) {
+export default function Navbar() {
   const trigger = useScrollTrigger();
   const location = useLocation();
   const navigate = useNavigate();
@@ -60,7 +47,7 @@ export default function Navbar({ loggedInName }) {
                 <Menu color="primary" />
               </IconButton>
             ) : (
-              <NavbarButtons loggedInName={loggedInName} />
+              <NavbarButtons />
             )}
           </Toolbar>
         </AppBar>

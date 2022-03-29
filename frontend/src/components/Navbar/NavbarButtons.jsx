@@ -1,24 +1,22 @@
 import { Button } from "@mui/material";
-import PropTypes from "prop-types";
 import { Link as RouterLink } from "react-router-dom";
 import useToggle from "../../util/hooks/useToggle";
 import RegistrationDialog from "../RegistrationDialog/RegistrationDialog";
 import LoginDialog from "../LoginDialog/LoginDialog";
-
-NavbarButtons.defaultProps = {
-  loggedInName: "",
-};
+import { LoginContext } from "../../util/loginContext";
+import { useContext } from "react";
+import PropTypes from "prop-types";
 
 NavbarButtons.propTypes = {
-  loggedInName: PropTypes.string,
   menuToggle: PropTypes.func,
 };
 
-export default function NavbarButtons({ loggedInName, menuToggle }) {
+export default function NavbarButtons({ menuToggle }) {
   const [registrationDialogOpen, toggleRegistrationDialog] = useToggle();
   const [loginDialogOpen, toggleLoginDialog] = useToggle();
+  const [loginData, setLoginData] = useContext(LoginContext);
 
-  if (loggedInName)
+  if (loginData.email)
     return (
       <>
         <Button
@@ -55,7 +53,7 @@ export default function NavbarButtons({ loggedInName, menuToggle }) {
           color="primary"
           onClick={menuToggle}
         >
-          {loggedInName}
+          {loginData.email}
         </Button>
       </>
     );
