@@ -11,10 +11,10 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import useJourneys from "util/hooks/useJourneys";
-// import testData from "test-data/testJourneys.json";
+import testData from "test-data/testJourneys.json";
 import { theme } from "../../theme";
 
-export default function GroupJourneys() {
+export default function MyJourneys() {
   const [visibleCount, setVisibleCount] = useState(8);
   const [showLoadButton, setShowLoadButton] = useState(true);
   const { journeys, isLoadingJourneys, JourneyLoadingSnackbar } = useJourneys();
@@ -22,7 +22,7 @@ export default function GroupJourneys() {
   const isSmallWidth = useMediaQuery(theme.breakpoints.down("sm"));
 
   const SHOW_MORE_JOURNEYS_INCREASE_BY = 8;
-  const DATA_SOURCE = journeys; // uncomment testData import & change 'journeys' to 'testData' for testing. Navigate to http://localhost:3000/group_journeys
+  const DATA_SOURCE = testData; // uncomment testData import & change 'journeys' to 'testData' for testing. Navigate to http://localhost:3000/group_journeys
 
   function showMoreJourneys() {
     if (visibleCount < DATA_SOURCE.length) {
@@ -51,7 +51,7 @@ export default function GroupJourneys() {
       sx={{ mt: "80px" }}
     >
       <Grid item xs={12}>
-        <Typography variant="h1">Porukan matkat</Typography>
+        <Typography variant="h1">Omat matkat</Typography>
       </Grid>
       <Grid item xs={12}>
         {isLoadingJourneys ? (
@@ -68,12 +68,12 @@ export default function GroupJourneys() {
                 <img
                   src={`${item.img}?w=248&fit=crop&auto=format`}
                   srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                  alt={item.author}
+                  alt={item.location}
                   loading="lazy"
                   style={{ overflow: "hidden" }}
                 />
                 <ImageListItemBar
-                  title={item.author}
+                  title={item.location.city + ", " + item.location.country}
                   subtitle={item.startDate + "-" + item.endDate}
                 />
               </ImageListItem>

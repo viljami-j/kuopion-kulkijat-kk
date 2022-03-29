@@ -19,7 +19,15 @@ export default function NavbarButtons({ loggedInName }) {
 
   if (loggedInName)
     return (
-      <div>
+      <>
+        <Button
+          component={RouterLink}
+          to="/my_journeys"
+          sx={{ mr: 2, fontSize: 14, fontWeight: "light" }}
+          color="primary"
+        >
+          Omat matkat
+        </Button>
         <Button
           component={RouterLink}
           to="/members"
@@ -52,7 +60,7 @@ export default function NavbarButtons({ loggedInName }) {
         >
           {loggedInName}
         </Button>
-      </div>
+      </>
     );
   return (
     <>
