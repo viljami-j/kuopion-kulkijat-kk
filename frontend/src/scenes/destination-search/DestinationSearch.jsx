@@ -1,12 +1,22 @@
 import React, { useMemo, useState } from "react";
-import { Box, CircularProgress, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Fab,
+  TextField,
+  Typography,
+} from "@mui/material";
 import DestinationCardGrid from "components/DestinationCardGrid";
 import useDestinations from "../../util/hooks/useDestinations";
+import { Add } from "@mui/icons-material";
+import DestinationDrawer from "../../components/DestinationDrawer/DestinationDrawer";
+import useToggle from "../../util/hooks/useToggle";
 
 function DestinationSearch() {
   const { destinations, isLoadingDestinations, DestinationLoadingSnackbar } =
     useDestinations();
   const [searchQuery, setSearchQuery] = useState("");
+  const [drawerOpen, toggleDrawer] = useToggle();
 
   function onTextFieldTyped(event) {
     setSearchQuery(event.target.value);
@@ -54,6 +64,20 @@ function DestinationSearch() {
       )}
 
       <DestinationLoadingSnackbar />
+      <Fab
+        color="secondary"
+        aria-label="Uusi matkakohde"
+        sx={{ position: "fixed", right: 30, bottom: 40 }}
+        onClick={toggleDrawer}
+      >
+        <Add />
+      </Fab>
+
+      <DestinationDrawer
+        open={drawerOpen}
+        toggleOpen={toggleDrawer}
+        header={"Uusi matkakohde"}
+      />
     </Box>
   );
 }

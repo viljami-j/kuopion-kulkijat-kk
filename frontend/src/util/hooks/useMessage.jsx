@@ -25,7 +25,7 @@ function useMessage() {
   const MessageSnackbar = () => (
     <Snackbar
       open={open}
-      autoHideDuration={6000}
+      autoHideDuration={2000}
       onClose={handleClose}
       message={message}
     />

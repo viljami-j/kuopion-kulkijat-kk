@@ -1,22 +1,44 @@
-import { CircularProgress, Container, Typography } from "@mui/material";
+import { CircularProgress, Fab, Typography } from "@mui/material";
 import DestinationBackgroundImage from "../DestinationBackgroundImage/DestinationBackgroundImage";
 import LocationIndicator from "../DestinationCard/LocationIndicator";
 import { Box } from "@mui/system";
 import { useParams } from "react-router-dom";
 import useDestinations from "../../util/hooks/useDestinations";
 import React from "react";
+import { Delete, Edit } from "@mui/icons-material";
+import DestinationDrawer from "../DestinationDrawer/DestinationDrawer";
+import useToggle from "../../util/hooks/useToggle";
+import { theme } from "../../theme";
+import { makeDeleteRequest } from "../../util/makeApiRequest";
+import endpoints from "../../util/endpoints";
+import useMessage from "../../util/hooks/useMessage";
 
 export default function DestinationReview() {
   const { id } = useParams();
   const { destinations, isLoadingDestinations, DestinationLoadingSnackbar } =
     useDestinations(id);
+  const [drawerOpen, toggleDrawer] = useToggle();
+  const { MessageSnackbar, showMessage } = useMessage();
 
   const { kohdenimi, maa, paikkakunta, kuvausteksti, kuva } = destinations;
 
+  function deleteDestination() {
+    try {
+      // TODO/80: viimeistele, kun backend valmis
+      makeDeleteRequest(endpoints.DESTINATIONS)();
+    } catch (e) {
+      showMessage(
+        "Virhe poistettaessa matkakohdetta. Yritä myöhemmin uudelleen."
+      );
+    }
+  }
+
   return (
-    <Container>
+    <Box
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       {isLoadingDestinations ? (
-        <CircularProgress sx={{ mx: "auto", my: 20 }} />
+        <CircularProgress sx={{ m: 20 }} />
       ) : (
         <>
           <DestinationBackgroundImage imageSrc={kuva} direction={"bottomToTop"}>
@@ -56,12 +78,47 @@ export default function DestinationReview() {
               ) : null}
             </Box>
           </DestinationBackgroundImage>
-          <Typography sx={{ lineHeight: 1.6, mt: 3 }}>
+          <Typography sx={{ lineHeight: 1.6, mt: 3, alignSelf: "flex-start" }}>
             {kuvausteksti}
           </Typography>
         </>
       )}
       <DestinationLoadingSnackbar />
-    </Container>
+
+      <Fab
+        aria-label="Poista matkakohde"
+        sx={{
+          position: "fixed",
+          right: 30,
+          bottom: 108,
+          backgroundColor: theme.palette.error.main,
+          color: "white",
+        }}
+        onClick={deleteDestination}
+      >
+        <Delete />
+      </Fab>
+      <Fab
+        color="secondary"
+        aria-label="Muokkaa matkakohdetta"
+        sx={{ position: "fixed", right: 30, bottom: 40 }}
+        onClick={toggleDrawer}
+      >
+        <Edit />
+      </Fab>
+
+      <DestinationDrawer
+        open={drawerOpen}
+        toggleOpen={toggleDrawer}
+        header={"Muokkaa matkakohdetta"}
+        values={{
+          name: kohdenimi,
+          city: paikkakunta,
+          country: maa,
+          description: kuvausteksti,
+        }}
+      />
+      <MessageSnackbar />
+    </Box>
   );
 }
