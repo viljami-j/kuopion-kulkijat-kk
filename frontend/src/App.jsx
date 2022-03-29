@@ -5,23 +5,28 @@ import { Route, Routes } from "react-router-dom";
 import DestinationSearch from "scenes/destination-search/DestinationSearch";
 import GroupJourneys from "scenes/group-journeys/GroupJourneys";
 import Navbar from "./components/Navbar/Navbar";
-import React from "react";
+import React, { useState } from "react";
 import Footer from "./components/Footer/Footer";
 import DestinationReview from "./components/DestinationReview/DestinationReview";
+import { LoginContext } from "./util/loginContext";
 
 function App() {
+  const loginState = useState({ email: "", password: "" });
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<FrontPage />} />
-          <Route path="destinations" element={<DestinationSearch />} />
-          <Route path="destinations/:id" element={<DestinationReview />} />
-          <Route path="group_journeys" element={<GroupJourneys />} />
-        </Routes>
-        <Footer />
+        <LoginContext.Provider value={loginState}>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<FrontPage />} />
+            <Route path="destinations" element={<DestinationSearch />} />
+            <Route path="destinations/:id" element={<DestinationReview />} />
+            <Route path="group_journeys" element={<GroupJourneys />} />
+          </Routes>
+          <Footer />
+        </LoginContext.Provider>
       </Container>
     </ThemeProvider>
   );

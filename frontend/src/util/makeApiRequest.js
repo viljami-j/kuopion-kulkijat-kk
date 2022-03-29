@@ -2,7 +2,7 @@ import { isEmpty } from "lodash";
 
 function makeApiRequest(method) {
   return function withPath(path) {
-    return async function withBody(body, abortController) {
+    return async function withBody(body, abortController = null, raw = false) {
       const apiUrl = `${process.env.REACT_APP_BACKEND_URL}${path}`;
       const response = await fetch(apiUrl, {
         method,
@@ -12,7 +12,7 @@ function makeApiRequest(method) {
         },
         body: isEmpty(body) ? null : JSON.stringify(body),
       });
-      return await response.json();
+      return raw ? await response : await response.json();
     };
   };
 }
