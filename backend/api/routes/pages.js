@@ -29,9 +29,9 @@ router.post("/login", (req, res, next) => {
       req.session.user = result;
       req.session.opp = 1;
 
-      res.redirect("/home");
+      res.status(200).send({ message: "Login ok" });
     } else {
-      res.send("email/password incorrect");
+      res.status(401).send({ message: "email/password incorrect" });
     }
   });
 });
