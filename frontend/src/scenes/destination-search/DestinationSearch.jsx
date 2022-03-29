@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import {
   Box,
   CircularProgress,
@@ -11,12 +11,14 @@ import useDestinations from "../../util/hooks/useDestinations";
 import { Add } from "@mui/icons-material";
 import DestinationDrawer from "../../components/DestinationDrawer/DestinationDrawer";
 import useToggle from "../../util/hooks/useToggle";
+import { LoginContext } from "../../util/loginContext";
 
 function DestinationSearch() {
   const { destinations, isLoadingDestinations, DestinationLoadingSnackbar } =
     useDestinations();
   const [searchQuery, setSearchQuery] = useState("");
   const [drawerOpen, toggleDrawer] = useToggle();
+  const [loginData, _] = useContext(LoginContext);
 
   function onTextFieldTyped(event) {
     setSearchQuery(event.target.value);
@@ -64,14 +66,16 @@ function DestinationSearch() {
       )}
 
       <DestinationLoadingSnackbar />
-      <Fab
-        color="secondary"
-        aria-label="Uusi matkakohde"
-        sx={{ position: "fixed", right: 30, bottom: 40 }}
-        onClick={toggleDrawer}
-      >
-        <Add />
-      </Fab>
+      {loginData.email !== "" ? (
+        <Fab
+          color="secondary"
+          aria-label="Uusi matkakohde"
+          sx={{ position: "fixed", right: 30, bottom: 40 }}
+          onClick={toggleDrawer}
+        >
+          <Add />
+        </Fab>
+      ) : null}
 
       <DestinationDrawer
         open={drawerOpen}

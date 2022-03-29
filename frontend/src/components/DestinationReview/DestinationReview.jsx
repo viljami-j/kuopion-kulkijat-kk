@@ -4,7 +4,7 @@ import LocationIndicator from "../DestinationCard/LocationIndicator";
 import { Box } from "@mui/system";
 import { useParams } from "react-router-dom";
 import useDestinations from "../../util/hooks/useDestinations";
-import React from "react";
+import React, { useContext } from "react";
 import { Delete, Edit } from "@mui/icons-material";
 import DestinationDrawer from "../DestinationDrawer/DestinationDrawer";
 import useToggle from "../../util/hooks/useToggle";
@@ -12,6 +12,7 @@ import { theme } from "../../theme";
 import { makeDeleteRequest } from "../../util/makeApiRequest";
 import endpoints from "../../util/endpoints";
 import useMessage from "../../util/hooks/useMessage";
+import { LoginContext } from "../../util/loginContext";
 
 export default function DestinationReview() {
   const { id } = useParams();
@@ -21,6 +22,7 @@ export default function DestinationReview() {
   const { MessageSnackbar, showMessage } = useMessage();
 
   const { kohdenimi, maa, paikkakunta, kuvausteksti, kuva } = destinations;
+  const [loginData, _] = useContext(LoginContext);
 
   function deleteDestination() {
     try {
@@ -85,27 +87,31 @@ export default function DestinationReview() {
       )}
       <DestinationLoadingSnackbar />
 
-      <Fab
-        aria-label="Poista matkakohde"
-        sx={{
-          position: "fixed",
-          right: 30,
-          bottom: 108,
-          backgroundColor: theme.palette.error.main,
-          color: "white",
-        }}
-        onClick={deleteDestination}
-      >
-        <Delete />
-      </Fab>
-      <Fab
-        color="secondary"
-        aria-label="Muokkaa matkakohdetta"
-        sx={{ position: "fixed", right: 30, bottom: 40 }}
-        onClick={toggleDrawer}
-      >
-        <Edit />
-      </Fab>
+      {loginData.email !== "" ? (
+        <>
+          <Fab
+            aria-label="Poista matkakohde"
+            sx={{
+              position: "fixed",
+              right: 30,
+              bottom: 108,
+              backgroundColor: theme.palette.error.main,
+              color: "white",
+            }}
+            onClick={deleteDestination}
+          >
+            <Delete />
+          </Fab>
+          <Fab
+            color="secondary"
+            aria-label="Muokkaa matkakohdetta"
+            sx={{ position: "fixed", right: 30, bottom: 40 }}
+            onClick={toggleDrawer}
+          >
+            <Edit />
+          </Fab>
+        </>
+      ) : null}
 
       <DestinationDrawer
         open={drawerOpen}

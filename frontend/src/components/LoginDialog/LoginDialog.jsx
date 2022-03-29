@@ -17,6 +17,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { makePostRequest } from "../../util/makeApiRequest";
 import useMessage from "../../util/hooks/useMessage";
 import { LoginContext } from "../../util/loginContext";
+import endpoints from "../../util/endpoints";
 
 function LoginDialog({ open, toggle }) {
   const [loginState, setLoginState] = useState({
@@ -25,11 +26,11 @@ function LoginDialog({ open, toggle }) {
   });
   const [passwordVisible, togglePasswordVisibility] = useToggle();
   const { MessageSnackbar, showMessage } = useMessage();
-  const [loginData, setLoginData] = useContext(LoginContext);
+  const [_, setLoginData] = useContext(LoginContext);
 
   async function handleClose() {
     try {
-      const response = await makePostRequest("/login")(
+      const response = await makePostRequest(endpoints.LOGIN)(
         {
           email: loginState.email,
           password: loginState.password,

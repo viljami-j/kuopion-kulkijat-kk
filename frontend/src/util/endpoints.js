@@ -1,5 +1,7 @@
 const endpoints = Object.freeze({
-  DESTINATIONS: "/destinations",
+  DESTINATIONS: "/api/destinations",
+  LOGIN: "/login",
+  REGISTER: "/register",
 });
 
 export default endpoints;
