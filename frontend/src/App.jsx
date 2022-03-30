@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar/Navbar";
 import React from "react";
 import Footer from "./components/Footer/Footer";
 import DestinationReview from "./components/DestinationReview/DestinationReview";
+import MyJourneys from "scenes/my-journeys/MyJourneys";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="destinations" element={<DestinationSearch />} />
           <Route path="destinations/:id" element={<DestinationReview />} />
           <Route path="group_journeys" element={<GroupJourneys />} />
+          <Route path="my_journeys" element={<MyJourneys />} />
         </Routes>
         <Footer />
       </Container>
