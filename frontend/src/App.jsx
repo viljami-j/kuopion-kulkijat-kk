@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import Footer from "./components/Footer/Footer";
 import DestinationReview from "./components/DestinationReview/DestinationReview";
 import { LoginContext } from "./util/loginContext";
+import MyJourneys from "scenes/my-journeys/MyJourneys";
 
 function App() {
   const loginState = useState({ email: "", password: "" });
@@ -24,6 +25,7 @@ function App() {
             <Route path="destinations" element={<DestinationSearch />} />
             <Route path="destinations/:id" element={<DestinationReview />} />
             <Route path="group_journeys" element={<GroupJourneys />} />
+            <Route path="my_journeys" element={<MyJourneys />} />
           </Routes>
           <Footer />
         </LoginContext.Provider>

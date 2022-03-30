@@ -70,6 +70,7 @@ export default function GroupJourneys() {
                   srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
                   alt={item.author}
                   loading="lazy"
+                  style={{ overflow: "hidden" }}
                 />
                 <ImageListItemBar
                   title={item.author}
