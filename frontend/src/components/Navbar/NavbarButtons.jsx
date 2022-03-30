@@ -23,6 +23,14 @@ export default function NavbarButtons({ loggedInName, menuToggle }) {
       <>
         <Button
           component={RouterLink}
+          to="/my_journeys"
+          sx={{ mr: 2, fontSize: 14, fontWeight: "light" }}
+          color="primary"
+        >
+          Omat matkat
+        </Button>
+        <Button
+          component={RouterLink}
           to="/members"
           sx={{ mr: 2, fontSize: 14, fontWeight: "light" }}
           color="primary"

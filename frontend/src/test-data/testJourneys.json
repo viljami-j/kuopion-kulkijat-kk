@@ -3,102 +3,119 @@
     "img": "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
     "author": "Matti Niinistö",
     "startDate": "21.4.2015",
-    "endDate": "1.6.2015"
+    "endDate": "1.6.2015",
+    "location": { "city": "Kuopio", "country": "Suomi" }
   },
   {
     "img": "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
     "author": "Heikki Moisio",
     "startDate": "24.12.2021",
-    "endDate": "2.1.2022"
+    "endDate": "2.1.2022",
+    "location": { "city": "Kuopio", "country": "Suomi" }
   },
   {
     "img": "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
     "author": "Miska Jämsä",
     "startDate": "19.9.2020",
-    "endDate": "19.10.2020"
+    "endDate": "19.10.2020",
+    "location": { "city": "Kuopio", "country": "Suomi" }
   },
   {
     "img": "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
     "author": "Osmo Lyytikäinen",
     "startDate": "19.9.2020",
-    "endDate": "19.10.2020"
+    "endDate": "19.10.2020",
+    "location": { "city": "Kuopio", "country": "Suomi" }
   },
   {
-    "img": "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
+    "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Vantaa.vaakuna.svg/1200px-Vantaa.vaakuna.svg.png",
     "author": "Kalle Vuohi",
     "startDate": "19.9.2020",
-    "endDate": "19.10.2020"
+    "endDate": "19.10.2020",
+    "location": { "city": "Vantaa", "country": "Suomi" }
   },
   {
-    "img": "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
+    "img": "https://images.cdn.yle.fi/image/upload/w_1200,h_800,ar_1.5002042055130005,dpr_1,c_fill,g_faces/q_auto:eco,f_auto,fl_lossy/13-3-11035801",
     "author": "Harri Hunaja",
     "startDate": "19.9.2020",
-    "endDate": "19.10.2020"
+    "endDate": "19.10.2020",
+    "location": { "city": "Rovaniemi", "country": "Suomi" }
   },
   {
     "img": "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
     "author": "Pentti Penala",
     "startDate": "19.9.2020",
-    "endDate": "19.10.2020"
+    "endDate": "19.10.2020",
+    "location": { "city": "Batman", "country": "Turkki" }
   },
   {
-    "img": "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
+    "img": "https://images.prismic.io/lapland-safaris/9fcc6b05-64be-48de-84a2-f95d967aca89_Santa-Claus-Village-Rovaniemi.jpg?auto=compress,format&rect=0,17,4752,2640&w=1440&h=800",
     "author": "Joni Viitala",
     "startDate": "19.9.2020",
-    "endDate": "19.10.2020"
+    "endDate": "19.10.2020",
+    "location": { "city": "Rovaniemi", "country": "Suomi" }
   },
   {
     "img": "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
     "author": "Kyllikki Ilonen",
     "startDate": "19.9.2020",
-    "endDate": "19.10.2020"
+    "endDate": "19.10.2020",
+    "location": { "city": "Kuopio", "country": "Suomi" }
   },
   {
     "img": "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
     "author": "Jenny Suomalainen",
     "startDate": "19.9.2020",
-    "endDate": "19.10.2020"
+    "endDate": "19.10.2020",
+    "location": { "city": "Batman", "country": "Turkki" }
   },
   {
     "img": "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
     "author": "Ismo Laaksonen",
     "startDate": "12.2.2018",
-    "endDate": "19.10.2018"
+    "endDate": "19.10.2018",
+    "location": { "city": "Vantaa", "country": "Suomi" }
   },
   {
-    "img": "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
+    "img": "https://www.foreverclub.fi/wp-content/uploads/2017/06/Helsinki-1700x994.jpg",
     "author": "Jari Karikko",
     "startDate": "16.6.2020",
-    "endDate": "19.10.2020"
+    "endDate": "19.10.2020",
+    "location": { "city": "Helsinki", "country": "Suomi" }
   },
   {
-    "img": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/e9/21/8e/screenshot-2017-10-08.jpg?w=600&h=400&s=1",
+    "img": "http://suomenavustajapalvelut.fi/wp-content/uploads/2019/08/Espoo-1080px.jpg",
     "author": "Joni Lennoni",
     "startDate": "5.5.2020",
-    "endDate": "1.10.2020"
+    "endDate": "1.10.2020",
+    "location": { "city": "Espoo", "country": "Suomi" }
   },
   {
     "img": "https://stuff.fendergarage.com/images/J/9/B/about-fender-1@2x.jpg",
     "author": "Leo Fenderi",
     "startDate": "11.11.2011",
-    "endDate": "12.12.2012"
+    "endDate": "12.12.2012",
+    "location": { "city": "New York", "country": "USA" }
   },
   {
-    "img": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/e9/21/8e/screenshot-2017-10-08.jpg?w=600&h=400&s=1",
+    "img": "https://d2m6qxs3k7lxsj.cloudfront.net/gallery/resort/ber/1.jpg",
     "author": "Jarmo Opel",
     "startDate": "17.4.2011",
-    "endDate": "18.5.2011"
+    "endDate": "18.5.2011",
+    "location": { "city": "Berliini", "country": "Saksa" }
   },
   {
-    "img": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/e9/21/8e/screenshot-2017-10-08.jpg?w=600&h=400&s=1",
+    "img": "https://www.flytap.com/-/media/Flytap/new-tap-pages/destinations/europe/sweden/stockholm/destinations-stockholm-banner-mobile-1024x553.jpg",
     "author": "Pentti Laatikainen",
     "startDate": "5.11.2017",
-    "endDate": "26.12.2017"
+    "endDate": "26.12.2017",
+    "location": { "city": "Tukholma", "country": "Ruotsi" }
   },
   {
-    "img": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/e9/21/8e/screenshot-2017-10-08.jpg?w=600&h=400&s=1",
+    "img": "https://i.media.fi/incoming/qoktst/6460274.jpg/alternates/FREE_1440/6460274.jpg",
     "author": "Pentti Laatikainen",
     "startDate": "21.4.2019",
-    "endDate": "11.7.2019"
+    "endDate": "11.7.2019",
+    "location": { "city": "Tallinna", "country": "Viro" }
   }
 ]
