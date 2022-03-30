@@ -2,18 +2,18 @@ import * as React from "react";
 import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import {
+  Button,
+  CircularProgress,
   Fab,
+  Grid,
   ImageList,
   ImageListItem,
   ImageListItemBar,
-  Button,
-  CircularProgress,
-  Grid,
   Typography,
   useMediaQuery,
 } from "@mui/material";
 import useJourneys from "util/hooks/useJourneys";
-// import testData from "test-data/testJourneys.json";
+import testData from "test-data/testJourneys.json";
 import { theme } from "../../theme";
 
 export default function MyJourneys() {
@@ -24,7 +24,7 @@ export default function MyJourneys() {
   const isSmallWidth = useMediaQuery(theme.breakpoints.down("sm"));
 
   const SHOW_MORE_JOURNEYS_INCREASE_BY = 8;
-  const DATA_SOURCE = journeys; // uncomment testData import & change 'journeys' to 'testData' for testing. Navigate to http://localhost:3000/my_journeys
+  const DATA_SOURCE = testData; // uncomment testData import & change 'journeys' to 'testData' for testing. Navigate to http://localhost:3000/my_journeys
 
   function showMoreJourneys() {
     if (visibleCount < DATA_SOURCE.length) {
@@ -93,17 +93,16 @@ export default function MyJourneys() {
           <JourneyLoadingSnackbar />
         </Grid>
       </Grid>
-      <Grid sx={{ display: "flex", alignItems: "end", justifyContent: "end" }}>
-        <Fab
-          variant="extended"
-          color="secondary"
-          aria-label="addJourney"
-          onClick={() => {}}
-        >
-          <AddIcon sx={{ mr: 1 }} />
-          Lisää matka
-        </Fab>
-      </Grid>
+      <Fab
+        variant="extended"
+        color="secondary"
+        aria-label="addJourney"
+        onClick={() => {}}
+        sx={{ position: "fixed", right: 30, bottom: 40 }}
+      >
+        <AddIcon sx={{ mr: 1 }} />
+        Lisää matka
+      </Fab>
     </>
   );
 }
