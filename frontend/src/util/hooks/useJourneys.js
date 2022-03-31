@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { makeGetRequest } from "../makeApiRequest";
 import useToggle from "./useToggle";
 import useMessage from "./useMessage";
+import endpoints from "../endpoints";
 
 /**
  * UNFINISHED CODE!
@@ -16,7 +17,7 @@ const useJourneys = (id) => {
   useEffect(
     function fetchSuggestedJourneys() {
       const abortController = new AbortController();
-      const path = id ? `/journeys/${id}` : `/journeys/`;
+      const path = id ? `${endpoints.JOURNEYS}/${id}` : endpoints.JOURNEYS;
 
       async function fetchData() {
         try {
