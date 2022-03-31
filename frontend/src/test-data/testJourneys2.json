@@ -1,0 +1,41 @@
+[
+  {
+    "startDate": "2022-04-13",
+    "endDate": "2022-04-20",
+    "private": "false",
+    "journeys": [
+      {
+        "destinationId": 1,
+        "date": "2022-04-16",
+        "text": "I'm baby thundercats everyday carry normcore, neutra glossier taiyaki chillwave slow-carb microdosing. Fam lumbersexual single-origin coffee, cred VHS kale chips kitsch copper mug before they sold out. Tattooed wolf dreamcatcher fashion axe microdosing, kale chips irony pickled chia pour-over. Neutra authentic actually plaid typewriter blog echo park everyday carry gastropub pinterest XOXO. Kinfolk DIY affogato, iPhone schlitz brooklyn hashtag enamel pin 8-bit forage raclette farm-to-table.",
+        "images": []
+      }
+    ]
+  },
+  {
+    "startDate": "2022-05-18",
+    "endDate": "2022-06-24",
+    "private": "false",
+    "journeys": [
+      {
+        "destinationId": 2,
+        "date": "2022-06-20",
+        "text": "I'm baby thundercats everyday carry normcore, neutra glossier taiyaki chillwave slow-carb microdosing. Fam lumbersexual single-origin coffee, cred VHS kale chips kitsch copper mug before they sold out. Tattooed wolf dreamcatcher fashion axe microdosing, kale chips irony pickled chia pour-over. Neutra authentic actually plaid typewriter blog echo park everyday carry gastropub pinterest XOXO. Kinfolk DIY affogato, iPhone schlitz brooklyn hashtag enamel pin 8-bit forage raclette farm-to-table.",
+        "images": []
+      }
+    ]
+  },
+  {
+    "startDate": "2022-08-18",
+    "endDate": "2023-01-24",
+    "private": "true",
+    "journeys": [
+      {
+        "destinationId": 2,
+        "date": "2022-06-20",
+        "text": "I'm baby thundercats everyday carry normcore, neutra glossier taiyaki chillwave slow-carb microdosing. Fam lumbersexual single-origin coffee, cred VHS kale chips kitsch copper mug before they sold out. Tattooed wolf dreamcatcher fashion axe microdosing, kale chips irony pickled chia pour-over. Neutra authentic actually plaid typewriter blog echo park everyday carry gastropub pinterest XOXO. Kinfolk DIY affogato, iPhone schlitz brooklyn hashtag enamel pin 8-bit forage raclette farm-to-table.",
+        "images": []
+      }
+    ]
+  }
+]
