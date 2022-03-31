@@ -10,6 +10,7 @@ import Footer from "./components/Footer/Footer";
 import DestinationReview from "./components/DestinationReview/DestinationReview";
 import { LoginContext } from "./util/loginContext";
 import MyJourneys from "scenes/my-journeys/MyJourneys";
+import JourneyReview from "./scenes/journey-review/JourneyReview";
 import Users from "./scenes/users/Users";
 import UserDetails from "./scenes/user-details/UserDetails";
 
@@ -30,6 +31,7 @@ function App() {
             <Route path="destinations/:id" element={<DestinationReview />} />
             <Route path="group_journeys" element={<GroupJourneys />} />
             <Route path="my_journeys" element={<MyJourneys />} />
+            <Route path="journey/:id" element={<JourneyReview />} />
           </Routes>
           <Footer />
         </LoginContext.Provider>
