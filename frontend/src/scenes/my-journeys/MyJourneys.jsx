@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import {
   Button,
@@ -15,6 +15,9 @@ import {
 import useJourneys from "util/hooks/useJourneys";
 import testData from "test-data/testJourneys.json";
 import { theme } from "../../theme";
+import useToggle from "../../util/hooks/useToggle";
+import JourneyDrawer from "../../components/JourneyDrawer/JourneyDrawer";
+import { LoginContext } from "../../util/loginContext";
 
 export default function MyJourneys() {
   const [visibleCount, setVisibleCount] = useState(8);
@@ -22,6 +25,8 @@ export default function MyJourneys() {
   const { journeys, isLoadingJourneys, JourneyLoadingSnackbar } = useJourneys();
   const isMediumWidth = useMediaQuery(theme.breakpoints.down("md"));
   const isSmallWidth = useMediaQuery(theme.breakpoints.down("sm"));
+  const [drawerOpen, toggleDrawer] = useToggle();
+  const [loginData, _] = useContext(LoginContext);
 
   const SHOW_MORE_JOURNEYS_INCREASE_BY = 8;
   const DATA_SOURCE = testData; // uncomment testData import & change 'journeys' to 'testData' for testing. Navigate to http://localhost:3000/my_journeys
@@ -93,16 +98,25 @@ export default function MyJourneys() {
           <JourneyLoadingSnackbar />
         </Grid>
       </Grid>
-      <Fab
-        variant="extended"
-        color="secondary"
-        aria-label="addJourney"
-        onClick={() => {}}
-        sx={{ position: "fixed", right: 30, bottom: 40 }}
-      >
-        <AddIcon sx={{ mr: 1 }} />
-        Lisää matka
-      </Fab>
+
+      {loginData.email ? (
+        <Fab
+          variant="extended"
+          color="secondary"
+          aria-label="addJourney"
+          onClick={toggleDrawer}
+          sx={{ position: "fixed", right: 30, bottom: 40 }}
+        >
+          <AddIcon sx={{ mr: 1 }} />
+          Lisää matka
+        </Fab>
+      ) : null}
+
+      <JourneyDrawer
+        open={drawerOpen}
+        toggleOpen={toggleDrawer}
+        header={"Uusi matkakertomus"}
+      />
     </>
   );
 }
