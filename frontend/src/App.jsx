@@ -13,6 +13,8 @@ import MyJourneys from "scenes/my-journeys/MyJourneys";
 import JourneyReview from "./scenes/journey-review/JourneyReview";
 import Users from "./scenes/users/Users";
 import UserDetails from "./scenes/user-details/UserDetails";
+import { LocalizationProvider } from "@mui/lab";
+import DateAdapter from "@mui/lab/AdapterDateFns";
 
 function App() {
   const loginState = useState({ email: "", password: "" });
@@ -21,20 +23,22 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container>
-        <LoginContext.Provider value={loginState}>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<FrontPage />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/users/:id" element={<UserDetails />} />
-            <Route path="destinations" element={<DestinationSearch />} />
-            <Route path="destinations/:id" element={<DestinationReview />} />
-            <Route path="group_journeys" element={<GroupJourneys />} />
-            <Route path="my_journeys" element={<MyJourneys />} />
-            <Route path="journey/:id" element={<JourneyReview />} />
-          </Routes>
-          <Footer />
-        </LoginContext.Provider>
+        <LocalizationProvider dateAdapter={DateAdapter}>
+          <LoginContext.Provider value={loginState}>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<FrontPage />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/users/:id" element={<UserDetails />} />
+              <Route path="destinations" element={<DestinationSearch />} />
+              <Route path="destinations/:id" element={<DestinationReview />} />
+              <Route path="group_journeys" element={<GroupJourneys />} />
+              <Route path="my_journeys" element={<MyJourneys />} />
+              <Route path="journey/:id" element={<JourneyReview />} />
+            </Routes>
+            <Footer />
+          </LoginContext.Provider>
+        </LocalizationProvider>
       </Container>
     </ThemeProvider>
   );
