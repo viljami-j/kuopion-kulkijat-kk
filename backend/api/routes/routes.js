@@ -1,28 +1,26 @@
-module.exports = app => {
+module.exports = (app) => {
   const destinations = require("../controllers/controller.js");
+  const journeys = require("../controllers/JourneyController.js");
 
-  var router = require("express").Router();
+  const router = require("express").Router();
 
-  // Post uusi matkakohde
-  router.post("/", destinations.create);
+  router.post("/destinations", destinations.create);
 
-  // Get kaikki matkakohteet
-  router.get("/", destinations.findAll);
+  router.get("/destinations", destinations.findAll);
 
-  // Täs oli joku idea niitä privaatti juttuja varten mutta unohin sen jo :D
-  router.get("/published", destinations.findAllPublished);
+  router.get("/destinations/published", destinations.findAllPublished);
 
-  // Get matkakohde id:llä
-  router.get("/:idmatkakohde", destinations.findOne);
+  router.get("/destinations/:idmatkakohde", destinations.findById);
 
-  // Update matkakohde id:llä
-  router.put("/:idmatkakohde", destinations.update);
+  router.put("/destinations/:idmatkakohde", destinations.updateById);
 
-  // Delete matkakohde id:llä
-  router.delete("/:idmatkakohde", destinations.delete);
+  router.delete("/destinations/:idmatkakohde", destinations.deleteById);
 
-  // Tarvittaessa voi ottaa käyttöön poista kaikki komento
   //router.delete("/", destinations.deleteAll);
 
-  app.use('/api/destinations', router);
+  router.get("/");
+
+  router.get("/user_journeys/:idmatkaaja", journeys.findJourneysByUserId);
+
+  app.use("/api", router);
 };

@@ -1,0 +1,1 @@
+users.js could be renamed to user.model.js to enforce uniformity. This is currently implied via this text file to avoid Git conflicts.txt
