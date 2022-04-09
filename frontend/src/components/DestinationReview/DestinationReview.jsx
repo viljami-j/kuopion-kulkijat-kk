@@ -123,6 +123,7 @@ export default function DestinationReview() {
           country: maa,
           description: kuvausteksti,
         }}
+        onClose={toggleDrawer}
       />
       <MessageSnackbar />
     </Box>

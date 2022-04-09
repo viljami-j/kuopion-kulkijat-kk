@@ -7,6 +7,7 @@ import { Upload } from "@mui/icons-material";
 import endpoints from "../../util/endpoints";
 import { makePostRequest } from "../../util/makeApiRequest";
 import useMessage from "../../util/hooks/useMessage";
+import { useAsync } from "@react-hookz/web";
 
 DestinationDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
@@ -20,7 +21,7 @@ DestinationDrawer.propTypes = {
   }),
 };
 
-function DestinationDrawer({ open, toggleOpen, header, values }) {
+function DestinationDrawer({ open, onClose, header, values }) {
   const initialDestinationData =
     values == null
       ? {
@@ -35,6 +36,15 @@ function DestinationDrawer({ open, toggleOpen, header, values }) {
     initialDestinationData
   );
   const { MessageSnackbar, showMessage } = useMessage();
+  const [postDestinationState, postDestination] = useAsync(
+    async () =>
+      await makePostRequest(endpoints.DESTINATIONS)({
+        kohdenimi: destinationData.name,
+        maa: destinationData.country,
+        paikkakunta: destinationData.city,
+        kuvausteksti: destinationData.description,
+      })
+  );
 
   function onTextFieldChange(event) {
     setDestinationData({
@@ -43,15 +53,17 @@ function DestinationDrawer({ open, toggleOpen, header, values }) {
     });
   }
 
-  async function postNewDestination() {
-    // TODO/80: viimeistele, kun backend valmis
-    try {
-      await makePostRequest(endpoints.DESTINATIONS)(destinationData);
-      toggleOpen();
-    } catch (e) {
+  useEffect(() => {
+    if (postDestinationState.status === "success") {
+      onClose();
+    }
+  }, [postDestinationState.status, onClose]);
+
+  useEffect(() => {
+    if (postDestinationState.error) {
       showMessage("Virhe luotaessa matkakohdetta. Yritä myöhemmin uudelleen");
     }
-  }
+  }, [postDestinationState.error, showMessage]);
 
   useEffect(() => {
     if (values != null) {
@@ -63,8 +75,8 @@ function DestinationDrawer({ open, toggleOpen, header, values }) {
     <SwipeableDrawer
       anchor="right"
       open={open}
-      onOpen={toggleOpen}
-      onClose={toggleOpen}
+      onOpen={() => null}
+      onClose={onClose}
       variant="temporary"
     >
       <Box
@@ -114,11 +126,11 @@ function DestinationDrawer({ open, toggleOpen, header, values }) {
           Lisää kuva
         </Button>
         <Box sx={{ display: "flex", mt: "auto", pb: 1 }}>
-          <Button onClick={toggleOpen} sx={{ width: "50%" }}>
+          <Button onClick={onClose} sx={{ width: "50%" }}>
             Peruuta
           </Button>
           <Button
-            onClick={postNewDestination}
+            onClick={postDestination.execute}
             variant={"contained"}
             sx={{ width: "69%" }}
           >

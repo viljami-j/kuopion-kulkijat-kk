@@ -4,7 +4,7 @@ import useToggle from "./useToggle";
 import useMessage from "./useMessage";
 import endpoints from "../endpoints";
 
-const useDestinations = (id) => {
+const useDestinations = (id, trigger) => {
   const [destinations, setDestinations] = useState([]);
   const [isLoadingDestinations, toggleLoading] = useToggle(true);
   const { MessageSnackbar, showMessage } = useMessage();
@@ -38,7 +38,7 @@ const useDestinations = (id) => {
 
       return () => abortController.abort();
     },
-    [showMessage, toggleLoading, id]
+    [showMessage, toggleLoading, id, trigger]
   );
 
   return {
