@@ -1,27 +1,59 @@
-import { AppBar, Box, Toolbar } from "@mui/material";
-import NavbarButtons from "./NavbarButtons";
-import PropTypes from "prop-types";
+import {
+  AppBar,
+  IconButton,
+  Slide,
+  Toolbar,
+  useMediaQuery,
+  useScrollTrigger,
+} from "@mui/material";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { ArrowBack, Menu } from "@mui/icons-material";
 import StyledLink from "./styled/StyledLink";
+import NavbarButtons from "./NavbarButtons";
+import { theme } from "../../theme";
+import useToggle from "../../util/hooks/useToggle";
+import React from "react";
+import { HamburgerMenu } from "./HamburgerMenu";
 
-Navbar.defaultProps = {
-  loggedInName: "",
-};
+export default function Navbar() {
+  const trigger = useScrollTrigger();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [hamburgerMenuOpen, toggleHamburgerMenu] = useToggle();
 
-Navbar.propTypes = {
-  loggedInName: PropTypes.string,
-};
+  const shouldEnableBackNavigation = new RegExp(/\/destinations\/\d/).test(
+    location.pathname
+  );
 
-export default function Navbar({ loggedInName }) {
   return (
-    <div>
-      <Box>
-        <AppBar elevation={0} color="transparent" position="static">
-          <Toolbar disableGutters>
-            <StyledLink href="/">Kuopion Kulkijat</StyledLink>
-            <NavbarButtons loggedInName={loggedInName} />
+    <>
+      <Slide appear={false} direction={"down"} in={!trigger}>
+        <AppBar position="fixed" sx={{ backgroundColor: "white" }}>
+          <Toolbar>
+            {shouldEnableBackNavigation ? (
+              <IconButton
+                aria-label="Navigoi takaisin"
+                onClick={() => navigate(-1)}
+              >
+                <ArrowBack sx={{ color: "black", mr: 1 }} />
+              </IconButton>
+            ) : null}
+            <StyledLink to="/" component={Link}>
+              Kuopion Kulkijat
+            </StyledLink>
+            {isMobile ? (
+              <IconButton aria-label="Valikko" onClick={toggleHamburgerMenu}>
+                <Menu color="primary" />
+              </IconButton>
+            ) : (
+              <NavbarButtons />
+            )}
           </Toolbar>
         </AppBar>
-      </Box>
-    </div>
+      </Slide>
+      <Toolbar />
+      <HamburgerMenu open={hamburgerMenuOpen} onClose={toggleHamburgerMenu} />
+    </>
   );
 }

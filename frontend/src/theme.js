@@ -27,23 +27,22 @@ export const theme = createTheme({
     fontSize: 16,
     fontWeightMedium: 500,
     fontWeightBold: 600,
-  },
-  props: {
-    MuiAppBar: {
-      color: "transparent",
+    h1: {
+      fontSize: "3rem",
+      fontWeight: 500,
+      "@media (max-width: 600px)": {
+        fontSize: "2rem",
+      },
+    },
+    h2: {
+      fontSize: "2.25rem",
+      fontWeight: 600,
+      "@media (max-width: 600px)": {
+        fontSize: "1.5rem",
+      },
     },
   },
   components: {
-    MuiTypography: {
-      styleOverrides: {
-        h2: ({ ownerState }) => ({
-          ...(ownerState.variant === "h2" && {
-            fontSize: "36px",
-            fontWeight: 600,
-          }),
-        }),
-      },
-    },
     MuiButton: {
       styleOverrides: {
         contained: ({ ownerState }) => ({

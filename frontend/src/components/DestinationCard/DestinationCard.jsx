@@ -10,12 +10,14 @@ import PropTypes from "prop-types";
 import LocationIndicator from "./LocationIndicator";
 import DestinationStyledCard from "./styled/DestinationStyledCard";
 import DestinationCardImage from "./styled/DestinationCardImage";
+import { useNavigate } from "react-router-dom";
 
 DestinationCard.defaultProps = {
   image: "",
 };
 
 export const DestinationPropType = {
+  id: PropTypes.number,
   name: PropTypes.string,
   description: PropTypes.string,
   image: PropTypes.string,
@@ -25,10 +27,16 @@ export const DestinationPropType = {
 
 DestinationCard.propTypes = DestinationPropType;
 
-function DestinationCard({ name, description, image, city, country }) {
+function DestinationCard({ id, name, description, image, city, country }) {
+  const navigate = useNavigate();
+
   const displayedContent = takeMaxFortyCharacters(description);
   return (
-    <DestinationStyledCard>
+    <DestinationStyledCard
+      onClick={() => {
+        navigate(`../destinations/${id}`, { replace: true });
+      }}
+    >
       <CardActionArea>
         {image ? (
           <DestinationCardImage
@@ -52,6 +60,7 @@ function DestinationCard({ name, description, image, city, country }) {
           titleTypographyProps={{
             component: "h3",
             fontWeight: "medium",
+            fontSize: "max(1rem, 1.15vw)",
             textAlign: "start",
           }}
           sx={{ pb: 0 }}
