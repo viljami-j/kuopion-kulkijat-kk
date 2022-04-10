@@ -31,11 +31,15 @@ User.prototype = {
     for (prop in body) {
       bind.push(body[prop]);
     }
+    if(bind[0] && bind[1] && bind[2] && bind[3] && bind[4]) {
     let sql = `INSERT INTO matkaaja(etunimi, sukunimi, nimimerkki, email, password) VALUES (?, ?, ?, ?, ?)`;
     pool.query(sql, bind, function (err, result) {
       if (err) throw err;
       callback(result.insertId);
-    });
+    })}else{
+    bind = [] 
+   console.log("eipä menny")
+  }
   },
 
   login: function (email, password, callback) {
