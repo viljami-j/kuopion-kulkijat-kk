@@ -37,7 +37,6 @@ Journey.findById = (idmatkaaja, result) => {
           if (err_storyimgs) {
             console.log("error while fetching story images: ", err_storyimgs);
             result(err_storyimgs, null);
-            return;
           }
           blobToBase64(storyimgs, (b64_storyimgs) => {
             journey_images.push(b64_storyimgs);
@@ -59,7 +58,6 @@ Journey.findById = (idmatkaaja, result) => {
           if (err_storyimgs) {
             console.log("error while fetching story images: ", err_storyimgs);
             result(err_storyimgs, null);
-            return;
           }
           blobToBase64(storyimgs, (b64_storyimgs) => {
             journey_images.push(b64_storyimgs);
@@ -99,7 +97,6 @@ Journey.findById = (idmatkaaja, result) => {
     if (err_journeydata) {
       console.log("error while fetching journey data: ", err_journeydata);
       result(err_journeydata, null);
-      return;
     }
 
     if (journey_data.length) {
@@ -112,39 +109,20 @@ Journey.findById = (idmatkaaja, result) => {
             err_journeyimgs
           );
           result(err_journeyimgs, null);
-          return;
         }
 
         if (journey_stories.length) {
           var count = 0;
           var end_condition = journey_stories.length - 1;
 
-          sql.query(
-            `SELECT kuva AS image FROM kuva WHERE idtarina=${journey_stories[count].storyId}`,
-            (err_storyimgs, storyimgs) => {
-              if (err_storyimgs) {
-                console.log(
-                  "error while fetching story images: ",
-                  err_storyimgs
-                );
-                result(err_storyimgs, null);
-                return;
-              }
-
-              blobToBase64(storyimgs, (b64_storyimgs) => {
-                var journey_images = [b64_storyimgs];
-                recursive_image_query(
-                  journey_data,
-                  journey_stories,
-                  journey_images,
-                  count + 1,
-                  end_condition
-                );
-              });
-            }
+          var journey_images = [];
+          recursive_image_query(
+            journey_data,
+            journey_stories,
+            journey_images,
+            count,
+            end_condition
           );
-
-          return;
         }
       });
     } else result({ kind: "not_found" }, null); // journeys not found with provided user id
