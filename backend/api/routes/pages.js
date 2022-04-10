@@ -23,7 +23,7 @@ router.get("/home", (req, res, next) => {
   res.redirect("/");
 });
 
-router.post("/login", (req, res, next) => {
+router.post("/api/login", (req, res, next) => {
   user.login(req.body.email, req.body.password, function (result) {
     if (result) {
       req.session.user = result;
@@ -36,7 +36,7 @@ router.post("/login", (req, res, next) => {
   });
 });
 
-router.post("/register", (req, res, next) => {
+router.post("/api/register", (req, res, next) => {
   let userInput = {
     etunimi: req.body.etunimi,
     sukunimi: req.body.sukunimi,
@@ -58,7 +58,7 @@ router.post("/register", (req, res, next) => {
   });
 });
 
-router.get("/logout", (req, res, next) => {
+router.get("/api/logout", (req, res, next) => {
   if (req.session.user) {
     req.session.destroy(function () {
       res.redirect("/");
