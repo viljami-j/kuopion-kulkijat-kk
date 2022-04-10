@@ -9,12 +9,11 @@ import {
 import DestinationCardGrid from "components/DestinationCardGrid";
 import { Add } from "@mui/icons-material";
 import DestinationDrawer from "../../components/DestinationDrawer/DestinationDrawer";
-import useToggle from "../../util/hooks/useToggle";
 import { LoginContext } from "../../util/loginContext";
 import { makeGetRequest } from "../../util/makeApiRequest";
 import endpoints from "../../util/endpoints";
 import useMessage from "../../util/hooks/useMessage";
-import { useAsyncAbortable, useMountEffect } from "@react-hookz/web";
+import { useAsyncAbortable, useMountEffect, useToggle } from "@react-hookz/web";
 
 function DestinationSearch() {
   const [destinations, setDestinations] = useState([]);
@@ -97,7 +96,7 @@ function DestinationSearch() {
           color="secondary"
           aria-label="Uusi matkakohde"
           sx={{ position: "fixed", right: 30, bottom: 40 }}
-          onClick={toggleDrawer}
+          onClick={() => toggleDrawer()}
         >
           <Add />
         </Fab>

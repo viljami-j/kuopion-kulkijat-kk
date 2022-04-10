@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { Snackbar } from "@mui/material";
-import useToggle from "./useToggle";
+import { useToggle } from "@react-hookz/web";
 
 function useMessage() {
   const [open, toggleSnackbar] = useToggle();

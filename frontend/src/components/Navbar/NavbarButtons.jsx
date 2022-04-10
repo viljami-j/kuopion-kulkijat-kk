@@ -1,11 +1,11 @@
 import { Button } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import useToggle from "../../util/hooks/useToggle";
 import RegistrationDialog from "../RegistrationDialog/RegistrationDialog";
 import LoginDialog from "../LoginDialog/LoginDialog";
 import { LoginContext } from "../../util/loginContext";
 import { useContext } from "react";
 import PropTypes from "prop-types";
+import { useToggle } from "@react-hookz/web";
 
 NavbarButtons.propTypes = {
   menuToggle: PropTypes.func,
@@ -79,7 +79,7 @@ export default function NavbarButtons({ menuToggle }) {
       <Button
         sx={{ mr: 2, fontSize: 14 }}
         color="primary"
-        onClick={toggleLoginDialog}
+        onClick={() => toggleLoginDialog()}
       >
         Kirjaudu sisään
       </Button>
@@ -87,15 +87,15 @@ export default function NavbarButtons({ menuToggle }) {
         sx={{ fontSize: 14, mr: 2 }}
         variant="contained"
         color="primary"
-        onClick={toggleRegistrationDialog}
+        onClick={() => toggleRegistrationDialog()}
       >
         Rekisteröidy
       </Button>
       <RegistrationDialog
         open={registrationDialogOpen}
-        toggle={toggleRegistrationDialog}
+        toggle={() => toggleRegistrationDialog()}
       />
-      <LoginDialog open={loginDialogOpen} toggle={toggleLoginDialog} />
+      <LoginDialog open={loginDialogOpen} toggle={() => toggleLoginDialog()} />
     </>
   );
 }

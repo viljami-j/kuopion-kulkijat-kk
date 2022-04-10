@@ -6,13 +6,12 @@ import { useParams } from "react-router-dom";
 import React, { useContext, useEffect, useState } from "react";
 import { Delete, Edit } from "@mui/icons-material";
 import DestinationDrawer from "../DestinationDrawer/DestinationDrawer";
-import useToggle from "../../util/hooks/useToggle";
 import { theme } from "../../theme";
 import { makeDeleteRequest, makeGetRequest } from "../../util/makeApiRequest";
 import endpoints from "../../util/endpoints";
 import useMessage from "../../util/hooks/useMessage";
 import { LoginContext } from "../../util/loginContext";
-import { useAsyncAbortable, useMountEffect } from "@react-hookz/web";
+import { useAsyncAbortable, useMountEffect, useToggle } from "@react-hookz/web";
 
 export default function DestinationReview() {
   const { id } = useParams();
@@ -122,7 +121,7 @@ export default function DestinationReview() {
             color="secondary"
             aria-label="Muokkaa matkakohdetta"
             sx={{ position: "fixed", right: 30, bottom: 40 }}
-            onClick={toggleDrawer}
+            onClick={() => toggleDrawer()}
           >
             <Edit />
           </Fab>
@@ -139,7 +138,7 @@ export default function DestinationReview() {
           country: maa,
           description: kuvausteksti,
         }}
-        onClose={toggleDrawer}
+        onClose={() => toggleDrawer()}
       />
       <MessageSnackbar />
     </Box>

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { makeGetRequest } from "../makeApiRequest";
-import useToggle from "./useToggle";
 import useMessage from "./useMessage";
 import endpoints from "../endpoints";
+import { useToggle } from "@react-hookz/web";
 
 /**
  * UNFINISHED CODE!

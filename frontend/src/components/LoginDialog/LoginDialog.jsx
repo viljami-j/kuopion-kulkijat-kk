@@ -11,13 +11,13 @@ import {
   InputAdornment,
   TextField,
 } from "@mui/material";
-import useToggle from "../../util/hooks/useToggle";
 import PropTypes from "prop-types";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { makePostRequest } from "../../util/makeApiRequest";
 import useMessage from "../../util/hooks/useMessage";
 import { LoginContext } from "../../util/loginContext";
 import endpoints from "../../util/endpoints";
+import { useToggle } from "@react-hookz/web";
 
 function LoginDialog({ open, toggle }) {
   const [loginState, setLoginState] = useState({
@@ -46,7 +46,6 @@ function LoginDialog({ open, toggle }) {
         });
       }
     } catch (error) {
-      console.log(error.message);
       showMessage("Väärä sähköposti tai salasana");
     } finally {
       toggle();
@@ -92,7 +91,7 @@ function LoginDialog({ open, toggle }) {
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
-                      onClick={togglePasswordVisibility}
+                      onClick={() => togglePasswordVisibility()}
                       onMouseDown={(event) => event.preventDefault()}
                       edge="end"
                     >
