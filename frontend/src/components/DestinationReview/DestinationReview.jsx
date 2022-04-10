@@ -3,21 +3,28 @@ import DestinationBackgroundImage from "../DestinationBackgroundImage/Destinatio
 import LocationIndicator from "../DestinationCard/LocationIndicator";
 import { Box } from "@mui/system";
 import { useParams } from "react-router-dom";
-import useDestinations from "../../util/hooks/useDestinations";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Delete, Edit } from "@mui/icons-material";
 import DestinationDrawer from "../DestinationDrawer/DestinationDrawer";
 import useToggle from "../../util/hooks/useToggle";
 import { theme } from "../../theme";
-import { makeDeleteRequest } from "../../util/makeApiRequest";
+import { makeDeleteRequest, makeGetRequest } from "../../util/makeApiRequest";
 import endpoints from "../../util/endpoints";
 import useMessage from "../../util/hooks/useMessage";
 import { LoginContext } from "../../util/loginContext";
+import { useAsyncAbortable, useMountEffect } from "@react-hookz/web";
 
 export default function DestinationReview() {
   const { id } = useParams();
-  const { destinations, isLoadingDestinations, DestinationLoadingSnackbar } =
-    useDestinations(id);
+  const [destinations, setDestinations] = useState([]);
+  const [dataFetchState, fetchDestination] = useAsyncAbortable(
+    async (signal) => {
+      const destinations = await makeGetRequest(
+        `${endpoints.DESTINATIONS}/${id}`
+      )("", signal);
+      setDestinations(destinations);
+    }
+  );
   const [drawerOpen, toggleDrawer] = useToggle();
   const { MessageSnackbar, showMessage } = useMessage();
 
@@ -35,11 +42,21 @@ export default function DestinationReview() {
     }
   }
 
+  useEffect(() => {
+    if (dataFetchState.error) {
+      showMessage(
+        "Verkkovirhe haettaessa matkakohdetta. Yritä myöhemmin uudelleen."
+      );
+    }
+  }, [dataFetchState.error, showMessage]);
+
+  useMountEffect(fetchDestination.execute);
+
   return (
     <Box
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      {isLoadingDestinations ? (
+      {dataFetchState.loading ? (
         <CircularProgress sx={{ m: 20 }} />
       ) : (
         <>
@@ -85,7 +102,6 @@ export default function DestinationReview() {
           </Typography>
         </>
       )}
-      <DestinationLoadingSnackbar />
 
       {loginData.email !== "" ? (
         <>

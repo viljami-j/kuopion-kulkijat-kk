@@ -11,15 +11,18 @@ import { Add } from "@mui/icons-material";
 import DestinationDrawer from "../../components/DestinationDrawer/DestinationDrawer";
 import useToggle from "../../util/hooks/useToggle";
 import { LoginContext } from "../../util/loginContext";
-import { useAsyncFn, useMount } from "react-use";
 import { makeGetRequest } from "../../util/makeApiRequest";
 import endpoints from "../../util/endpoints";
 import useMessage from "../../util/hooks/useMessage";
+import { useAsyncAbortable, useMountEffect } from "@react-hookz/web";
 
 function DestinationSearch() {
   const [destinations, setDestinations] = useState([]);
-  const [state, fetchDestinations] = useAsyncFn(async () => {
-    const destinations = await makeGetRequest(endpoints.DESTINATIONS)();
+  const [state, fetchDestinations] = useAsyncAbortable(async (signal) => {
+    const destinations = await makeGetRequest(endpoints.DESTINATIONS)(
+      "",
+      signal
+    );
     setDestinations(destinations);
   });
   const [searchQuery, setSearchQuery] = useState("");
@@ -41,10 +44,10 @@ function DestinationSearch() {
 
   function onDrawerClose() {
     toggleDrawer();
-    fetchDestinations();
+    fetchDestinations.execute();
   }
 
-  useMount(() => fetchDestinations());
+  useMountEffect(fetchDestinations.execute);
 
   useEffect(() => {
     if (state.error) {

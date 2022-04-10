@@ -1,13 +1,25 @@
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
-import React, { useState } from "react";
-import useDestinations from "../../util/hooks/useDestinations";
+import React, { useEffect, useState } from "react";
 import DestinationCardGrid from "../../components/DestinationCardGrid";
+import { makeGetRequest } from "../../util/makeApiRequest";
+import endpoints from "../../util/endpoints";
+import useMessage from "../../util/hooks/useMessage";
+import { useAsyncAbortable, useMountEffect } from "@react-hookz/web";
 
 const DESTINATIONS_PER_ROW = 4;
 
 function SuggestedDestinations() {
-  const { destinations, isLoadingDestinations, DestinationLoadingSnackbar } =
-    useDestinations();
+  const [destinations, setDestinations] = useState([]);
+  const [dataFetchState, fetchDestinations] = useAsyncAbortable(
+    async (signal) => {
+      const destinations = await makeGetRequest(endpoints.DESTINATIONS)(
+        "",
+        signal
+      );
+      setDestinations(destinations);
+    }
+  );
+  const { MessageSnackbar, showMessage } = useMessage();
   const [numberOfDestinations, setNumberOfDestinations] =
     useState(DESTINATIONS_PER_ROW);
 
@@ -24,6 +36,16 @@ function SuggestedDestinations() {
     );
   }
 
+  useEffect(() => {
+    if (dataFetchState.error) {
+      showMessage(
+        "Verkkovirhe haettaessa matkakohteita. Yritä myöhemmin uudelleen."
+      );
+    }
+  }, [dataFetchState.error, showMessage]);
+
+  useMountEffect(fetchDestinations.execute);
+
   return (
     <Box
       sx={{
@@ -37,7 +59,7 @@ function SuggestedDestinations() {
       <Typography variant="h2">Suosittelemme sinulle</Typography>
       <Typography>Käyttäjämme ovat nauttineet näistä kohteista</Typography>
 
-      {isLoadingDestinations ? (
+      {dataFetchState.loading ? (
         <CircularProgress sx={{ mx: "auto", my: 20 }} />
       ) : (
         <DestinationCardGrid destinations={calculateDisplayedDestinations()} />
@@ -50,7 +72,7 @@ function SuggestedDestinations() {
         Näytä lisää
       </Button>
 
-      <DestinationLoadingSnackbar />
+      <MessageSnackbar />
     </Box>
   );
 }
