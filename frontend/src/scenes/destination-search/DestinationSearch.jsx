@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import {
   Box,
   CircularProgress,
@@ -41,10 +47,10 @@ function DestinationSearch() {
     });
   }, [destinations, searchQuery]);
 
-  function onDrawerClose() {
+  const onDrawerClose = useCallback(() => {
     toggleDrawer();
     fetchDestinations.execute();
-  }
+  }, [fetchDestinations, toggleDrawer]);
 
   useMountEffect(fetchDestinations.execute);
 

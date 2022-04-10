@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { DestinationDescriptionTextField } from "./DestinationDescriptionTextField";
 import { Upload } from "@mui/icons-material";
 import endpoints from "../../util/endpoints";
-import { makePostRequest } from "../../util/makeApiRequest";
+import { makePostRequest, makePutRequest } from "../../util/makeApiRequest";
 import useMessage from "../../util/hooks/useMessage";
 import { useAsync } from "@react-hookz/web";
 
@@ -14,6 +14,7 @@ DestinationDrawer.propTypes = {
   toggleOpen: PropTypes.func.isRequired,
   header: PropTypes.string.isRequired,
   values: PropTypes.shape({
+    id: PropTypes.number,
     name: PropTypes.string,
     city: PropTypes.string,
     country: PropTypes.string,
@@ -25,6 +26,7 @@ function DestinationDrawer({ open, onClose, header, values }) {
   const initialDestinationData =
     values == null
       ? {
+          id: 0,
           name: "",
           city: "",
           country: "",
@@ -36,15 +38,30 @@ function DestinationDrawer({ open, onClose, header, values }) {
     initialDestinationData
   );
   const { MessageSnackbar, showMessage } = useMessage();
-  const [postDestinationState, postDestination] = useAsync(
-    async () =>
-      await makePostRequest(endpoints.DESTINATIONS)({
-        kohdenimi: destinationData.name,
-        maa: destinationData.country,
-        paikkakunta: destinationData.city,
-        kuvausteksti: destinationData.description,
-      })
+  const [destinationOperationState, destinationOperation] = useAsync(() =>
+    values == null ? postDestinationData() : putDestinationData()
   );
+
+  async function postDestinationData() {
+    return await makePostRequest(endpoints.DESTINATIONS)({
+      kohdenimi: destinationData.name,
+      maa: destinationData.country,
+      paikkakunta: destinationData.city,
+      kuvausteksti: destinationData.description,
+    });
+  }
+
+  async function putDestinationData() {
+    return await makePutRequest(
+      `${endpoints.DESTINATIONS}/${destinationData.id}`
+    )({
+      idmatkakohde: destinationData.id,
+      kohdenimi: destinationData.name,
+      maa: destinationData.country,
+      paikkakunta: destinationData.city,
+      kuvausteksti: destinationData.description,
+    });
+  }
 
   function onTextFieldChange(event) {
     setDestinationData({
@@ -54,16 +71,16 @@ function DestinationDrawer({ open, onClose, header, values }) {
   }
 
   useEffect(() => {
-    if (postDestinationState.status === "success") {
+    if (destinationOperationState.status === "success") {
       onClose();
     }
-  }, [postDestinationState.status, onClose]);
+  }, [destinationOperationState.status, onClose]);
 
   useEffect(() => {
-    if (postDestinationState.error) {
+    if (destinationOperationState.error) {
       showMessage("Virhe luotaessa matkakohdetta. Yritä myöhemmin uudelleen");
     }
-  }, [postDestinationState.error, showMessage]);
+  }, [destinationOperationState.error, showMessage]);
 
   useEffect(() => {
     if (values != null) {
@@ -130,7 +147,7 @@ function DestinationDrawer({ open, onClose, header, values }) {
             Peruuta
           </Button>
           <Button
-            onClick={postDestination.execute}
+            onClick={destinationOperation.execute}
             variant={"contained"}
             sx={{ width: "69%" }}
           >
