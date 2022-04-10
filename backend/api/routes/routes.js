@@ -42,5 +42,5 @@ module.exports = app2 => {
   router2.put("/:idmatkaaja", User.update);
 
 
-  app2.use('/users', router2);
+  app2.use('/api/users', router2);
 };
