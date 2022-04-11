@@ -8,9 +8,8 @@ app.use(cors(corsOptions));
 var corsOptions = {
   origin: "http://localhost:3000",
 };
-
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ limit: "10mb", extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 require("./routes/routes.js")(app);
 app.set("views", path.join(__dirname, "views"));
@@ -27,7 +26,7 @@ app.use(
   })
 );
 
-app.use('/', pageRouter)
+app.use("/", pageRouter);
 
 app.use((req, res, next) => {
   var err = new Error("Page not found");
