@@ -6,6 +6,7 @@ import { LoginContext } from "../../util/loginContext";
 import { useContext } from "react";
 import PropTypes from "prop-types";
 import { useToggle } from "@react-hookz/web";
+import useMessage from "../../util/hooks/useMessage";
 
 NavbarButtons.propTypes = {
   menuToggle: PropTypes.func,
@@ -15,6 +16,7 @@ export default function NavbarButtons({ menuToggle }) {
   const [registrationDialogOpen, toggleRegistrationDialog] = useToggle();
   const [loginDialogOpen, toggleLoginDialog] = useToggle();
   const [loginData, setLoginData] = useContext(LoginContext);
+  const { MessageSnackbar, showMessage } = useMessage();
 
   if (loginData.email)
     return (
@@ -95,7 +97,12 @@ export default function NavbarButtons({ menuToggle }) {
         open={registrationDialogOpen}
         toggle={() => toggleRegistrationDialog()}
       />
-      <LoginDialog open={loginDialogOpen} toggle={() => toggleLoginDialog()} />
+      <LoginDialog
+        open={loginDialogOpen}
+        toggle={() => toggleLoginDialog()}
+        showMessage={showMessage}
+      />
+      <MessageSnackbar />
     </>
   );
 }
