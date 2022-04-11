@@ -1,6 +1,7 @@
 module.exports = (app) => {
   const destinations = require("../controllers/controller.js");
   const journeys = require("../controllers/JourneyController.js");
+  const pictures = require("../controllers/PictureController.js");
 
   const router = require("express").Router();
 
@@ -21,6 +22,8 @@ module.exports = (app) => {
   router.get("/");
 
   router.get("/user_journeys/:idmatkaaja", journeys.findJourneysByUserId);
+
+  router.get("/pictures/:idkuva", pictures.findPictureById);
 
   app.use("/api", router);
 };
