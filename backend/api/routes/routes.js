@@ -25,5 +25,9 @@ module.exports = (app) => {
 
   router.get("/pictures/:idkuva", pictures.findPictureById);
 
+  router.post("/pictures", pictures.create);
+
+  router.delete("/pictures/:idkuva", pictures.deletePictureById);
+
   app.use("/api", router);
 };
