@@ -32,6 +32,9 @@ function RegistrationDialog({ open, toggle }) {
   async function handleClose() {
     try {
       await makePostRequest(endpoints.REGISTER)({
+        etunimi: registrationState.firstName,
+        sukunimi: registrationState.lastName,
+        nimimerkki: registrationState.userName,
         email: registrationState.email,
         password: registrationState.password,
       });

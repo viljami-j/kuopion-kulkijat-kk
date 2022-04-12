@@ -1,7 +1,7 @@
 const endpoints = Object.freeze({
   DESTINATIONS: "/api/destinations",
-  LOGIN: "/login",
-  REGISTER: "/register",
+  LOGIN: "/api/login",
+  REGISTER: "/api/register",
   JOURNEYS: "/api/journeys",
 });
 

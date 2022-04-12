@@ -1,8 +1,8 @@
 module.exports = app => {
   const destinations = require("../controllers/controller.js");
 
-  var router = require("express").Router();
 
+  var router = require("express").Router();
   // Post uusi matkakohde
   router.post("/", destinations.create);
 
@@ -25,4 +25,22 @@ module.exports = app => {
   //router.delete("/", destinations.deleteAll);
 
   app.use('/api/destinations', router);
+ 
+};
+module.exports = app2 => {
+  const User = require("../controllers/controllerUser.js");
+
+
+  var router2 = require("express").Router();
+ 
+  // Get kaikki matkakohteet
+  router2.get("/", User.findAll);
+
+  // Get matkakohde id:llä
+  router2.get("/:idmatkaaja", User.findOne);
+
+  router2.put("/:idmatkaaja", User.update);
+
+
+  app2.use('/api/users', router2);
 };
