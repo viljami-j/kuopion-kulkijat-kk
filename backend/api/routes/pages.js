@@ -36,7 +36,6 @@ router.post("/api/login", (req, res, next) => {
 });
 
 router.post("/api/register", (req, res, next) => {
-
   let userInput = {
     etunimi: req.body.etunimi,
     sukunimi: req.body.sukunimi,
@@ -44,18 +43,6 @@ router.post("/api/register", (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
   };
-
-  user.create(userInput, function (lastId) {
-    if (lastId) {
-      user.find(lastId, function (result) {
-        req.session.user = result;
-        req.session.opp = 0;
-        res.status(201).send({ message: "New user created." });
-      });
-    } else {
-      console.log("Error creating new user");
-    }
-  });
 
   try {
     user.create(userInput, function (lastId) {
