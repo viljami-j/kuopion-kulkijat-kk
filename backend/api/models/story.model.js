@@ -1,10 +1,10 @@
 const sql = require("./db.js");
 
 const Story = function (story) {
-  (this.date = story.date),
-    (this.text = story.text),
-    (this.destinationId = story.destinationId),
-    (this.journeyId = story.journeyId);
+  (this.pvm = story.pvm),
+    (this.teksti = story.teksti),
+    (this.idmatkakohde = story.idmatkakohde),
+    (this.idmatka = story.idmatka);
 };
 
 Story.findById = (storyId, result) => {
@@ -39,7 +39,7 @@ Story.create = (newStory, result) => {
 Story.updateById = (storyId, story, result) => {
   sql.query(
     "UPDATE tarina SET pvm = ?, teksti = ?, idmatkakohde = ?, idmatka = ? WHERE idtarina = ?",
-    [story.date, story.text, story.destinationId, story.journeyId, storyId],
+    [story.pvm, story.teksti, story.idmatkakohde, story.idmatka, storyId],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -58,26 +58,19 @@ Story.updateById = (storyId, story, result) => {
 };
 
 Story.remove = (storyId, result) => {
-  sql.query("DELETE FROM kuva WHERE idtarina = ?", storyId, (err_pics, res) => {
-    if (err_pics) {
-      console.log("error: ", err_pics);
-      result(null, err_pics);
+  sql.query("DELETE FROM tarina WHERE idtarina = ?", storyId, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
       return;
     }
-    sql.query("DELETE FROM tarina WHERE idtarina = ?", storyId, (err, res) => {
-      if (err) {
-        console.log("error: ", err);
-        result(null, err);
-        return;
-      }
 
-      if (res.affectedRows == 0) {
-        result({ kind: "not_found" }, null);
-        return;
-      }
+    if (res.affectedRows == 0) {
+      result({ kind: "not_found" }, null);
+      return;
+    }
 
-      result(null, res);
-    });
+    result(null, res);
   });
 };
 
