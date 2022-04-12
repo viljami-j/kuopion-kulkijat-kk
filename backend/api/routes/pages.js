@@ -4,7 +4,7 @@ const router = express.Router();
 
 const user = new User();
 
-router.get("", (req, res, next) => {
+router.get("/", (req, res, next) => {
   let user = req.session.user;
   if (user) {
     res.redirect("/home");
@@ -22,8 +22,7 @@ router.get("/home", (req, res, next) => {
   }
   res.redirect("/");
 });
-
-router.post("/login", (req, res, next) => {
+router.post("/api/login", (req, res, next) => {
   user.login(req.body.email, req.body.password, function (result) {
     if (result) {
       req.session.user = result;
@@ -36,8 +35,12 @@ router.post("/login", (req, res, next) => {
   });
 });
 
-router.post("/register", (req, res, next) => {
+router.post("/api/register", (req, res, next) => {
+
   let userInput = {
+    etunimi: req.body.etunimi,
+    sukunimi: req.body.sukunimi,
+    nimimerkki: req.body.nimimerkki,
     email: req.body.email,
     password: req.body.password,
   };
@@ -53,9 +56,25 @@ router.post("/register", (req, res, next) => {
       console.log("Error creating new user");
     }
   });
+
+  try {
+    user.create(userInput, function (lastId) {
+      if (lastId) {
+        user.find(lastId, function (result) {
+          req.session.user = result;
+          req.session.opp = 0;
+          res.status(201).send({ message: "New user created." });
+        });
+      } else {
+        console.log("Error creating new user");
+      }
+    });
+  } catch (e) {
+    res.status(400).send({ message: "Missing user information." });
+  }
 });
 
-router.get("/logout", (req, res, next) => {
+router.get("/api/logout", (req, res, next) => {
   if (req.session.user) {
     req.session.destroy(function () {
       res.redirect("/");
