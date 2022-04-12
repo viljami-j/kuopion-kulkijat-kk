@@ -3,6 +3,7 @@ module.exports = (app) => {
   const journeys = require("../controllers/JourneyController.js");
   const pictures = require("../controllers/PictureController.js");
   const stories = require("../controllers/StoriesController.js");
+  const users = require("../controllers/UsersController");
 
   const router = require("express").Router();
 
@@ -16,6 +17,8 @@ module.exports = (app) => {
   //router.delete("/", destinations.deleteAll);
 
   router.get("/");
+
+  router.get("/users/public", users.getPublicData);
 
   router.get("/user_journeys/:idmatkaaja", journeys.findJourneysByUserId);
 
