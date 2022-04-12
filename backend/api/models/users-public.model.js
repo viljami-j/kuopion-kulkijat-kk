@@ -9,7 +9,7 @@ const UsersPublic = function (destination) {};
 
 UsersPublic.getAll = (result) => {
   sql.query(
-    "SELECT idmatkaaja AS userId, etunimi AS firstname, sukunimi AS lastname, nimimerkki AS username, paikkakunta AS city, esittely AS introduction, kuva AS profilePicture FROM matkaaja",
+    "SELECT idmatkaaja, etunimi, sukunimi, nimimerkki, paikkakunta, esittely, kuva FROM matkaaja",
     (err, res) => {
       if (err) {
         console.log("error: ", err);
