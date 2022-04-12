@@ -1,6 +1,6 @@
-module.exports = app => {
+const User = require("../controllers/controllerUser");
+module.exports = (app) => {
   const destinations = require("../controllers/controller.js");
-
 
   var router = require("express").Router();
   // Post uusi matkakohde
@@ -24,23 +24,16 @@ module.exports = app => {
   // Tarvittaessa voi ottaa käyttöön poista kaikki komento
   //router.delete("/", destinations.deleteAll);
 
-  app.use('/api/destinations', router);
- 
-};
-module.exports = app2 => {
+  app.use("/api/destinations", router);
+
   const User = require("../controllers/controllerUser.js");
+  var userRoutes = require("express").Router();
 
+  userRoutes.get("/", User.findAll);
 
-  var router2 = require("express").Router();
- 
-  // Get kaikki matkakohteet
-  router2.get("/", User.findAll);
+  userRoutes.get("/:idmatkaaja", User.findOne);
 
-  // Get matkakohde id:llä
-  router2.get("/:idmatkaaja", User.findOne);
+  userRoutes.put("/:idmatkaaja", User.update);
 
-  router2.put("/:idmatkaaja", User.update);
-
-
-  app2.use('/api/users', router2);
+  app.use("/api/users", userRoutes);
 };
