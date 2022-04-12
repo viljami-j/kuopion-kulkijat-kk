@@ -1,5 +1,21 @@
 const Story = require("../models/story.model.js");
 
+exports.findById = (req, res) => {
+  Story.findById(req.params.storyId, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Didn't find any stories with given id: ${req.params.storyId}.`,
+        });
+      } else {
+        res.status(500).send({
+          message: "Error retrieving a story with id " + req.params.storyId,
+        });
+      }
+    } else res.send(data);
+  });
+};
+
 exports.create = (req, res) => {
   // Validate request
   if (!req.body) {
