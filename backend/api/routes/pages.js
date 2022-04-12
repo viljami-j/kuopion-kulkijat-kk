@@ -4,7 +4,7 @@ const router = express.Router();
 
 const user = new User();
 
-router.get('/', (req, res, next) => {
+router.get("/", (req, res, next) => {
   let user = req.session.user;
   if (user) {
     res.redirect("/home");
@@ -45,17 +45,21 @@ router.post("/api/register", (req, res, next) => {
     password: req.body.password,
   };
 
-  user.create(userInput, function (lastId) {
-    if (lastId) {
-      user.find(lastId, function (result) {
-        req.session.user = result;
-        req.session.opp = 0;
-        res.status(201).send({ message: "New user created." });
-      });
-    } else {
-      console.log("Error creating new user");
-    }
-  });
+  try {
+    user.create(userInput, function (lastId) {
+      if (lastId) {
+        user.find(lastId, function (result) {
+          req.session.user = result;
+          req.session.opp = 0;
+          res.status(201).send({ message: "New user created." });
+        });
+      } else {
+        console.log("Error creating new user");
+      }
+    });
+  } catch (e) {
+    res.status(400).send({ message: "Missing user information." });
+  }
 });
 
 router.get("/api/logout", (req, res, next) => {
