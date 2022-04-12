@@ -1,6 +1,11 @@
 const sql = require("./db.js");
 
-const Story = function (story) {};
+const Story = function (story) {
+  (this.pvm = story.pvm),
+    (this.teksti = story.teksti),
+    (this.idmatkakohde = story.idmatkakohde),
+    (this.idmatka = story.idmatka);
+};
 
 Story.findById = (storyId, result) => {
   sql.query(
@@ -31,21 +36,42 @@ Story.create = (newStory, result) => {
   });
 };
 
-Story.remove = (storyId, result) => {
-    sql.query("DELETE FROM tarina WHERE idtarina = ?", storyId, (err, res) => {
+Story.updateById = (storyId, story, result) => {
+  sql.query(
+    "UPDATE tarina SET pvm = ?, teksti = ?, idmatkakohde = ?, idmatka = ? WHERE idtarina = ?",
+    [story.pvm, story.teksti, story.idmatkakohde, story.idmatka, storyId],
+    (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
         return;
       }
-  
+
       if (res.affectedRows == 0) {
         result({ kind: "not_found" }, null);
         return;
       }
-  
-      result(null, res);
-    });
-  };
+
+      result(null, { storyId: storyId, ...story });
+    }
+  );
+};
+
+Story.remove = (storyId, result) => {
+  sql.query("DELETE FROM tarina WHERE idtarina = ?", storyId, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+
+    if (res.affectedRows == 0) {
+      result({ kind: "not_found" }, null);
+      return;
+    }
+
+    result(null, res);
+  });
+};
 
 module.exports = Story;

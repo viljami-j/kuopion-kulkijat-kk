@@ -66,6 +66,29 @@ exports.create = (req, res) => {
   }
 };
 
+exports.updateById = (req, res) => {
+  // Validate Request
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!",
+    });
+  }
+
+  Story.updateById(req.params.storyId, new Story(req.body), (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Didn't find any stories assigned to id ${req.params.storyId}.`,
+        });
+      } else {
+        res.status(500).send({
+          message: "Error updating story with id " + req.params.storyId,
+        });
+      }
+    } else res.send(data);
+  });
+};
+
 exports.deleteById = (req, res) => {
   Story.remove(req.params.storyId, (err, data) => {
     if (err) {
