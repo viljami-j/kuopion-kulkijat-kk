@@ -2,6 +2,7 @@ module.exports = (app) => {
   const destinations = require("../controllers/controller.js");
   const journeys = require("../controllers/JourneyController.js");
   const pictures = require("../controllers/PictureController.js");
+  const stories = require("../controllers/StoriesController.js");
 
   const router = require("express").Router();
 
@@ -22,6 +23,8 @@ module.exports = (app) => {
   router.get("/");
 
   router.get("/user_journeys/:idmatkaaja", journeys.findJourneysByUserId);
+
+  router.post("/stories", stories.create);
 
   router.get("/pictures/:idkuva", pictures.findPictureById);
 
