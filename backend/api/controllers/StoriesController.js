@@ -65,3 +65,19 @@ exports.create = (req, res) => {
     });
   }
 };
+
+exports.deleteById = (req, res) => {
+  Story.remove(req.params.storyId, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Didn't find a story with id ${req.params.storyId}.`,
+        });
+      } else {
+        res.status(500).send({
+          message: "Could not delete a story with id " + req.params.storyId,
+        });
+      }
+    } else res.send({ message: `The story was deleted successfully!` });
+  });
+};

@@ -31,4 +31,21 @@ Story.create = (newStory, result) => {
   });
 };
 
+Story.remove = (storyId, result) => {
+    sql.query("DELETE FROM tarina WHERE idtarina = ?", storyId, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+  
+      if (res.affectedRows == 0) {
+        result({ kind: "not_found" }, null);
+        return;
+      }
+  
+      result(null, res);
+    });
+  };
+
 module.exports = Story;

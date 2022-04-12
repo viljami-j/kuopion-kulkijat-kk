@@ -21,6 +21,7 @@ module.exports = (app) => {
 
   router.get("/stories/:storyId", stories.findById);
   router.post("/stories", stories.create);
+  router.delete("/stories/:storyId", stories.deleteById);
 
   router.get("/pictures/:idkuva", pictures.findPictureById);
   router.post("/pictures", pictures.create);
