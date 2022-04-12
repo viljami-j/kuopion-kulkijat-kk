@@ -38,7 +38,7 @@ User.prototype = {
       callback(result.insertId);
     })}else{
     bind = [] 
-   console.log("eipä menny")
+    throw new Error ("Joku kenttä on tyhjä")
   }
   },
 
