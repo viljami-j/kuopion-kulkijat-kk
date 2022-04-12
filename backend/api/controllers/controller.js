@@ -5,7 +5,7 @@ exports.create = (req, res) => {
   // Validate request
   if (!req.body) {
     res.status(400).send({
-      message: "Content can not be empty!",
+      message: "Content can not be empty!"
     });
   }
 
@@ -16,7 +16,7 @@ exports.create = (req, res) => {
     maa: req.body.maa,
     paikkakunta: req.body.paikkakunta,
     kuvausteksti: req.body.kuvausteksti,
-    kuva: req.body.kuva || null,
+    kuva: req.body.kuva || null
   });
 
   // Create/Post Destination in the database
@@ -24,7 +24,7 @@ exports.create = (req, res) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Destination.",
+          err.message || "Some error occurred while creating the Destination."
       });
     else res.send(data);
   });
@@ -37,24 +37,23 @@ exports.findAll = (req, res) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving Destinations.",
+          err.message || "Some error occurred while retrieving Destinations."
       });
     else res.send(data);
   });
 };
 
 // Find a single Destination by Id
-exports.findById = (req, res) => {
+exports.findOne = (req, res) => {
   Destination.findById(req.params.idmatkakohde, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found Destination with id ${req.params.idmatkakohde}.`,
+          message: `Not found Destination with id ${req.params.idmatkakohde}.`
         });
       } else {
         res.status(500).send({
-          message:
-            "Error retrieving Destination with id " + req.params.idmatkakohde,
+          message: "Error retrieving Destination with id " + req.params.idmatkakohde
         });
       }
     } else res.send(data);
@@ -67,18 +66,18 @@ exports.findAllPublished = (req, res) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving Destinations.",
+          err.message || "Some error occurred while retrieving Destinations."
       });
     else res.send(data);
   });
 };
 
 // Update a Destination identified by the id in the request
-exports.updateById = (req, res) => {
+exports.update = (req, res) => {
   // Validate Request
   if (!req.body) {
     res.status(400).send({
-      message: "Content can not be empty!",
+      message: "Content can not be empty!"
     });
   }
 
@@ -91,12 +90,11 @@ exports.updateById = (req, res) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `Not found Destination with id ${req.params.idmatkakohde}.`,
+            message: `Not found Destination with id ${req.params.idmatkakohde}.`
           });
         } else {
           res.status(500).send({
-            message:
-              "Error updating Destination with id " + req.params.idmatkakohde,
+            message: "Error updating Destination with id " + req.params.idmatkakohde
           });
         }
       } else res.send(data);
@@ -105,17 +103,16 @@ exports.updateById = (req, res) => {
 };
 
 // Delete a Destination with the specified id in the request
-exports.deleteById = (req, res) => {
+exports.delete = (req, res) => {
   Destination.remove(req.params.idmatkakohde, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found Destination with id ${req.params.idmatkakohde}.`,
+          message: `Not found Destination with id ${req.params.idmatkakohde}.`
         });
       } else {
         res.status(500).send({
-          message:
-            "Could not delete Destination with id " + req.params.idmatkakohde,
+          message: "Could not delete Destination with id " + req.params.idmatkakohde
         });
       }
     } else res.send({ message: `Destination was deleted successfully!` });
