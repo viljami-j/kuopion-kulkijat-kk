@@ -72,7 +72,7 @@ exports.updateById = (req, res) => {
     });
   }
 
-  Story.updateById(req.params.storyId, new Story(req.body), (err, data) => {
+  Story.updateById(req.params.storyId, req.body, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({

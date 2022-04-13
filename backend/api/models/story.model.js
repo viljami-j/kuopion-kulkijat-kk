@@ -39,7 +39,7 @@ Story.create = (newStory, result) => {
 Story.updateById = (storyId, story, result) => {
   sql.query(
     "UPDATE tarina SET pvm = ?, teksti = ?, idmatkakohde = ?, idmatka = ? WHERE idtarina = ?",
-    [story.date, story.text, story.destinationId, story.journeyId, storyId],
+    [story.pvm, story.teksti, story.idmatkakohde, story.idmatka, storyId],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
