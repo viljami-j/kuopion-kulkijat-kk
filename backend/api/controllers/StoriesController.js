@@ -33,17 +33,19 @@ exports.create = (req, res) => {
 
   const story = req.body
 
+  console.log(story)
+
   let err = { msg: "", flagged: false };
 
-  if (isNaN(story.idmatka)) {
+  if (isNaN(story.journeyId)) {
     err.msg += "journeyId must be a number! ";
     err.flagged = true;
   }
-  if (isNaN(story.idmatkakohde)) {
+  if (isNaN(story.destinationId)) {
     err.msg += "destinationId must be a number! ";
     err.flagged = true;
   }
-  if (!story.pvm) {
+  if (!story.date) {
     err.msg += "date cannot be empty! ";
     err.flagged = true;
   }
