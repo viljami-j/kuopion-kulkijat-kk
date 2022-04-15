@@ -24,29 +24,20 @@ exports.create = (req, res) => {
     });
   }
 
-  // const story = {
-  //   idmatka: req.body.journeyId,
-  //   idmatkakohde: req.body.destinationId,
-  //   pvm: req.body.date,
-  //   teksti: req.body.text,
-  // };
-
   const story = req.body
-
-  console.log(story)
 
   let err = { msg: "", flagged: false };
 
-  if (isNaN(story.journeyId)) {
-    err.msg += "journeyId must be a number! ";
+  if (isNaN(story.idmatka)) {
+    err.msg += "idmatka must be a number! ";
     err.flagged = true;
   }
-  if (isNaN(story.destinationId)) {
-    err.msg += "destinationId must be a number! ";
+  if (isNaN(story.idmatkakohde)) {
+    err.msg += "idmatkakohde must be a number! ";
     err.flagged = true;
   }
-  if (!story.date) {
-    err.msg += "date cannot be empty! ";
+  if (!story.pvm) {
+    err.msg += "pvm cannot be empty! ";
     err.flagged = true;
   }
 
