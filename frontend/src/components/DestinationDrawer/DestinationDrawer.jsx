@@ -5,14 +5,16 @@ import React, { useEffect, useState } from "react";
 import { DestinationDescriptionTextField } from "./DestinationDescriptionTextField";
 import { Upload } from "@mui/icons-material";
 import endpoints from "../../util/endpoints";
-import { makePostRequest } from "../../util/makeApiRequest";
+import { makePostRequest, makePutRequest } from "../../util/makeApiRequest";
 import useMessage from "../../util/hooks/useMessage";
+import { useAsync } from "@react-hookz/web";
 
 DestinationDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
   toggleOpen: PropTypes.func.isRequired,
   header: PropTypes.string.isRequired,
   values: PropTypes.shape({
+    id: PropTypes.number,
     name: PropTypes.string,
     city: PropTypes.string,
     country: PropTypes.string,
@@ -20,10 +22,11 @@ DestinationDrawer.propTypes = {
   }),
 };
 
-function DestinationDrawer({ open, toggleOpen, header, values }) {
+function DestinationDrawer({ open, onClose, header, values }) {
   const initialDestinationData =
     values == null
       ? {
+          id: 0,
           name: "",
           city: "",
           country: "",
@@ -35,6 +38,30 @@ function DestinationDrawer({ open, toggleOpen, header, values }) {
     initialDestinationData
   );
   const { MessageSnackbar, showMessage } = useMessage();
+  const [destinationOperationState, destinationOperation] = useAsync(() =>
+    values == null ? postDestinationData() : putDestinationData()
+  );
+
+  async function postDestinationData() {
+    return await makePostRequest(endpoints.DESTINATIONS)({
+      kohdenimi: destinationData.name,
+      maa: destinationData.country,
+      paikkakunta: destinationData.city,
+      kuvausteksti: destinationData.description,
+    });
+  }
+
+  async function putDestinationData() {
+    return await makePutRequest(
+      `${endpoints.DESTINATIONS}/${destinationData.id}`
+    )({
+      idmatkakohde: destinationData.id,
+      kohdenimi: destinationData.name,
+      maa: destinationData.country,
+      paikkakunta: destinationData.city,
+      kuvausteksti: destinationData.description,
+    });
+  }
 
   function onTextFieldChange(event) {
     setDestinationData({
@@ -43,15 +70,17 @@ function DestinationDrawer({ open, toggleOpen, header, values }) {
     });
   }
 
-  async function postNewDestination() {
-    // TODO/80: viimeistele, kun backend valmis
-    try {
-      await makePostRequest(endpoints.DESTINATIONS)(destinationData);
-      toggleOpen();
-    } catch (e) {
+  useEffect(() => {
+    if (destinationOperationState.status === "success") {
+      onClose();
+    }
+  }, [destinationOperationState.status, onClose]);
+
+  useEffect(() => {
+    if (destinationOperationState.error) {
       showMessage("Virhe luotaessa matkakohdetta. Yritä myöhemmin uudelleen");
     }
-  }
+  }, [destinationOperationState.error, showMessage]);
 
   useEffect(() => {
     if (values != null) {
@@ -63,8 +92,8 @@ function DestinationDrawer({ open, toggleOpen, header, values }) {
     <SwipeableDrawer
       anchor="right"
       open={open}
-      onOpen={toggleOpen}
-      onClose={toggleOpen}
+      onOpen={() => null}
+      onClose={onClose}
       variant="temporary"
     >
       <Box
@@ -114,11 +143,11 @@ function DestinationDrawer({ open, toggleOpen, header, values }) {
           Lisää kuva
         </Button>
         <Box sx={{ display: "flex", mt: "auto", pb: 1 }}>
-          <Button onClick={toggleOpen} sx={{ width: "50%" }}>
+          <Button onClick={onClose} sx={{ width: "50%" }}>
             Peruuta
           </Button>
           <Button
-            onClick={postNewDestination}
+            onClick={destinationOperation.execute}
             variant={"contained"}
             sx={{ width: "69%" }}
           >

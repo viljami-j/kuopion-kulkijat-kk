@@ -11,9 +11,9 @@ import { ArrowBack, Menu } from "@mui/icons-material";
 import StyledLink from "./styled/StyledLink";
 import NavbarButtons from "./NavbarButtons";
 import { theme } from "../../theme";
-import useToggle from "../../util/hooks/useToggle";
 import React from "react";
 import { HamburgerMenu } from "./HamburgerMenu";
+import { useToggle } from "@react-hookz/web";
 
 export default function Navbar() {
   const trigger = useScrollTrigger();

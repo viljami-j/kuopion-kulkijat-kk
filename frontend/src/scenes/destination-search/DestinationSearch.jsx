@@ -1,4 +1,10 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import {
   Box,
   CircularProgress,
@@ -7,18 +13,27 @@ import {
   Typography,
 } from "@mui/material";
 import DestinationCardGrid from "components/DestinationCardGrid";
-import useDestinations from "../../util/hooks/useDestinations";
 import { Add } from "@mui/icons-material";
 import DestinationDrawer from "../../components/DestinationDrawer/DestinationDrawer";
-import useToggle from "../../util/hooks/useToggle";
 import { LoginContext } from "../../util/loginContext";
+import { makeGetRequest } from "../../util/makeApiRequest";
+import endpoints from "../../util/endpoints";
+import useMessage from "../../util/hooks/useMessage";
+import { useAsyncAbortable, useMountEffect, useToggle } from "@react-hookz/web";
 
 function DestinationSearch() {
-  const { destinations, isLoadingDestinations, DestinationLoadingSnackbar } =
-    useDestinations();
+  const [destinations, setDestinations] = useState([]);
+  const [state, fetchDestinations] = useAsyncAbortable(async (signal) => {
+    const destinations = await makeGetRequest(endpoints.DESTINATIONS)(
+      "",
+      signal
+    );
+    setDestinations(destinations);
+  });
   const [searchQuery, setSearchQuery] = useState("");
   const [drawerOpen, toggleDrawer] = useToggle();
   const [loginData, _] = useContext(LoginContext);
+  const { MessageSnackbar, showMessage } = useMessage();
 
   function onTextFieldTyped(event) {
     setSearchQuery(event.target.value);
@@ -31,6 +46,21 @@ function DestinationSearch() {
         .includes(searchQuery.toLowerCase());
     });
   }, [destinations, searchQuery]);
+
+  const onDrawerClose = useCallback(() => {
+    toggleDrawer();
+    fetchDestinations.execute();
+  }, [fetchDestinations, toggleDrawer]);
+
+  useMountEffect(fetchDestinations.execute);
+
+  useEffect(() => {
+    if (state.error) {
+      showMessage(
+        "Verkkovirhe haettaessa matkakohteita. Yritä myöhemmin uudelleen."
+      );
+    }
+  }, [state.error, showMessage]);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }} component={"main"}>
@@ -59,19 +89,20 @@ function DestinationSearch() {
         />
       </Box>
 
-      {isLoadingDestinations ? (
+      {state.loading ? (
         <CircularProgress sx={{ mx: "auto", my: 20 }} />
       ) : (
         <SearchResults searchResults={searchResults} />
       )}
 
-      <DestinationLoadingSnackbar />
+      <MessageSnackbar />
+
       {loginData.email !== "" ? (
         <Fab
           color="secondary"
           aria-label="Uusi matkakohde"
           sx={{ position: "fixed", right: 30, bottom: 40 }}
-          onClick={toggleDrawer}
+          onClick={() => toggleDrawer()}
         >
           <Add />
         </Fab>
@@ -81,6 +112,7 @@ function DestinationSearch() {
         open={drawerOpen}
         toggleOpen={toggleDrawer}
         header={"Uusi matkakohde"}
+        onClose={onDrawerClose}
       />
     </Box>
   );

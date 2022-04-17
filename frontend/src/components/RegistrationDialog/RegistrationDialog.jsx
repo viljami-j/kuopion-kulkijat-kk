@@ -11,12 +11,12 @@ import {
   InputAdornment,
   TextField,
 } from "@mui/material";
-import useToggle from "../../util/hooks/useToggle";
 import PropTypes from "prop-types";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { makePostRequest } from "../../util/makeApiRequest";
 import useMessage from "../../util/hooks/useMessage";
 import endpoints from "../../util/endpoints";
+import { useToggle } from "@react-hookz/web";
 
 function RegistrationDialog({ open, toggle }) {
   const [registrationState, setRegistrationState] = useState({
@@ -109,7 +109,7 @@ function RegistrationDialog({ open, toggle }) {
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
-                      onClick={togglePasswordVisibility}
+                      onClick={() => togglePasswordVisibility()}
                       onMouseDown={(event) => event.preventDefault()}
                       edge="end"
                     >

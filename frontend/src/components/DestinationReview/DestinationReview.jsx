@@ -3,26 +3,28 @@ import DestinationBackgroundImage from "../DestinationBackgroundImage/Destinatio
 import LocationIndicator from "../DestinationCard/LocationIndicator";
 import { Box } from "@mui/system";
 import { useParams } from "react-router-dom";
-import useDestinations from "../../util/hooks/useDestinations";
-import React, { useContext } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Delete, Edit } from "@mui/icons-material";
 import DestinationDrawer from "../DestinationDrawer/DestinationDrawer";
-import useToggle from "../../util/hooks/useToggle";
 import { theme } from "../../theme";
-import { makeDeleteRequest } from "../../util/makeApiRequest";
+import { makeDeleteRequest, makeGetRequest } from "../../util/makeApiRequest";
 import endpoints from "../../util/endpoints";
 import useMessage from "../../util/hooks/useMessage";
 import { LoginContext } from "../../util/loginContext";
+import { useAsyncAbortable, useMountEffect, useToggle } from "@react-hookz/web";
 
 export default function DestinationReview() {
   const { id } = useParams();
-  const { destinations, isLoadingDestinations, DestinationLoadingSnackbar } =
-    useDestinations(id);
+  const [destinations, setDestinations] = useState([]);
+  const [dataFetchState, fetchDestination] = useAsyncAbortable((signal) =>
+    makeGetRequest(`${endpoints.DESTINATIONS}/${id}`)("", signal)
+  );
   const [drawerOpen, toggleDrawer] = useToggle();
   const { MessageSnackbar, showMessage } = useMessage();
-
-  const { kohdenimi, maa, paikkakunta, kuvausteksti, kuva } = destinations;
   const [loginData, _] = useContext(LoginContext);
+
+  const { idmatkakohde, kohdenimi, maa, paikkakunta, kuvausteksti, kuva } =
+    destinations;
 
   function deleteDestination() {
     try {
@@ -35,11 +37,32 @@ export default function DestinationReview() {
     }
   }
 
+  const onDrawerClose = useCallback(() => {
+    toggleDrawer();
+    fetchDestination.execute();
+  }, [fetchDestination, toggleDrawer]);
+
+  useEffect(() => {
+    if (dataFetchState.error) {
+      showMessage(
+        "Verkkovirhe haettaessa matkakohdetta. Yritä myöhemmin uudelleen."
+      );
+    }
+  }, [dataFetchState.error, showMessage]);
+
+  useEffect(() => {
+    if (dataFetchState.status === "success") {
+      setDestinations(dataFetchState.result);
+    }
+  }, [dataFetchState.status, dataFetchState.result]);
+
+  useMountEffect(fetchDestination.execute);
+
   return (
     <Box
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      {isLoadingDestinations ? (
+      {dataFetchState.loading ? (
         <CircularProgress sx={{ m: 20 }} />
       ) : (
         <>
@@ -85,7 +108,6 @@ export default function DestinationReview() {
           </Typography>
         </>
       )}
-      <DestinationLoadingSnackbar />
 
       {loginData.email !== "" ? (
         <>
@@ -106,7 +128,7 @@ export default function DestinationReview() {
             color="secondary"
             aria-label="Muokkaa matkakohdetta"
             sx={{ position: "fixed", right: 30, bottom: 40 }}
-            onClick={toggleDrawer}
+            onClick={() => toggleDrawer()}
           >
             <Edit />
           </Fab>
@@ -118,11 +140,13 @@ export default function DestinationReview() {
         toggleOpen={toggleDrawer}
         header={"Muokkaa matkakohdetta"}
         values={{
+          id: idmatkakohde,
           name: kohdenimi,
           city: paikkakunta,
           country: maa,
           description: kuvausteksti,
         }}
+        onClose={onDrawerClose}
       />
       <MessageSnackbar />
     </Box>

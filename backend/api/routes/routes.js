@@ -1,3 +1,4 @@
+const User = require("../controllers/controllerUser");
 module.exports = (app) => {
   const destinations = require("../controllers/controller.js");
   const journeys = require("../controllers/JourneyController.js");
@@ -34,19 +35,17 @@ module.exports = (app) => {
   app.use("/api", router);
 };
 module.exports = app2 => {
+
+
   const User = require("../controllers/controllerUser.js");
 
+  var userRoutes = require("express").Router();
 
-  var router2 = require("express").Router();
+  userRoutes.get("/", User.findAll);
 
-  // Get kaikki matkakohteet
-  router2.get("/", User.findAll);
+  userRoutes.get("/:idmatkaaja", User.findOne);
 
-  // Get matkakohde id:llä
-  router2.get("/:idmatkaaja", User.findOne);
+  userRoutes.put("/:idmatkaaja", User.update);
 
-  router2.put("/:idmatkaaja", User.update);
-
-
-  app2.use('/api/users', router2);
+  app2.use("/api/users", userRoutes);
 };
