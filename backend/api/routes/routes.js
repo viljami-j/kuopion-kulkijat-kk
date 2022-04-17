@@ -4,7 +4,8 @@ module.exports = (app) => {
   const journeys = require("../controllers/JourneyController.js");
   const pictures = require("../controllers/PictureController.js");
   const stories = require("../controllers/StoriesController.js");
-  const users = require("../controllers/UsersController.js");
+  const users = require("../controllers/UsersController.js"); // -> NOTED DURING TASK #107:
+  const User = require("../controllers/controllerUser.js");   // -> These two should be merged during later refactoring.
 
   const router = require("express").Router();
 
@@ -17,9 +18,11 @@ module.exports = (app) => {
 
   //router.delete("/", destinations.deleteAll);
 
-  router.get("/");
-
   router.get("/users/public", users.getPublicData);
+
+  //router.get("/", User.findAll); // DISABLED DURING TASK #107 due to routes clashing with another endpoint. Both route + method are also likely deprecated
+  router.get("/users/:idmatkaaja", User.findOne);
+  router.put("/users/:idmatkaaja", User.update);
 
   router.get("/user_journeys/:idmatkaaja", journeys.findJourneysByUserId);
 
@@ -33,19 +36,4 @@ module.exports = (app) => {
   router.delete("/pictures/:idkuva", pictures.deletePictureById);
 
   app.use("/api", router);
-};
-module.exports = app2 => {
-
-
-  const User = require("../controllers/controllerUser.js");
-
-  var userRoutes = require("express").Router();
-
-  userRoutes.get("/", User.findAll);
-
-  userRoutes.get("/:idmatkaaja", User.findOne);
-
-  userRoutes.put("/:idmatkaaja", User.update);
-
-  app2.use("/api/users", userRoutes);
 };
