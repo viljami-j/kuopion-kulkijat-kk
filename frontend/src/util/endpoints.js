@@ -3,6 +3,7 @@ const endpoints = Object.freeze({
   LOGIN: "/api/login",
   REGISTER: "/api/register",
   JOURNEYS: "/api/journeys",
+  USERS: "/api/users/public",
 });
 
 export default endpoints;
