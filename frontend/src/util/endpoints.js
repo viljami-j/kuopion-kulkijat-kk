@@ -3,6 +3,7 @@ const endpoints = Object.freeze({
   LOGIN: "/api/login",
   REGISTER: "/api/register",
   JOURNEYS: "/api/journeys",
+  USER_JOURNEYS: "/api/user_journeys",
   USERS: "/api/users/public",
   USER: "/api/users",
 });
