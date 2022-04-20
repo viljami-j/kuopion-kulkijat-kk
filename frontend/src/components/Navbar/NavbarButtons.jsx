@@ -31,7 +31,7 @@ export default function NavbarButtons({ menuToggle }) {
         </Button>
         <Button
           component={RouterLink}
-          to="/members"
+          to="/users"
           sx={{ mr: 2, fontSize: 14, fontWeight: "light" }}
           color="primary"
           onClick={menuToggle}

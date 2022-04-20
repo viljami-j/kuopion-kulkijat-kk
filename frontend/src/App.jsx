@@ -10,6 +10,8 @@ import Footer from "./components/Footer/Footer";
 import DestinationReview from "./components/DestinationReview/DestinationReview";
 import { LoginContext } from "./util/loginContext";
 import MyJourneys from "scenes/my-journeys/MyJourneys";
+import Users from "./scenes/users/Users";
+import UserDetails from "./scenes/user-details/UserDetails";
 
 function App() {
   const loginState = useState({ email: "", password: "" });
@@ -22,6 +24,8 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<FrontPage />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/users/:id" element={<UserDetails />} />
             <Route path="destinations" element={<DestinationSearch />} />
             <Route path="destinations/:id" element={<DestinationReview />} />
             <Route path="group_journeys" element={<GroupJourneys />} />

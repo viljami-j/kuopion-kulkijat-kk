@@ -43,7 +43,10 @@ export default function Navbar() {
               Kuopion Kulkijat
             </StyledLink>
             {isMobile ? (
-              <IconButton aria-label="Valikko" onClick={toggleHamburgerMenu}>
+              <IconButton
+                aria-label="Valikko"
+                onClick={() => toggleHamburgerMenu()}
+              >
                 <Menu color="primary" />
               </IconButton>
             ) : (
@@ -53,7 +56,10 @@ export default function Navbar() {
         </AppBar>
       </Slide>
       <Toolbar />
-      <HamburgerMenu open={hamburgerMenuOpen} onClose={toggleHamburgerMenu} />
+      <HamburgerMenu
+        open={hamburgerMenuOpen}
+        onClose={() => toggleHamburgerMenu()}
+      />
     </>
   );
 }
