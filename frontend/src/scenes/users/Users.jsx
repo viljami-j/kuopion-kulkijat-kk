@@ -14,6 +14,7 @@ import endpoints from "../../util/endpoints";
 import React, { useEffect, useState } from "react";
 import useMessage from "../../util/hooks/useMessage";
 import { AccountCircle } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 function Users() {
   const [users, setUsers] = useState([]);
@@ -22,6 +23,7 @@ function Users() {
     setUsers(users);
   });
   const { MessageSnackbar, showMessage } = useMessage();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (dataFetchState.error) {
@@ -34,7 +36,12 @@ function Users() {
   return (
     <Container
       maxWidth="md"
-      sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        flexDirection: "column",
+        mt: 4,
+      }}
     >
       <Typography variant="h1">Jäsenet</Typography>
       {dataFetchState.status === "loading" ? (
@@ -45,13 +52,15 @@ function Users() {
             .filter((user) => user.etunimi && user.sukunimi)
             .map((user) => (
               <ListItem key={user.idmatkaaja}>
-                <ListItemButton>
+                <ListItemButton
+                  onClick={() => navigate(`/users/${user.idmatkaaja}`)}
+                >
                   <ListItemIcon>
                     <AccountCircle fontSize="large" />
                   </ListItemIcon>
                   <ListItemText
                     primary={`${user.etunimi} ${user.sukunimi}`}
-                    secondary={`@${user.nimimerkki}`}
+                    secondary={`@ ${user.nimimerkki}`}
                   />
                 </ListItemButton>
               </ListItem>
