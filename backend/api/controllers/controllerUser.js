@@ -1,5 +1,11 @@
 const Users = require("../models/destinationUser.js");
 
+// NOTES INCLUDED DURING COMPLETION OF TASK #107:
+// - Unrelated comments should be cleaned before PR:ing into dev or main.
+// - findAll likely isn't needed. (method for getting all public users is defined in UsersController.js)
+//
+
+
 // Create and Save a new Destination
 exports.create = (req, res) => {
   // Validate request
@@ -34,17 +40,17 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Destinations from the database with condition (e. maa, paikkakunta).
-exports.findAll = (req, res) => {
-  const title = req.query.title; // muokkaa tarpeen mukaan
-  Users.getAll(title, (err, data) => {
-    if (err)
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving Destinations."
-      });
-    else res.send(data);
-  });
-};
+// exports.findAll = (req, res) => {
+//   const title = req.query.title; // muokkaa tarpeen mukaan
+//   Users.getAll(title, (err, data) => {
+//     if (err)
+//       res.status(500).send({
+//         message:
+//           err.message || "Some error occurred while retrieving Destinations."
+//       });
+//     else res.send(data);
+//   });
+// };
 
 // Find a single Destination by Id
 exports.findOne = (req, res) => {
