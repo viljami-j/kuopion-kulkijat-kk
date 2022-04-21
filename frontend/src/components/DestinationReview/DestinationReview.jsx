@@ -62,7 +62,7 @@ export default function DestinationReview() {
     <Box
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      {dataFetchState.loading ? (
+      {dataFetchState.status === "loading" ? (
         <CircularProgress sx={{ m: 20 }} />
       ) : (
         <>
