@@ -2,12 +2,13 @@ import { useParams } from "react-router-dom";
 import { useAsyncAbortable, useMountEffect, useToggle } from "@react-hookz/web";
 import { makeGetRequest } from "../../util/makeApiRequest";
 import endpoints from "../../util/endpoints";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import useMessage from "../../util/hooks/useMessage";
 import { CircularProgress, Container, Fab, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Edit, LocationOn } from "@mui/icons-material";
 import { LoginContext } from "../../util/loginContext";
+import UserDetailsDrawer from "./UserDetailsDrawer";
 
 function UserDetails() {
   const { id } = useParams();
@@ -20,14 +21,19 @@ function UserDetails() {
     esittely: "",
     kuva: "",
     email: "",
+    password: "",
   });
-  const [dataFetchState, fetchUser] = useAsyncAbortable(async (signal) => {
-    const users = await makeGetRequest(`${endpoints.USER}/${id}`)("", signal);
-    setUser(users);
-  });
+  const [dataFetchState, fetchUser] = useAsyncAbortable((signal) =>
+    makeGetRequest(`${endpoints.USER}/${id}`)("", signal)
+  );
   const { MessageSnackbar, showMessage } = useMessage();
   const [loginData, _] = useContext(LoginContext);
   const [drawerOpen, toggleDrawer] = useToggle();
+
+  const onDrawerClose = useCallback(() => {
+    toggleDrawer();
+    fetchUser.execute();
+  }, [fetchUser, toggleDrawer]);
 
   useEffect(() => {
     if (dataFetchState.error) {
@@ -36,6 +42,12 @@ function UserDetails() {
       );
     }
   }, [dataFetchState.error, showMessage]);
+
+  useEffect(() => {
+    if (dataFetchState.status === "success") {
+      setUser(dataFetchState.result);
+    }
+  }, [fetchUser, dataFetchState.status, dataFetchState.result]);
 
   useMountEffect(fetchUser.execute);
 
@@ -82,6 +94,22 @@ function UserDetails() {
         </>
       )}
       <MessageSnackbar />
+      <UserDetailsDrawer
+        header={"Muokkaa tietojasi"}
+        toggle={toggleDrawer}
+        open={drawerOpen}
+        values={{
+          idmatkaaja: id,
+          etunimi: user.etunimi,
+          sukunimi: user.sukunimi,
+          nimimerkki: user.nimimerkki,
+          paikkakunta: user.paikkakunta,
+          esittely: user.esittely,
+          email: user.email,
+          password: user.password,
+        }}
+        onClose={onDrawerClose}
+      />
     </Container>
   );
 }
