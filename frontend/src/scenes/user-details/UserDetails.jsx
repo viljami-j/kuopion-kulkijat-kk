@@ -1,12 +1,13 @@
 import { useParams } from "react-router-dom";
-import { useAsyncAbortable, useMountEffect } from "@react-hookz/web";
+import { useAsyncAbortable, useMountEffect, useToggle } from "@react-hookz/web";
 import { makeGetRequest } from "../../util/makeApiRequest";
 import endpoints from "../../util/endpoints";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useMessage from "../../util/hooks/useMessage";
-import { CircularProgress, Container, Typography } from "@mui/material";
+import { CircularProgress, Container, Fab, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { LocationOn } from "@mui/icons-material";
+import { Edit, LocationOn } from "@mui/icons-material";
+import { LoginContext } from "../../util/loginContext";
 
 function UserDetails() {
   const { id } = useParams();
@@ -25,6 +26,8 @@ function UserDetails() {
     setUser(users);
   });
   const { MessageSnackbar, showMessage } = useMessage();
+  const [loginData, _] = useContext(LoginContext);
+  const [drawerOpen, toggleDrawer] = useToggle();
 
   useEffect(() => {
     if (dataFetchState.error) {
@@ -64,6 +67,18 @@ function UserDetails() {
             </Box>
             <Typography sx={{ mt: 4 }}>{`${user.esittely}`}</Typography>
           </Box>
+          {loginData.email !== "" ? (
+            <>
+              <Fab
+                color="secondary"
+                aria-label="Muokkaa tietojasi"
+                sx={{ position: "fixed", right: 30, bottom: 40 }}
+                onClick={() => toggleDrawer()}
+              >
+                <Edit />
+              </Fab>
+            </>
+          ) : null}
         </>
       )}
       <MessageSnackbar />
