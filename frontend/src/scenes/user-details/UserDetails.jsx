@@ -63,10 +63,12 @@ function UserDetails() {
               mt: 4,
               display: "flex",
               flexDirection: "column",
+              gap: 1,
             }}
           >
             <Typography variant="h1">{`${user.etunimi} ${user.sukunimi}`}</Typography>
             <Typography>{`@ ${user.nimimerkki}`}</Typography>
+            {loginData.email && <Typography>{user.email}</Typography>}
             <Box
               sx={{
                 display: "flex",
