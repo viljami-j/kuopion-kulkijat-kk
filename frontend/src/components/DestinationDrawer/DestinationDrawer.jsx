@@ -12,6 +12,7 @@ import { useAsync } from "@react-hookz/web";
 DestinationDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
   toggleOpen: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   header: PropTypes.string.isRequired,
   values: PropTypes.shape({
     id: PropTypes.number,
