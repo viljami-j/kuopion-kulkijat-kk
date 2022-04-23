@@ -1,7 +1,7 @@
 const Journey = require("../models/journey.model.js");
 
 exports.findJourneysByUserId = (req, res) => {
-  Journey.findById(req.params.idmatkaaja, (err, data) => {
+  Journey.findByUserId(req.params.idmatkaaja, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
