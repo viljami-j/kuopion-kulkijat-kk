@@ -18,23 +18,20 @@ import { useAsyncAbortable, useMountEffect, useToggle } from "@react-hookz/web";
 import { makeGetRequest } from "../../util/makeApiRequest";
 import useMessage from "../../util/hooks/useMessage";
 import endpoints from "../../util/endpoints";
-import { defaultTo } from "lodash";
 
 export default function MyJourneys() {
   const { MessageSnackbar, showMessage } = useMessage();
-  const [journey, setJourney] = useState({});
+  const [journeys, setJourneys] = useState([]);
   // TODO: Tämä tulee myöhemmin LoginContextista, kunhan sisäänkirjautuminen saadaan pelittämään.
-  const userId = 2;
+  const userId = 1;
   const [journeyFetchState, fetchJourneys] = useAsyncAbortable(
     async (signal) => {
       const journeys = await makeGetRequest(
         `${endpoints.USER_JOURNEYS}/${userId}`
       )("", signal);
-      setJourney(journeys);
+      setJourneys(journeys);
     }
   );
-  const [destinations, setDestinations] = useState([]);
-
   const isMediumWidth = useMediaQuery(theme.breakpoints.down("md"));
   const isSmallWidth = useMediaQuery(theme.breakpoints.down("sm"));
   const [drawerOpen, toggleDrawer] = useToggle();
@@ -50,23 +47,6 @@ export default function MyJourneys() {
   }
 
   useEffect(() => {
-    async function asyncWrapper() {
-      const destinationPromises = [];
-      journey.stories.forEach((story) => {
-        destinationPromises.push(
-          makeGetRequest(`${endpoints.DESTINATIONS}/${story.destinationId}`)()
-        );
-      });
-      const destinations = await Promise.all(destinationPromises);
-      setDestinations(destinations);
-    }
-
-    if (journey.stories) {
-      asyncWrapper();
-    }
-  }, [journey.stories]);
-
-  useEffect(() => {
     if (journeyFetchState.error) {
       showMessage("Verkkovirhe haettaessa matkoja. Yritä myöhemmin uudelleen.");
     }
@@ -74,28 +54,21 @@ export default function MyJourneys() {
 
   useMountEffect(fetchJourneys.execute);
 
-  function renderStories() {
-    return journey.stories.map((story, index) => {
-      const destination = defaultTo(destinations[index], {
-        kohdenimi: "",
-        paikkakunta: "",
-      });
-      return (
-        <ImageList
-          rowHeight={200}
-          cols={calculateGridColumns()}
-          gap={6}
-          sx={{ width: "50vw" }}
-        >
-          <ImageListItem key={story.storyId}>
-            <ImageListItemBar
-              title={destination.kohdenimi + ", " + destination.paikkakunta}
-              subtitle={story.date}
-            />
-          </ImageListItem>
-        </ImageList>
-      );
-    });
+  function renderJourneys() {
+    return journeys.map((journey, index) => (
+      <ImageList
+        rowHeight={200}
+        cols={calculateGridColumns()}
+        gap={6}
+        sx={{ width: "50vw" }}
+      >
+        <ImageListItem key={index}>
+          <ImageListItemBar
+            title={`${journey.startDate} - ${journey.endDate}`}
+          />
+        </ImageListItem>
+      </ImageList>
+    ));
   }
 
   return (
@@ -115,7 +88,7 @@ export default function MyJourneys() {
           {journeyFetchState.result ? (
             <CircularProgress sx={{ mx: "auto", my: 20 }} />
           ) : (
-            <>{journey.stories && renderStories()}</>
+            <>{renderJourneys()}</>
           )}
         </Grid>
       </Grid>
