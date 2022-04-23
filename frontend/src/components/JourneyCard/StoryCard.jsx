@@ -7,12 +7,15 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import React from "react";
-import useDestinations from "../../util/hooks/useDestinations";
+import React, { useEffect, useState } from "react";
 import { isEmpty } from "lodash";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { theme } from "../../theme";
+import { useAsyncAbortable, useMountEffect } from "@react-hookz/web";
+import { makeGetRequest } from "../../util/makeApiRequest";
+import endpoints from "../../util/endpoints";
+import useMessage from "../../util/hooks/useMessage";
 
 export const StoryPropType = {
   id: PropTypes.number,
@@ -25,17 +28,32 @@ export const StoryPropType = {
 StoryCard.propTypes = StoryPropType;
 
 function StoryCard({ destinationId, date, text, images }) {
-  const { destinations: destination, isLoadingDestinations } =
-    useDestinations(destinationId);
-
+  const { MessageSnackbar, showMessage } = useMessage();
+  const [destination, setDestination] = useState({});
+  const [destinationFetchState, fetchDestination] = useAsyncAbortable(
+    async (signal) => {
+      const destinationData = await makeGetRequest(
+        `${endpoints.DESTINATIONS}/${destinationId}`
+      )("", signal);
+      setDestination(destinationData);
+    }
+  );
   const isSmallWidth = useMediaQuery(theme.breakpoints.down("sm"));
 
   const destinationName = !isEmpty(destination) ? destination.kohdenimi : "";
   const directionOfImages = isSmallWidth ? "column" : "row";
 
+  useEffect(() => {
+    if (destinationFetchState.error) {
+      showMessage("Verkkovirhe haettaessa matkaa. Yritä myöhemmin uudelleen.");
+    }
+  }, [destinationFetchState.error, showMessage]);
+
+  useMountEffect(fetchDestination.execute);
+
   return (
     <>
-      {isLoadingDestinations ? (
+      {destinationFetchState.status === "loading" ? (
         <CircularProgress sx={{ mx: "auto", my: 20 }} />
       ) : (
         <Card>
@@ -86,6 +104,7 @@ function StoryCard({ destinationId, date, text, images }) {
           </CardContent>
         </Card>
       )}
+      <MessageSnackbar />
     </>
   );
 }
