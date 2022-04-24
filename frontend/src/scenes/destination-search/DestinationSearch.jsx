@@ -39,13 +39,13 @@ function DestinationSearch() {
     setSearchQuery(event.target.value);
   }
 
-  const searchResults = useMemo(() => {
-    return destinations.filter((destination) => {
-      return destination.kohdenimi
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase());
-    });
-  }, [destinations, searchQuery]);
+  const searchResults = useMemo(
+    () =>
+      destinations.filter((destination) =>
+        destination.kohdenimi.toLowerCase().includes(searchQuery.toLowerCase())
+      ),
+    [destinations, searchQuery]
+  );
 
   const onDrawerClose = useCallback(() => {
     toggleDrawer();
@@ -89,7 +89,7 @@ function DestinationSearch() {
         />
       </Box>
 
-      {state.loading ? (
+      {state.status === "loading" ? (
         <CircularProgress sx={{ mx: "auto", my: 20 }} />
       ) : (
         <SearchResults searchResults={searchResults} />
