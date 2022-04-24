@@ -20,6 +20,7 @@ import { makeGetRequest } from "../../util/makeApiRequest";
 import endpoints from "../../util/endpoints";
 import useMessage from "../../util/hooks/useMessage";
 import { useAsyncAbortable, useMountEffect, useToggle } from "@react-hookz/web";
+import { debounce } from "lodash";
 
 function DestinationSearch() {
   const [destinations, setDestinations] = useState([]);
@@ -38,6 +39,11 @@ function DestinationSearch() {
   function onTextFieldTyped(event) {
     setSearchQuery(event.target.value);
   }
+
+  const debouncedSearchQueryHandler = useMemo(
+    () => debounce(onTextFieldTyped, 300),
+    []
+  );
 
   const searchResults = useMemo(
     () =>
@@ -81,8 +87,7 @@ function DestinationSearch() {
           id={"destination-search-field"}
           label={"Etsi matkakohdetta"}
           variant={"outlined"}
-          value={searchQuery}
-          onChange={onTextFieldTyped}
+          onChange={debouncedSearchQueryHandler}
           sx={{
             width: "100%",
           }}
