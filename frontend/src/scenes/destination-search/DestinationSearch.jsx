@@ -118,7 +118,7 @@ function DestinationSearch() {
   );
 }
 
-function SearchResults({ searchResults }) {
+export function SearchResults({ searchResults }) {
   return (
     <>
       {searchResults.length !== 0 ? (
