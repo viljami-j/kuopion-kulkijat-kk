@@ -35,10 +35,8 @@ function LoginDialog({ open, toggle, showMessage }) {
         true
       );
       if (response.ok) {
-        setLoginData({
-          email: values.email,
-          password: values.password,
-        });
+        const loginData = await response.json();
+        setLoginData(loginData.result);
       } else {
         showMessage("Väärä sähköposti tai salasana.");
         toggle();
