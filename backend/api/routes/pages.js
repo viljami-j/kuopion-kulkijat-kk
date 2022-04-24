@@ -28,7 +28,7 @@ router.post("/api/login", (req, res, next) => {
       req.session.user = result;
       req.session.opp = 1;
 
-      res.status(200).send({ message: "Login ok" });
+      res.status(200).send({ result });
     } else {
       res.status(401).send({ message: "email/password incorrect" });
     }
