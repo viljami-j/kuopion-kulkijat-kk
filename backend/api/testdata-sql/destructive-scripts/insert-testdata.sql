@@ -1,8 +1,8 @@
+DELETE FROM kuva;
 DELETE FROM tarina; 
 DELETE FROM matkakohde;
 DELETE FROM matka;
 DELETE FROM matkaaja;
-DELETE FROM kuva; 
 
 INSERT INTO matkaaja (idmatkaaja, etunimi, sukunimi, nimimerkki, paikkakunta, esittely, kuva, email, password) VALUES (1, "Marko", "Poikala", "Makeboy87", "Lempäälä", "moi. minä olen marko teen videoita", "1", "markonposti@tpk.fi", "topikissa123");
 INSERT INTO matkaaja (idmatkaaja, etunimi, sukunimi, nimimerkki, paikkakunta, esittely, kuva, email, password) VALUES (2, "Teppo", "Tappo", "ppoppo", "Helsinki", "Hei. Heviä kuuntelen. Terve vaan!", "2", "moottorisaha@suomi24.fi", "nightwish666");
@@ -24,17 +24,17 @@ INSERT INTO tarina (idtarina, pvm, teksti, idmatkakohde, idmatka) VALUES (2, "20
 INSERT INTO tarina (idtarina, pvm, teksti, idmatkakohde, idmatka) VALUES (3, "2021-12-25", "jouluaaton jälken lähdin tuonne tsernopiyliin ihan vaan kiviä potkimaan. rakennuksia oli paljon mutta jänä oli kyllä paikka, mukavan harmaa ja ankea.", 2, 3);
 INSERT INTO tarina (idtarina, pvm, teksti, idmatkakohde, idmatka) VALUES (4, "2020-01-19", "Patongeille tuli mentyä. Tuotteita löytyi jokaisen makuun ja Pariisin nähtävyydet tuli koluttua. Hieno matka.", 4, 4);
 
-INSERT INTO kuva (kuva, idtarina) VALUES("story_picture1_1", 1); 
-INSERT INTO kuva (kuva, idtarina) VALUES("story_picture1_2", 1); 
-INSERT INTO kuva (kuva, idtarina) VALUES("story_picture2_1", 2); 
-INSERT INTO kuva (kuva, idtarina) VALUES("story_picture2_2", 2);
+INSERT INTO kuva (idkuva, kuva, idtarina) VALUES(9, "story_picture1_1", 1); 
+INSERT INTO kuva (idkuva, kuva, idtarina) VALUES(10, "story_picture1_2", 1); 
+INSERT INTO kuva (idkuva, kuva, idtarina) VALUES(11, "story_picture2_1", 2); 
+INSERT INTO kuva (idkuva, kuva, idtarina) VALUES(12, "story_picture2_2", 2);
 
-INSERT INTO kuva (kuva, idtarina) VALUES(1, "profile_picture1"); 
-INSERT INTO kuva (kuva, idtarina) VALUES(2, "profile_picture2"); 
-INSERT INTO kuva (kuva, idtarina) VALUES(3, "profile_picture3"); 
-INSERT INTO kuva (kuva, idtarina) VALUES(4, "profile_picture4");
+INSERT INTO kuva (idkuva, kuva) VALUES(1, "profile_picture1"); 
+INSERT INTO kuva (idkuva, kuva) VALUES(2, "profile_picture2"); 
+INSERT INTO kuva (idkuva, kuva) VALUES(3, "profile_picture3"); 
+INSERT INTO kuva (idkuva, kuva) VALUES(4, "profile_picture4");
 
-INSERT INTO kuva (kuva, idtarina) VALUES(5, "matkakohde_picture1"); 
-INSERT INTO kuva (kuva, idtarina) VALUES(6, "matkakohde_picture2"); 
-INSERT INTO kuva (kuva, idtarina) VALUES(7, "matkakohde_picture3"); 
-INSERT INTO kuva (kuva, idtarina) VALUES(8, "matkakohde_picture4");
+INSERT INTO kuva (idkuva, kuva) VALUES(5, "matkakohde_picture1"); 
+INSERT INTO kuva (idkuva, kuva) VALUES(6, "matkakohde_picture2"); 
+INSERT INTO kuva (idkuva, kuva) VALUES(7, "matkakohde_picture3"); 
+INSERT INTO kuva (idkuva, kuva) VALUES(8, "matkakohde_picture4");
