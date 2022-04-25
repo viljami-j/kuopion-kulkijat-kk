@@ -7,7 +7,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `mydb` ;
 
 -- -----------------------------------------------------
 -- Schema mydb
@@ -95,8 +94,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`kuva` (
   `idkuva` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `kuva` MEDIUMBLOB NULL,
-  `idtarina` INT UNSIGNED NOT NULL,
+  `kuva` MEDIUMBLOB NOT NULL,
+  `idtarina` INT UNSIGNED NULL,
   PRIMARY KEY (`idkuva`),
   INDEX `fk_kuva_tarina1_idx` (`idtarina` ASC),
   CONSTRAINT `fk_kuva_tarina1`
