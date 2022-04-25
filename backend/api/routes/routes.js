@@ -5,7 +5,7 @@ module.exports = (app) => {
   const pictures = require("../controllers/PictureController.js");
   const stories = require("../controllers/StoriesController.js");
   const users = require("../controllers/UsersController.js"); // -> NOTED DURING TASK #107:
-  const User = require("../controllers/controllerUser.js");   // -> These two should be merged during later refactoring.
+  const User = require("../controllers/controllerUser.js"); // -> These two should be merged during later refactoring.
 
   const router = require("express").Router();
 
@@ -25,6 +25,7 @@ module.exports = (app) => {
   router.put("/users/:idmatkaaja", User.update);
 
   router.get("/user_journeys/:idmatkaaja", journeys.findJourneysByUserId);
+  router.get("/journeys/:idmatka", journeys.findJourneysByJourneyId);
 
   router.get("/stories/:storyId", stories.findById);
   router.post("/stories", stories.create);
