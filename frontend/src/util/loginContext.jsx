@@ -1,6 +1,15 @@
 import { createContext } from "react";
 
 export const LoginContext = createContext([
-  { email: "", password: "" },
+  {
+    idmatkaaja: 0,
+    etunimi: "",
+    sukunimi: "",
+    nimimerkki: "",
+    paikkakunta: "",
+    esittely: "",
+    email: "",
+    password: "",
+  },
   (data) => null,
 ]);

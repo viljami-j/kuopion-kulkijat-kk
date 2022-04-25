@@ -17,7 +17,16 @@ import { LocalizationProvider } from "@mui/lab";
 import DateAdapter from "@mui/lab/AdapterDateFns";
 
 function App() {
-  const loginState = useState({ email: "", password: "" });
+  const loginState = useState({
+    idmatkaaja: 0,
+    etunimi: "",
+    sukunimi: "",
+    nimimerkki: "",
+    paikkakunta: "",
+    esittely: "",
+    email: "",
+    password: "",
+  });
 
   return (
     <ThemeProvider theme={theme}>
