@@ -22,20 +22,21 @@ import endpoints from "../../util/endpoints";
 export default function MyJourneys() {
   const { MessageSnackbar, showMessage } = useMessage();
   const [journeys, setJourneys] = useState([]);
-  // TODO: Tämä tulee myöhemmin LoginContextista, kunhan sisäänkirjautuminen saadaan pelittämään.
-  const userId = 1;
+  const [loginData, _] = useContext(LoginContext);
   const [journeyFetchState, fetchJourneys] = useAsyncAbortable(
     async (signal) => {
       const journeys = await makeGetRequest(
-        `${endpoints.USER_JOURNEYS}/${userId}`
+        `${endpoints.JOURNEYS}/${loginData.idmatkaaja}`
       )("", signal);
-      setJourneys(journeys);
+
+      if (Array.isArray(journeys)) {
+        setJourneys(journeys);
+      }
     }
   );
   const isMediumWidth = useMediaQuery(theme.breakpoints.down("md"));
   const isSmallWidth = useMediaQuery(theme.breakpoints.down("sm"));
   const [drawerOpen, toggleDrawer] = useToggle();
-  const [loginData, _] = useContext(LoginContext);
 
   function calculateGridColumns() {
     if (isSmallWidth) {
