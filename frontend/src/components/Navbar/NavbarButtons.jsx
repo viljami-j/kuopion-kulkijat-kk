@@ -56,11 +56,9 @@ export default function NavbarButtons({ menuToggle }) {
         >
           Matkakohteet
         </Button>
-        {/* TODO/106: korvaa käyttäjän id loginContextista saatavalla tiedolla
-        sitten, kun sieltä löytyy käyttäjän id*/}
         <Button
           component={RouterLink}
-          to="/users/2"
+          to={`/users/${loginData.idmatkaaja}`}
           sx={{ fontSize: 14, mr: 2 }}
           color="primary"
           onClick={menuToggle}

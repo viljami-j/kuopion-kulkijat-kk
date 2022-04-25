@@ -23,11 +23,11 @@ function UserDetails() {
     email: "",
     password: "",
   });
+  const [loginData, _] = useContext(LoginContext);
   const [dataFetchState, fetchUser] = useAsyncAbortable((signal) =>
     makeGetRequest(`${endpoints.USER}/${id}`)("", signal)
   );
   const { MessageSnackbar, showMessage } = useMessage();
-  const [loginData, _] = useContext(LoginContext);
   const [drawerOpen, toggleDrawer] = useToggle();
 
   const onDrawerClose = useCallback(() => {
@@ -76,12 +76,18 @@ function UserDetails() {
                 alignItems: "center",
               }}
             >
-              <LocationOn color={"secondary"} sx={{ mr: 0, ml: -0.5 }} />
-              <Typography>{`${user.paikkakunta}`}</Typography>
+              {loginData.paikkakunta && (
+                <>
+                  <LocationOn color={"secondary"} sx={{ mr: 0, ml: -0.5 }} />
+                  <Typography>{`${user.paikkakunta}`}</Typography>
+                </>
+              )}
             </Box>
-            <Typography sx={{ mt: 4 }}>{`${user.esittely}`}</Typography>
+            {loginData.esittely && (
+              <Typography sx={{ mt: 4 }}>{`${user.esittely}`}</Typography>
+            )}
           </Box>
-          {loginData.email !== "" ? (
+          {loginData.email === user.email ? (
             <>
               <Fab
                 color="secondary"

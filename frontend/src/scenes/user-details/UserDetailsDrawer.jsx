@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import PropTypes from "prop-types";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useContext } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import endpoints from "../../util/endpoints";
 import { makePutRequest } from "../../util/makeApiRequest";
@@ -16,6 +16,7 @@ import useMessage from "../../util/hooks/useMessage";
 import * as Yup from "yup";
 import { Field, Form, Formik } from "formik";
 import { useToggle } from "@react-hookz/web";
+import { LoginContext } from "../../util/loginContext";
 
 UserDetailsDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
@@ -37,6 +38,7 @@ UserDetailsDrawer.propTypes = {
 function UserDetailsDrawer({ open, header, values, onClose, toggle }) {
   const { MessageSnackbar, showMessage } = useMessage();
   const [passwordVisible, togglePasswordVisibility] = useToggle();
+  const [_, setLoginData] = useContext(LoginContext);
 
   async function onSubmit(values) {
     try {
@@ -44,6 +46,7 @@ function UserDetailsDrawer({ open, header, values, onClose, toggle }) {
         `${endpoints.USER}/${values.idmatkaaja}`
       )(values, null, true);
       if (response.ok) {
+        setLoginData(await response.json());
         showMessage("Tietojen päivittäminen onnistui.");
         setTimeout(onClose, 1000);
       } else {
@@ -161,6 +164,7 @@ function UserDetailsDrawer({ open, header, values, onClose, toggle }) {
                   {...field}
                   error={meta.touched && Boolean(meta.error)}
                   helperText={meta.touched && meta.error}
+                  multiline
                 />
               )}
             </Field>
