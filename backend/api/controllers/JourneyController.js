@@ -1,5 +1,21 @@
 const Journey = require("../models/journey.model.js");
 
+exports.getAllPublic = (req, res) => {
+  Journey.getPublished((err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Didn't find public journeys.`,
+        });
+      } else {
+        res.status(500).send({
+          message: "Error retrieving public journeys",
+        });
+      }
+    } else res.send(data);
+  });
+};
+
 exports.findJourneysByJourneyId = (req, res) => {
   Journey.findByJourneyId(req.params.idmatka, (err, data) => {
     if (err) {
