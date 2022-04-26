@@ -25,6 +25,7 @@ module.exports = (app) => {
   router.put("/users/:idmatkaaja", User.update);
 
   router.get("/user_journeys/:idmatkaaja", journeys.findJourneysByUserId);
+  router.get("/journeys", journeys.getAllPublic);
   router.get("/journeys/:idmatka", journeys.findJourneysByJourneyId);
 
   router.get("/stories/:storyId", stories.findById);
