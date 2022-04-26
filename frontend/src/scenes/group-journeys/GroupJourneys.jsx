@@ -1,33 +1,46 @@
 import * as React from "react";
-import { useState } from "react";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import ImageListItemBar from "@mui/material/ImageListItemBar";
+import { useEffect, useState } from "react";
 import {
   Button,
   CircularProgress,
   Grid,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import useJourneys from "util/hooks/useJourneys";
-// import testData from "test-data/testJourneys.json";
 import { theme } from "../../theme";
+import useMessage from "../../util/hooks/useMessage";
+import endpoints from "../../util/endpoints";
+import { makeGetRequest } from "../../util/makeApiRequest";
+import { useAsyncAbortable, useMountEffect } from "@react-hookz/web";
+import { TravelExplore } from "@mui/icons-material";
 
 export default function GroupJourneys() {
   const [visibleCount, setVisibleCount] = useState(8);
   const [showLoadButton, setShowLoadButton] = useState(true);
-  const { journeys, isLoadingJourneys, JourneyLoadingSnackbar } = useJourneys();
+  const [journeyFetchState, fetchJourneys] = useAsyncAbortable(
+    async (signal) => {
+      const journeys = await makeGetRequest(endpoints.JOURNEYS)("", signal);
+
+      if (Array.isArray(journeys)) {
+        setJourneys(journeys);
+      }
+    }
+  );
   const isMediumWidth = useMediaQuery(theme.breakpoints.down("md"));
   const isSmallWidth = useMediaQuery(theme.breakpoints.down("sm"));
+  const [journeys, setJourneys] = useState([]);
+  const { MessageSnackbar, showMessage } = useMessage();
 
   const SHOW_MORE_JOURNEYS_INCREASE_BY = 8;
-  const DATA_SOURCE = journeys; // uncomment testData import & change 'journeys' to 'testData' for testing. Navigate to http://localhost:3000/group_journeys
 
   function showMoreJourneys() {
-    if (visibleCount < DATA_SOURCE.length) {
+    if (visibleCount < journeys.length) {
       setVisibleCount(visibleCount + SHOW_MORE_JOURNEYS_INCREASE_BY);
-      if (visibleCount + SHOW_MORE_JOURNEYS_INCREASE_BY > DATA_SOURCE.length)
+      if (visibleCount + SHOW_MORE_JOURNEYS_INCREASE_BY > journeys.length)
         setShowLoadButton(false);
     }
   }
@@ -40,6 +53,14 @@ export default function GroupJourneys() {
     }
     return 4;
   }
+
+  useEffect(() => {
+    if (journeyFetchState.error) {
+      showMessage("Verkkovirhe haettaessa matkoja. Yritä myöhemmin uudelleen.");
+    }
+  }, [journeyFetchState.error, showMessage]);
+
+  useMountEffect(fetchJourneys.execute);
 
   return (
     <Grid
@@ -54,31 +75,22 @@ export default function GroupJourneys() {
         <Typography variant="h1">Porukan matkat</Typography>
       </Grid>
       <Grid item xs={12}>
-        {isLoadingJourneys ? (
+        {journeyFetchState.status === "loading" ? (
           <CircularProgress sx={{ mx: "auto", my: 20 }} />
         ) : (
-          <ImageList
-            rowHeight={200}
-            cols={calculateGridColumns()}
-            gap={6}
-            sx={{ width: "50vw" }}
-          >
-            {DATA_SOURCE.slice(0, visibleCount).map((item) => (
-              <ImageListItem key={item.img}>
-                <img
-                  src={`${item.img}?w=248&fit=crop&auto=format`}
-                  srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                  alt={item.author}
-                  loading="lazy"
-                  style={{ overflow: "hidden" }}
+          <List>
+            {journeys.slice(0, visibleCount).map((journey) => (
+              <ListItem divider key={journey.journeyId} button>
+                <ListItemIcon>
+                  <TravelExplore />
+                </ListItemIcon>
+                <ListItemText
+                  primary={journey.author}
+                  secondary={`${journey.startDate} - ${journey.endDate}`}
                 />
-                <ImageListItemBar
-                  title={item.author}
-                  subtitle={item.startDate + "-" + item.endDate}
-                />
-              </ImageListItem>
+              </ListItem>
             ))}
-          </ImageList>
+          </List>
         )}
       </Grid>
       <Grid item xs={12}>
@@ -87,7 +99,7 @@ export default function GroupJourneys() {
             Näytä lisää
           </Button>
         ) : null}
-        <JourneyLoadingSnackbar />
+        <MessageSnackbar />
       </Grid>
     </Grid>
   );
