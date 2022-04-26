@@ -9,14 +9,13 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
-  useMediaQuery,
 } from "@mui/material";
-import { theme } from "../../theme";
 import useMessage from "../../util/hooks/useMessage";
 import endpoints from "../../util/endpoints";
 import { makeGetRequest } from "../../util/makeApiRequest";
 import { useAsyncAbortable, useMountEffect } from "@react-hookz/web";
 import { TravelExplore } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 export default function GroupJourneys() {
   const [visibleCount, setVisibleCount] = useState(8);
@@ -30,10 +29,9 @@ export default function GroupJourneys() {
       }
     }
   );
-  const isMediumWidth = useMediaQuery(theme.breakpoints.down("md"));
-  const isSmallWidth = useMediaQuery(theme.breakpoints.down("sm"));
   const [journeys, setJourneys] = useState([]);
   const { MessageSnackbar, showMessage } = useMessage();
+  const navigate = useNavigate();
 
   const SHOW_MORE_JOURNEYS_INCREASE_BY = 8;
 
@@ -43,15 +41,6 @@ export default function GroupJourneys() {
       if (visibleCount + SHOW_MORE_JOURNEYS_INCREASE_BY > journeys.length)
         setShowLoadButton(false);
     }
-  }
-
-  function calculateGridColumns() {
-    if (isSmallWidth) {
-      return 1;
-    } else if (isMediumWidth) {
-      return 2;
-    }
-    return 4;
   }
 
   useEffect(() => {
@@ -80,7 +69,11 @@ export default function GroupJourneys() {
         ) : (
           <List>
             {journeys.slice(0, visibleCount).map((journey) => (
-              <ListItem divider key={journey.journeyId} button>
+              <ListItem
+                divider
+                key={journey.journeyId}
+                onClick={() => navigate(`/journey/${journey.journeyId}`)}
+              >
                 <ListItemIcon>
                   <TravelExplore />
                 </ListItemIcon>
