@@ -103,12 +103,9 @@ const blobToBase64 = (blob, callback) => {
   };
 
   let data = [];
-  if (blob[0]) {
-    blob.forEach((v, i) => {
-      Object.values(blob[i]).forEach((value) => {
-        let obj = { image: convert(value) };
-        data.push(obj);
-      });
+  if (blob) {
+    blob.forEach((v) => {
+      data.push({ storyId: v.storyId, image: convert(v.image) });
     });
   }
 
@@ -217,7 +214,7 @@ const recursive_image_query = (payload, format_response, result) => {
       ) !== "empty"
     ) {
       sql.query(
-        `SELECT kuva AS image FROM kuva WHERE idtarina=${
+        `SELECT idtarina AS storyId, kuva AS image FROM kuva WHERE idtarina=${
           payload.recursion.stories[payload.recursion.global_running_value][
             payload.recursion.local_running_value
           ].storyId
@@ -262,7 +259,7 @@ const recursive_image_query = (payload, format_response, result) => {
       ) !== "empty"
     ) {
       sql.query(
-        `SELECT kuva AS image FROM kuva WHERE idtarina=${
+        `SELECT idtarina AS storyId, kuva AS image FROM kuva WHERE idtarina=${
           payload.recursion.stories[payload.recursion.global_running_value][
             payload.recursion.local_running_value
           ].storyId
@@ -306,12 +303,16 @@ Journey.getPublished = (result) => {
                 startDate: element.startDate,
                 endDate: element.endDate,
                 private: element.private,
-                stories: payload.recursion.stories[journeyInd].map(
-                  (story, storyInd) => ({
-                    ...story,
-                    images: payload.recursion.images[storyInd],
-                  })
-                ),
+                stories: payload.recursion.stories[journeyInd].map((story) => ({
+                  ...story,
+                  images: payload.recursion.images.map((imgs) => {
+                    return imgs.map((img) => {
+                      if (img.storyId === story.storyId) {
+                        return img.image;
+                      }
+                    });
+                  }),
+                })),
               });
             });
 
@@ -343,12 +344,12 @@ Journey.findByJourneyId = (idmatka, result) => {
                 startDate: element.startDate,
                 endDate: element.endDate,
                 private: element.private,
-                stories: payload.recursion.stories[journeyInd].map(
-                  (story, storyInd) => ({
-                    ...story,
-                    images: payload.recursion.images[storyInd],
-                  })
-                ),
+                stories: payload.recursion.stories[journeyInd].map((story) => ({
+                  ...story,
+                  images: payload.recursion.images.map((img) => {
+                    console.log(img);
+                  }),
+                })),
               });
             });
 
