@@ -298,6 +298,19 @@ Journey.getPublished = (result) => {
           payload,
           (payload) => {
             payload.recursion.journeys.forEach((element, journeyInd) => {
+              const process_images = (story) => {
+                let processed_images = [];
+                payload.recursion.images.forEach((imgs) => {
+                  imgs.forEach((img) => {
+                    if (img.storyId === story.storyId) {
+                      processed_images.push(img.image);
+                    }
+                  });
+                });
+
+                return processed_images;
+              };
+
               payload.journeys.push({
                 journeyId: element.journeyId,
                 startDate: element.startDate,
@@ -305,13 +318,7 @@ Journey.getPublished = (result) => {
                 private: element.private,
                 stories: payload.recursion.stories[journeyInd].map((story) => ({
                   ...story,
-                  images: payload.recursion.images.map((imgs) => {
-                    return imgs.map((img) => {
-                      if (img.storyId === story.storyId) {
-                        return img.image;
-                      }
-                    });
-                  }),
+                  images: process_images(story),
                 })),
               });
             });
@@ -340,15 +347,26 @@ Journey.findByJourneyId = (idmatka, result) => {
           payload,
           (payload) => {
             payload.recursion.journeys.forEach((element, journeyInd) => {
+              const process_images = (story) => {
+                let processed_images = [];
+                payload.recursion.images.forEach((imgs) => {
+                  imgs.forEach((img) => {
+                    if (img.storyId === story.storyId) {
+                      processed_images.push(img.image);
+                    }
+                  });
+                });
+
+                return processed_images;
+              };
+
               payload.journeys.push({
                 startDate: element.startDate,
                 endDate: element.endDate,
                 private: element.private,
                 stories: payload.recursion.stories[journeyInd].map((story) => ({
                   ...story,
-                  images: payload.recursion.images.map((img) => {
-                    console.log(img);
-                  }),
+                  images: process_images(story),
                 })),
               });
             });
@@ -377,16 +395,28 @@ Journey.findByUserId = (idmatkaaja, result) => {
           payload,
           (payload) => {
             payload.recursion.journeys.forEach((element, journeyInd) => {
+              const process_images = (story) => {
+                let processed_images = [];
+                payload.recursion.images.forEach((imgs) => {
+                  imgs.forEach((img) => {
+                    if (img.storyId === story.storyId) {
+                      processed_images.push(img.image);
+                    }
+                  });
+                });
+
+                return processed_images;
+              };
+
               payload.journeys.push({
+                journeyId: element.journeyId,
                 startDate: element.startDate,
                 endDate: element.endDate,
                 private: element.private,
-                stories: payload.recursion.stories[journeyInd].map(
-                  (story, storyInd) => ({
-                    ...story,
-                    images: payload.recursion.images[storyInd],
-                  })
-                ),
+                stories: payload.recursion.stories[journeyInd].map((story) => ({
+                  ...story,
+                  images: process_images(story),
+                })),
               });
             });
 
