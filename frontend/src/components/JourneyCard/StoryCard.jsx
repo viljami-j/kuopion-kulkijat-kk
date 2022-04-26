@@ -9,8 +9,6 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { isEmpty } from "lodash";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
 import { theme } from "../../theme";
 import { useAsyncAbortable, useMountEffect } from "@react-hookz/web";
 import { makeGetRequest } from "../../util/makeApiRequest";
@@ -73,31 +71,6 @@ function StoryCard({ destinationId, date, text, images }) {
             sx={{ pb: 0 }}
           />
           <CardContent sx={{ pt: 1, pb: 2, textAlign: "start" }}>
-            <ImageList
-              gap={16}
-              sx={{ display: "flex", flexDirection: directionOfImages }}
-            >
-              <ImageListItem sx={{ width: "100%" }}>
-                <img
-                  src={
-                    "https://images.unsplash.com/photo-1551782450-a2132b4ba21d"
-                  }
-                  alt="Test"
-                  loading="lazy"
-                  style={{ borderRadius: "10px" }}
-                />
-              </ImageListItem>
-              <ImageListItem sx={{ width: "100%" }}>
-                <img
-                  src={
-                    "https://images.unsplash.com/photo-1551782450-a2132b4ba21d"
-                  }
-                  alt="Test"
-                  loading="lazy"
-                  style={{ borderRadius: "10px" }}
-                />
-              </ImageListItem>
-            </ImageList>
             <Typography variant="body2" color="text.secondary">
               {text}
             </Typography>

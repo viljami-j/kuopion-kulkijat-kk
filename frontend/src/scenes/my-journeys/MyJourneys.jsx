@@ -18,6 +18,7 @@ import { useAsyncAbortable, useMountEffect, useToggle } from "@react-hookz/web";
 import { makeGetRequest } from "../../util/makeApiRequest";
 import useMessage from "../../util/hooks/useMessage";
 import endpoints from "../../util/endpoints";
+import { useNavigate } from "react-router-dom";
 
 export default function MyJourneys() {
   const { MessageSnackbar, showMessage } = useMessage();
@@ -26,7 +27,7 @@ export default function MyJourneys() {
   const [journeyFetchState, fetchJourneys] = useAsyncAbortable(
     async (signal) => {
       const journeys = await makeGetRequest(
-        `${endpoints.JOURNEYS}/${loginData.idmatkaaja}`
+        `${endpoints.USER_JOURNEYS}/${loginData.idmatkaaja}`
       )("", signal);
 
       if (Array.isArray(journeys)) {
@@ -37,6 +38,7 @@ export default function MyJourneys() {
   const isMediumWidth = useMediaQuery(theme.breakpoints.down("md"));
   const isSmallWidth = useMediaQuery(theme.breakpoints.down("sm"));
   const [drawerOpen, toggleDrawer] = useToggle();
+  const navigate = useNavigate();
 
   function calculateGridColumns() {
     if (isSmallWidth) {
@@ -63,7 +65,11 @@ export default function MyJourneys() {
         gap={6}
         sx={{ width: "50vw" }}
       >
-        <ImageListItem key={index}>
+        <ImageListItem
+          key={index}
+          button
+          onClick={() => navigate(`/journey/${journey.journeyId}`)}
+        >
           <ImageListItemBar
             title={`${journey.startDate} - ${journey.endDate}`}
           />
