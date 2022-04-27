@@ -28,7 +28,7 @@ exports.create = (req, res) => {
     });
   }
 
-  if (isNaN(req.body.storyId)) {
+  if (isNaN(req.body.storyId) && req.body.storyId !== undefined) {
     res.status(400).send({
       message: "storyId must be a number!",
     });
